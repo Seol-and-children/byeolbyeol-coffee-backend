@@ -1,27 +1,74 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.util.List;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOption;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.Franchise;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeImage;
+import javax.persistence.*;
+
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverage;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafe;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUser;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@NoArgsConstructor
 @Entity
 public class Recipe {
+
 	@Id
-	private Long recipeId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	private String recipeName;
-	@Embedded
-	private RecipeUser userName;
-	private String registerTime;
-	@Embedded
-	private RecipeImage recipeImage;
-	@Embedded
-	private Franchise franchise;
-	@Embedded
-	private CustomOption customOption;
+	private String recipePhoto;
 	private String description;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	private FranchiseCafe franchiseCafe;
+
+	@Embedded
+	private BaseBeverage baseBeverage;
+
+	@ElementCollection
+	private List<String> customOptions;
+
+	private LocalDateTime registerTime;
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	private RecipeUser author;
+
+	@PrePersist
+	protected void onCreate() {
+		registerTime = LocalDateTime.now();
+	}
+
+	@Builder
+	public Recipe(String recipeName, String recipePhoto, String description,
+		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
+		List<String> customOptions, RecipeUser author) {
+		this.recipeName = recipeName;
+		this.recipePhoto = recipePhoto;
+		this.description = description;
+		this.franchiseCafe = franchiseCafe;
+		this.baseBeverage = baseBeverage;
+		this.customOptions = customOptions;
+		this.author = author;
+	}
+
+	/*
+	* 레시피 정보 업데이트 메소드
+	* */
+	public void updateRecipe(String recipeName, String recipePhoto, String description,
+		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
+		List<String> customOptions, RecipeUser author) {
+		this.recipeName = recipeName;
+		this.recipePhoto = recipePhoto;
+		this.description = description;
+		this.franchiseCafe = franchiseCafe;
+		this.baseBeverage = baseBeverage;
+		this.customOptions = customOptions;
+		this.author = author;
+	}
 }

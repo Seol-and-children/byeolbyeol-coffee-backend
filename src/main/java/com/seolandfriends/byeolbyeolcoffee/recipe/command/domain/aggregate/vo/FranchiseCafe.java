@@ -6,10 +6,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class RecipeUser {
+public class FranchiseCafe {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	private String username;
+	private String name;
 }
