@@ -1,6 +1,5 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverage;
