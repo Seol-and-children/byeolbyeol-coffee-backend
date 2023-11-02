@@ -21,31 +21,38 @@ public class RecipeController {
 		this.recipeService = recipeService;
 	}
 
-	// 새 레시피 생성
+	/* 새로운 레시피 생성 */
 	@PostMapping
 	public ResponseEntity<Recipe> createRecipe(@RequestBody RecipeDto recipeDto) {
 		Recipe newRecipe = recipeService.createRecipe(recipeDto);
 		return ResponseEntity.ok(newRecipe);
 	}
 
-	// 레시피 업데이트
+	/* 레시피 수정 */
 	@PutMapping("/{recipeId}")
 	public ResponseEntity<Recipe> updateRecipe(@PathVariable Long recipeId, @RequestBody RecipeDto recipeDto) {
 		Recipe updatedRecipe = recipeService.updateRecipe(recipeId, recipeDto);
 		return ResponseEntity.ok(updatedRecipe);
 	}
 
-	// 모든 레시피 가져오기
+	/* 모든 레시피 정보 가져오기 */
 	@GetMapping
 	public ResponseEntity<List<Recipe>> getAllRecipes() {
 		List<Recipe> recipes = recipeService.getAllRecipes();
 		return ResponseEntity.ok(recipes);
 	}
 
-	// ID로 레시피 가져오기
+	/* Id로 레시피 가져오기 */
 	@GetMapping("/{recipeId}")
 	public ResponseEntity<Recipe> getRecipeById(@PathVariable Long recipeId) {
 		Recipe recipe = recipeService.getRecipeById(recipeId);
 		return ResponseEntity.ok(recipe);
 	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteRecipe(@PathVariable Long id) {
+		recipeService.deleteRecipe(id);
+		return ResponseEntity.ok("레시피가 삭제 되었습니다");
+	}
+
 }

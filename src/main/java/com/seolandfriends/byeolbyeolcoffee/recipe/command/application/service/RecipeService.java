@@ -2,6 +2,8 @@ package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service;
 
 import java.util.List;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +21,7 @@ public class RecipeService {
 		this.recipeRepository = recipeRepository;
 	}
 
-	/*
-	 * 새로운 레시피 생성 메소드
-	 * */
+	/* 새로운 레시피 생성 메소드 */
 	public Recipe createRecipe(RecipeDto recipeDto) {
 		Recipe newRecipe = Recipe.builder()
 			.recipeName(recipeDto.getRecipeName())
@@ -36,9 +36,7 @@ public class RecipeService {
 		return recipeRepository.save(newRecipe);
 	}
 
-	/*
-	 * {recipeid}를 가진 레시피 정보 수정하기
-	 * */
+	/* {recipeid}를 가진 레시피 정보 수정하기 */
 	public Recipe updateRecipe(Long recipeId, RecipeDto recipeDto) {
 		Recipe recipe = recipeRepository.findById(recipeId)
 			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
@@ -49,26 +47,29 @@ public class RecipeService {
 			recipeDto.getDescription(),
 			recipeDto.getFranchiseCafe(),
 			recipeDto.getBaseBeverage(),
-			recipeDto.getCustomOptions(),
-			recipeDto.getAuthor()
+			recipeDto.getCustomOptions()
 		);
 
 		return recipeRepository.save(recipe);
 	}
 
-	/*
-	 모든 레시피 정보 불러오기
-	**/
+	/* 모든 레시피 정보 불러오기 */
 	public List<Recipe> getAllRecipes() {
 		return recipeRepository.findAll();
 	}
 
-	/*
-	 * {recipeId}를 가진 레시피 정보 불러오기
-	 * */
+	/* {recipeId}를 가진 레시피 정보 불러오기 */
 	public Recipe getRecipeById(Long recipeId) {
 		return recipeRepository.findById(recipeId)
 			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
+	}
+
+	/* {recipeId}를 가진 레시피 삭제하기 */
+	public void deleteRecipe(Long recipeId) {
+		if (!recipeRepository.existsById(recipeId)) {
+			throw new EntityNotFoundException("레시피를 찾을 수 없습니다. ID: " + recipeId);
+		}
+		recipeRepository.deleteById(recipeId);
 	}
 
 }

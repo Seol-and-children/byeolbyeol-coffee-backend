@@ -57,18 +57,15 @@ public class Recipe {
 		this.author = author;
 	}
 
-	/*
-	* 레시피 정보 업데이트 메소드
-	* */
+	/* 레시피 정보 업데이트 메소드 */
 	public void updateRecipe(String recipeName, String recipePhoto, String description,
 		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		List<String> customOptions, RecipeUser author) {
+		List<String> customOptions) {
 		this.recipeName = recipeName;
 		this.recipePhoto = recipePhoto;
 		this.description = description;
 		this.franchiseCafe = franchiseCafe;
 		this.baseBeverage = baseBeverage;
 		this.customOptions = customOptions;
-		this.author = author;
 	}
 }
