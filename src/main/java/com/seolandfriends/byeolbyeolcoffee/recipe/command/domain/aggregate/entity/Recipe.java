@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 public class Recipe {
 
 	@Id
+	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String recipeName;
@@ -26,17 +27,22 @@ public class Recipe {
 	private String description;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn
 	private FranchiseCafe franchiseCafe;
 
+	@Column
 	@Embedded
 	private BaseBeverage baseBeverage;
 
+	@Column
 	@ElementCollection
 	private List<String> customOptions;
 
+	@Column
 	private LocalDateTime registerTime;
 
 	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn
 	private RecipeUser author;
 
 	@PrePersist
@@ -57,7 +63,7 @@ public class Recipe {
 		this.author = author;
 	}
 
-	/* 레시피 정보 업데이트 메소드 */
+	/* 레시피 업데이트 메소드 */
 	public void updateRecipe(String recipeName, String recipePhoto, String description,
 		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
 		List<String> customOptions) {
@@ -68,4 +74,5 @@ public class Recipe {
 		this.baseBeverage = baseBeverage;
 		this.customOptions = customOptions;
 	}
+
 }
