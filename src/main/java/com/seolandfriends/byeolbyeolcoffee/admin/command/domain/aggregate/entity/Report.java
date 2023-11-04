@@ -1,6 +1,5 @@
 package com.seolandfriends.byeolbyeolcoffee.admin.command.domain.aggregate.entity;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -44,9 +43,8 @@ public class Report {
 		this.processing = processing;
 	}
 
-	public void processingCompleted(){
-		this.processing = false;
-	}
+	//처리 여부 변경 메소드
+	public void processingCompleted(){ this.processing = false;	}
 	public void processingBefore(){
 		this.processing = true;
 	}

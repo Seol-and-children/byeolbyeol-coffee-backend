@@ -36,9 +36,9 @@ public class ReportController {
 
 	//신고 처리 수정(true/false)
 	@PutMapping("/{reportId}")
-	public ResponseEntity<ReportDTO> updateReport(@PathVariable Long reportId, @RequestBody ReportDTO reportDTO){
-		ReportDTO updatedreport = reportService.updateReport(reportId, reportDTO);
-		return ResponseEntity.ok(updatedreport);
+	public ResponseEntity<ReportDTO> modifyReport(@PathVariable Long reportId, @RequestBody ReportDTO reportDTO){
+		ReportDTO modifydreportreport = reportService.updateReport(reportId, reportDTO);
+		return ResponseEntity.ok(modifydreportreport);
 	}
 
 	//모든 신고 불러오기
