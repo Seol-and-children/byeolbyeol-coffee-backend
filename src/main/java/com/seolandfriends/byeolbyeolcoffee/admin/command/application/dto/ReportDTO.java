@@ -1,6 +1,5 @@
 package com.seolandfriends.byeolbyeolcoffee.admin.command.application.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ReportDTO {
 	private Long reportId;
 
@@ -24,5 +22,5 @@ public class ReportDTO {
 
 	private String contentTitle;
 
-	private Boolean processing;
+	private boolean processing;
 }

@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -17,14 +18,13 @@ import com.seolandfriends.byeolbyeolcoffee.admin.command.application.dto.ReportD
 import com.seolandfriends.byeolbyeolcoffee.admin.command.application.service.ReportService;
 
 @RestController
-@RequestMapping("/report")
+@RequestMapping("/reports")
 public class ReportController {
 	private final ReportService reportService;
-	private final ModelMapper modelMapper;
+
 	@Autowired
-	public ReportController(ReportService reportService, ModelMapper modelMapper){
+	public ReportController(ReportService reportService){
 		this.reportService = reportService;
-		this.modelMapper = modelMapper;
 	}
 
 	//새로운 신고 생성
@@ -35,20 +35,25 @@ public class ReportController {
 	}
 
 	//신고 처리 수정(true/false)
-	@PutMapping("{report_id}}")
-	public ResponseEntity<ReportDTO> updateReport(@PathVariable Long reportId, @RequestBody boolean process){
-		ReportDTO reportDTO = reportService.updateReport(reportId, process);
+	@PutMapping("/{reportId}")
+	public ResponseEntity<ReportDTO> updateReport(@PathVariable Long reportId, @RequestBody ReportDTO reportDTO){
+		ReportDTO updatedreport = reportService.updateReport(reportId, reportDTO);
+		return ResponseEntity.ok(updatedreport);
+	}
+
+	//모든 신고 불러오기
+	@GetMapping
+	public ResponseEntity<List<ReportDTO>> getAllReport(){
+		List<ReportDTO> reoprtDTO = reportService.getAllReport();
+		return ResponseEntity.ok(reoprtDTO);
+	}
+
+	//특정 신고 불러오기
+	@GetMapping("/{reportId}")
+	public ResponseEntity<ReportDTO> getRepoer(@PathVariable Long reportId) {
+		ReportDTO reportDTO = reportService.getReport(reportId);
 		return ResponseEntity.ok(reportDTO);
 	}
-	// public ResponseEntity<ReportDTO> createReport(@RequestBody ReportDTO reportDTO) {
-	// 	Report report = reportService.createReport(reportDTO);
-	// 	ReportDTO reportDto = modelMapper.map(report, ReportDTO.class);
-	// 	return ResponseEntity.ok(reportDto);
-	//
-	// @GetMapping("{report_id}}")
-	// public
-	//
-	// @GetMapping
 
 }
 

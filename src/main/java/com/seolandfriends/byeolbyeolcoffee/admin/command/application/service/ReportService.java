@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.seolandfriends.byeolbyeolcoffee.admin.command.application.dto.ReportDTO;
 import com.seolandfriends.byeolbyeolcoffee.admin.command.domain.aggregate.entity.Report;
@@ -27,22 +26,31 @@ public class ReportService {
 	// 새로운 신고 생성
 	@Transactional
 	public ReportDTO createReport(ReportDTO reportDTO) {
-		Report report = reportRepository.save(modelMapper.map(reportDTO, Report.class));
-		return modelMapper.map(report, ReportDTO.class);
+		//Report report = reportRepository.save(modelMapper.map(reportDTO, Report.class));
+		Report report = Report.builder()
+			.reportedName(reportDTO.getReportedName())
+			.authorName(reportDTO.getAuthorName())
+			.reportReason(reportDTO.getReportReason())
+			.reportedContent(reportDTO.getReportedContent())
+			.reportTime(reportDTO.getReportTime())
+			.contentTitle(reportDTO.getContentTitle())
+			.processing(reportDTO.isProcessing())
+			.build();
+		Report savedReport = reportRepository.save(report);
+		return modelMapper.map(savedReport, ReportDTO.class);
 	}
 
 	//모든 신고 불러오기
 	public List<ReportDTO> getAllReport(){
 		List<Report> reportList = reportRepository.findAll();
 		return reportList.stream().map(report -> modelMapper.map(report, ReportDTO.class)).collect(Collectors.toList());
-		//return reportRepository.findAll();
 	}
 
-	//
+	//신고 처리하기
 	@Transactional
-	public ReportDTO updateReport(Long reportId, boolean isProcessed) {
+	public ReportDTO updateReport(Long reportId, ReportDTO reportDTO) {
 		Report report = reportRepository.findById(reportId).orElseThrow(() -> new RuntimeException("신고 정보를 찾을 수 없습니다.. ID: " + reportId));
-		if (isProcessed) {
+		if (report.isProcessing()) {
 			report.processingCompleted();
 		} else {
 			report.processingBefore();
@@ -51,7 +59,7 @@ public class ReportService {
 		return modelMapper.map(report, ReportDTO.class);
 	}
 
-	//
+	//특정 신고 불러오기
 	public ReportDTO getReport(Long reportId){
 		Report report = reportRepository.findById(reportId).orElseThrow(() -> new RuntimeException("신고 정보를 찾을 수 없습니다.. ID: " + reportId));
 		return modelMapper.map(report, ReportDTO.class);
