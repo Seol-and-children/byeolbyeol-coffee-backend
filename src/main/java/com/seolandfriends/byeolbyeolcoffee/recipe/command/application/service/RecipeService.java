@@ -3,8 +3,6 @@ package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,6 @@ import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.Reci
 
 @Service
 public class RecipeService {
-
 	private final RecipeRepository recipeRepository;
 	ModelMapper modelMapper = new ModelMapper();
 
@@ -45,16 +42,16 @@ public class RecipeService {
 		Recipe recipe = recipeRepository.findById(recipeId)
 			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
 
-		Recipe updateRecipe = Recipe.builder()
-			.recipeName(recipeDto.getRecipeName())
-			.recipePhoto(recipeDto.getRecipePhoto())
-			.description(recipeDto.getDescription())
-			.franchiseCafe(recipeDto.getFranchiseCafe())
-			.baseBeverage(recipeDto.getBaseBeverage())
-			.customOptions(recipeDto.getCustomOptions())
-			.build();
+		recipe.updateRecipe(
+			recipeDto.getRecipeName(),
+			recipeDto.getRecipePhoto(),
+			recipeDto.getDescription(),
+			recipeDto.getFranchiseCafe(),
+			recipeDto.getBaseBeverage(),
+			recipeDto.getCustomOptions()
+		);
 
-		Recipe savedRecipe = recipeRepository.save(updateRecipe);
+		Recipe savedRecipe = recipeRepository.save(recipe);
 		return modelMapper.map(savedRecipe, RecipeDto.class);
 	}
 
@@ -68,7 +65,7 @@ public class RecipeService {
 
 	/* {recipeId}를 가진 레시피 정보 불러오기 */
 	public RecipeDto getRecipeById(Long recipeId) {
-		Recipe savedRecipe =  recipeRepository.findById(recipeId)
+		Recipe savedRecipe = recipeRepository.findById(recipeId)
 			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
 		return modelMapper.map(savedRecipe, RecipeDto.class);
 	}
@@ -76,7 +73,7 @@ public class RecipeService {
 	/* {recipeId}를 가진 레시피 삭제하기 */
 	public void deleteRecipe(Long recipeId) {
 		if (!recipeRepository.existsById(recipeId)) {
-			throw new EntityNotFoundException("레시피를 찾을 수 없습니다. ID: " + recipeId);
+			throw new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId);
 		}
 		recipeRepository.deleteById(recipeId);
 	}

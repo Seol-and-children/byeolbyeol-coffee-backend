@@ -19,9 +19,8 @@ import lombok.NoArgsConstructor;
 public class Recipe {
 
 	@Id
-	@Column
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long recipeId;
 	private String recipeName;
 	private String recipePhoto;
 	private String description;

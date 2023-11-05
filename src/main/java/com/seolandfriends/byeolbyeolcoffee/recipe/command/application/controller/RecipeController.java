@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service.RecipeService;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
 
 @RestController
 @RequestMapping("/recipes")
