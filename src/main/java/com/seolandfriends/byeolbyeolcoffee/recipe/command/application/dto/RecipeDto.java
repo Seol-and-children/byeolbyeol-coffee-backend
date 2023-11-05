@@ -16,6 +16,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeDto {
+	private Long id;
 	private String recipeName;
 	private String recipePhoto;
 	private String description;
@@ -23,4 +24,6 @@ public class RecipeDto {
 	private BaseBeverage baseBeverage;
 	private List<String> customOptions;
 	private RecipeUser author;
+	private Integer likesCount;
+	private Integer viewsCount;
 }

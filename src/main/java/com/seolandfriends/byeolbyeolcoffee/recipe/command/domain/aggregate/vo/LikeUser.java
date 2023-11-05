@@ -1,5 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo;
 
+
 import javax.persistence.Embeddable;
 
 import lombok.AllArgsConstructor;
@@ -10,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Embeddable
-public class FranchiseCafe {
-	private Long franchiseId;
+public class LikeUser {
+	private Long userId;
 }

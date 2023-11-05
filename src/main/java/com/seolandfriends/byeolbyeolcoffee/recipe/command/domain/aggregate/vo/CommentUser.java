@@ -6,14 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Embeddable
 public class CommentUser {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long userId;
-	private String username;
 }

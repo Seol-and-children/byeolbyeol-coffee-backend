@@ -13,6 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeCommentDto {
+	private Long commentId;
 	private CommentUser commentUser;
 	private String content;
 	private RecipeComment parent;

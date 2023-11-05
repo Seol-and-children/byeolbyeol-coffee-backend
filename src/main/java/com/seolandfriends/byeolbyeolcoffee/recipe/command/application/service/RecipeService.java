@@ -67,6 +67,8 @@ public class RecipeService {
 	public RecipeDto getRecipeById(Long recipeId) {
 		Recipe savedRecipe = recipeRepository.findById(recipeId)
 			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
+		savedRecipe.incrementViewsCount();
+		savedRecipe = recipeRepository.save(savedRecipe);
 		return modelMapper.map(savedRecipe, RecipeDto.class);
 	}
 

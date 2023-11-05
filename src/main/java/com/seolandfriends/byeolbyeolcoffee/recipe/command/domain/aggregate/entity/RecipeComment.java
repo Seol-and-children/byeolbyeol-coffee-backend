@@ -1,7 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,8 +24,7 @@ public class RecipeComment {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long commentId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn
+	@Embedded
 	private CommentUser commentUser;
 
 	@Column
