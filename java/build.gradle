@@ -22,7 +22,6 @@ repositories {
 }
 
 dependencies {
-    runtimeOnly 'com.h2database:h2'
     implementation 'org.hibernate:hibernate-entitymanager:5.6.15.Final'
     implementation 'com.mysql:mysql-connector-j:8.0.33'
     implementation 'org.springframework.boot:spring-boot-starter-web'
