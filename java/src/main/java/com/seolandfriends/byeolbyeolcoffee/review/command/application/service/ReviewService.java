@@ -1,74 +1,85 @@
 package com.seolandfriends.byeolbyeolcoffee.review.command.application.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.modelmapper.ModelMapper;
 
 import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.ReviewDTO;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.repository.ReviewRepository;
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 
 @Service
 public class ReviewService {
 
 	private final ReviewRepository ReviewRepository;
+ 	ModelMapper modelMapper = new ModelMapper();
 
 	@Autowired
 	public ReviewService(ReviewRepository ReviewRepository) {
+
 		this.ReviewRepository = ReviewRepository;
 	}
 
-	/* 새로운 레시피 생성 메소드 */
-	public Review createReview(ReviewDTO ReviewDTO) {
+	/* 새로운 리뷰 생성 메소드 */
+	public ReviewDTO createReview(ReviewDTO ReviewDTO) {
 		Review newReview = Review.builder()
-			.ReviewName(ReviewDTO.getReviewName())
-			.ReviewPhoto(ReviewDTO.getReviewPhoto())
-			.description(ReviewDTO.getDescription())
-			.franchiseCafe(ReviewDTO.getFranchiseCafe())
-			.baseBeverage(ReviewDTO.getBaseBeverage())
-			.customOptions(ReviewDTO.getCustomOptions())
+			.reviewName(ReviewDTO.getReviewName())
+			.content(ReviewDTO.getContent())
+			.photoUrl(ReviewDTO.getPhotoUrl())
 			.author(ReviewDTO.getAuthor())
+			.registerTime(ReviewDTO.getRegisterTime())
+			.recommendations(ReviewDTO.getRecommendations())
+			.views(ReviewDTO.getViews())
 			.build();
 
-		return ReviewRepository.save(newReview);
-	}
+		Review savedReview = ReviewRepository.save(newReview);
+		return modelMapper.map(savedReview, ReviewDTO.class);	}
 
-	/* {Reviewid}를 가진 레시피 정보 수정하기 */
-	public Review updateReview(Long ReviewId, ReviewDTO ReviewDTO) {
-		Review Review = ReviewRepository.findById(ReviewId)
-			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + ReviewId));
+	/* {Reviewid}를 가진 리뷰 정보 수정하기 */
+	public ReviewDTO updateReview(Long ReviewId, ReviewDTO ReviewDTO) {
+		Review  Review = ReviewRepository.findById(ReviewId)
+			.orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다. ID: " + ReviewId));
 
 		Review.updateReview(
 			ReviewDTO.getReviewName(),
-			ReviewDTO.getReviewPhoto(),
-			ReviewDTO.getDescription(),
-			ReviewDTO.getFranchiseCafe(),
-			ReviewDTO.getBaseBeverage(),
-			ReviewDTO.getCustomOptions()
-		);
+			ReviewDTO.getContent(),
+			ReviewDTO.getPhotoUrl(),
+			ReviewDTO.getAuthor(),
+			ReviewDTO.getRegisterTime(),
+			ReviewDTO.getRecommendations(),
+			ReviewDTO.getViews()
+			);
 
+		Review savedReview = ReviewRepository.save(review);
 		return ReviewRepository.save(Review);
 	}
 
 	/* 모든 레시피 정보 불러오기 */
-	public List<Review> getAllReviews() {
-		return ReviewRepository.findAll();
+	public List<ReviewDTO> getAllReviews() {
+		List<Review> savedReviews = ReviewRepository.findAll();
+		return savedReviews.stream()
+			.map(review -> modelMapper.map(review, ReviewDTO.class))
+			.collect(Collectors.toList());
 	}
 
 	/* {ReviewId}를 가진 레시피 정보 불러오기 */
-	public Review getReviewById(Long ReviewId) {
-		return ReviewRepository.findById(ReviewId)
-			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + ReviewId));
+	public ReviewDTO getReviewById(Long reviewId) {
+		Review savedReview = ReviewRepository.findById(reviewId)
+			.orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다. ID: " + reviewId));
+		savedReview.incrementViewsCount();
+		savedReview = ReviewRepository.save(savedReview);
+		return modelMapper.map(savedReview, ReviewDTO.class);
 	}
 
-	/* {ReviewId}를 가진 레시피 삭제하기 */
+	/* {ReviewId}를 가진 리뷰 삭제하기 */
 	public void deleteReview(Long ReviewId) {
 		if (!ReviewRepository.existsById(ReviewId)) {
-			throw new EntityNotFoundException("레시피를 찾을 수 없습니다. ID: " + ReviewId);
+			throw new EntityNotFoundException("리뷰를 찾을 수 없습니다. ID: " + ReviewId);
 		}
 		ReviewRepository.deleteById(ReviewId);
 	}
