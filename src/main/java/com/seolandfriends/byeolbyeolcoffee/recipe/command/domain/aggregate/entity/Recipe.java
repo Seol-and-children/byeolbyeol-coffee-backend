@@ -20,12 +20,18 @@ public class Recipe {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long recipeId;
+
+	@Column
 	private String recipeName;
+
+	@Column
 	private String recipePhoto;
+
+	@Column
 	private String description;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@Embedded
 	private FranchiseCafe franchiseCafe;
 
 	@Embedded
@@ -34,10 +40,17 @@ public class Recipe {
 	@ElementCollection
 	private List<String> customOptions;
 
+	@Column
 	private LocalDateTime registerTime;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@Embedded
 	private RecipeUser author;
+
+	@Column(nullable = false)
+	private Integer likesCount = 0;
+
+	@Column(nullable = false)
+	private Integer viewsCount = 0;
 
 	@PrePersist
 	protected void onCreate() {
@@ -47,7 +60,7 @@ public class Recipe {
 	@Builder
 	public Recipe(String recipeName, String recipePhoto, String description,
 		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		List<String> customOptions, RecipeUser author) {
+		List<String> customOptions, RecipeUser author, Integer likesCount, Integer viewsCount) {
 		this.recipeName = recipeName;
 		this.recipePhoto = recipePhoto;
 		this.description = description;
@@ -55,9 +68,11 @@ public class Recipe {
 		this.baseBeverage = baseBeverage;
 		this.customOptions = customOptions;
 		this.author = author;
+		this.likesCount = likesCount != null ? likesCount : this.likesCount;
+		this.viewsCount = viewsCount != null ? viewsCount : this.viewsCount;
 	}
 
-	/* 레시피 정보 업데이트 메소드 */
+	/* 레시피 업데이트 메소드 */
 	public void updateRecipe(String recipeName, String recipePhoto, String description,
 		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
 		List<String> customOptions) {
@@ -68,4 +83,22 @@ public class Recipe {
 		this.baseBeverage = baseBeverage;
 		this.customOptions = customOptions;
 	}
+
+	/* 좋아요 수 증가 메소드 */
+	public void incrementLikesCount() {
+		this.likesCount++;
+	}
+
+	/* 조회수 증가 메소드 */
+	public void incrementViewsCount() {
+		this.viewsCount++;
+	}
+
+	/* 좋아요 수 감소 메소드 */
+	public void decrementLikesCount() {
+		if (this.likesCount > 0) {
+			this.likesCount--;
+		}
+	}
+
 }
