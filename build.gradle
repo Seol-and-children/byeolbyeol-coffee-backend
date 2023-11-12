@@ -24,7 +24,6 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.hibernate:hibernate-entitymanager:5.6.15.Final'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'com.mysql:mysql-connector-j:8.0.33'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
