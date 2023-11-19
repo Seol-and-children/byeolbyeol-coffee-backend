@@ -1,4 +1,4 @@
-package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo;
+package com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo;
 
 import java.io.Serializable;
 
