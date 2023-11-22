@@ -2,7 +2,6 @@ package com.seolandfriends.byeolbyeolcoffee.admin.command.application.controller
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -37,8 +36,8 @@ public class ReportController {
 	//신고 처리 수정(true/false)
 	@PutMapping("/{reportId}")
 	public ResponseEntity<ReportDTO> modifyReport(@PathVariable Long reportId, @RequestBody ReportDTO reportDTO){
-		ReportDTO modifydreportreport = reportService.updateReport(reportId, reportDTO);
-		return ResponseEntity.ok(modifydreportreport);
+		ReportDTO modifyreport = reportService.updateReport(reportId, reportDTO);
+		return ResponseEntity.ok(modifyreport);
 	}
 
 	//모든 신고 불러오기
@@ -50,7 +49,7 @@ public class ReportController {
 
 	//특정 신고 불러오기
 	@GetMapping("/{reportId}")
-	public ResponseEntity<ReportDTO> getRepoer(@PathVariable Long reportId) {
+	public ResponseEntity<ReportDTO> getRepoert(@PathVariable Long reportId) {
 		ReportDTO reportDTO = reportService.getReport(reportId);
 		return ResponseEntity.ok(reportDTO);
 	}

@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,21 +13,22 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name="custom_option")
 @NoArgsConstructor
-public class RecipeIngredient {
+public class CustomOption {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@Column(name = "id")
 	private Long ingredientId;
-	@Column
+	@Column(name = "name")
 	private String ingredientName;
-	@Column
+	@Column(name = "ingredient_unit")
 	private String ingredientUnit;
-	@Column
+	@Column(name = "process")
 	private boolean processing;
 
 	@Builder
-	public RecipeIngredient(String ingredientName,String ingredientUnit,boolean processing){
+	public CustomOption(String ingredientName,String ingredientUnit,boolean processing){
 		this.ingredientName = ingredientName;
 		this.ingredientUnit = ingredientUnit;
 		this.processing = processing;
