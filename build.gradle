@@ -21,6 +21,10 @@ repositories {
     mavenCentral()
 }
 dependencies {
+    implementation 'org.modelmapper:modelmapper:2.3.8'
+    runtimeOnly 'com.h2database:h2'
+    implementation 'org.hibernate:hibernate-entitymanager:5.6.15.Final'
+    implementation 'com.mysql:mysql-connector-j:8.0.33'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
