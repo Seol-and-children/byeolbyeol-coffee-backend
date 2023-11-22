@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 
 import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.ReviewDTO;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.repository.ReviewRepository;
+import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewRepository;
 
 @Service
 public class ReviewService {
@@ -28,10 +28,10 @@ public class ReviewService {
 	public ReviewDTO createReview(ReviewDTO ReviewDTO) {
 		Review newReview = Review.builder()
 			.reviewName(ReviewDTO.getReviewName())
-			.content(ReviewDTO.getContent())
-			.photoUrl(ReviewDTO.getPhotoUrl())
 			.author(ReviewDTO.getAuthor())
 			.registerTime(ReviewDTO.getRegisterTime())
+			.content(ReviewDTO.getContent())
+			.photoUrl(ReviewDTO.getPhotoUrl())
 			.build();
 
 		Review savedReview = reviewRepository.save(newReview);
@@ -44,10 +44,10 @@ public class ReviewService {
 
 		review.updateReview(
 			reviewDTO.getReviewName(),
-			reviewDTO.getContent(),
-			reviewDTO.getPhotoUrl(),
 			reviewDTO.getAuthor(),
-			reviewDTO.getRegisterTime()
+			reviewDTO.getRegisterTime(),
+			reviewDTO.getContent(),
+			reviewDTO.getPhotoUrl()
 			);
 
 		Review savedReview = reviewRepository.save(review);

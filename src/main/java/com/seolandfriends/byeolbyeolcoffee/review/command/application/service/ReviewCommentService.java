@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.ReviewCommentDTO;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.ReviewComment;
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.repository.ReviewCommentRepository;
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.repository.ReviewRepository;
+import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewCommentRepository;
+import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewRepository;
 
 @Service
 public class ReviewCommentService {

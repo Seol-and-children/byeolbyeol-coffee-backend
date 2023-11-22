@@ -1,4 +1,4 @@
-package com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.repository;
+package com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
