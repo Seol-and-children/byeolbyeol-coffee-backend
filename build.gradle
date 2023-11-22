@@ -22,17 +22,19 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.modelmapper:modelmapper:2.3.8'
+    runtimeOnly 'com.h2database:h2'
     implementation 'org.hibernate:hibernate-entitymanager:5.6.15.Final'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'com.mysql:mysql-connector-j:8.0.33'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
-    implementation 'org.modelmapper:modelmapper:3.1.1'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    runtimeOnly 'com.h2database:h2'
+    implementation 'org.hibernate:hibernate-entitymanager:5.6.15.Final'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.projectlombok:lombok'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 }
 
 tasks.named('test') {
