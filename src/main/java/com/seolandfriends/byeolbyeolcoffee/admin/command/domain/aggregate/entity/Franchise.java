@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -12,16 +13,22 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
+@Table(name="franchise")
 @NoArgsConstructor
 public class Franchise {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column
+	@Column(name="id")
 	private Long franchiseId;
+	@Column(name="name")
 	private String franchiseName;
+	@Column(name="bg_color")
 	private String franchiseBackColor;
+	@Column(name="font_color")
 	private String franchiseFontColor;
+	@Column(name="image")
 	private String franchiseImage;
+	@Column(name="process")
 	private boolean processing;
 
 	@Builder

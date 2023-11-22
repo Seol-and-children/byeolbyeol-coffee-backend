@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seolandfriends.byeolbyeolcoffee.admin.command.application.dto.FranchiseDTO;
-import com.seolandfriends.byeolbyeolcoffee.admin.command.application.dto.RecipeIngredientDTO;
+import com.seolandfriends.byeolbyeolcoffee.admin.command.application.dto.CustomOptionDTO;
 import com.seolandfriends.byeolbyeolcoffee.admin.command.application.service.OptionService;
 
 @RestController
@@ -29,37 +29,38 @@ public class OptionController {
 	/*기본 재공 재료 관련 메소드*/
 	//새로운 기본 재료 생성
 	@PostMapping("/ingredients")
-	public ResponseEntity<RecipeIngredientDTO> createIngredients(@RequestBody RecipeIngredientDTO recipeIngredientDTO) {
-		RecipeIngredientDTO recipeIngredientDTO1 = optionService.createIngredient(recipeIngredientDTO);
-		return ResponseEntity.ok(recipeIngredientDTO1);
+	public ResponseEntity<CustomOptionDTO> createIngredients(@RequestBody CustomOptionDTO customOptionDTO) {
+		CustomOptionDTO customOptionDTO1 = optionService.createIngredient(customOptionDTO);
+		return ResponseEntity.ok(customOptionDTO1);
 	}
 
 	//기본 재료 사용 여부 수정(true/false)
 	@PutMapping("/ingredients/process/{ingredientId}")
-	public ResponseEntity<RecipeIngredientDTO> modifyProcessIngredients(@PathVariable Long ingredientId, @RequestBody RecipeIngredientDTO recipeIngredientDTO){
-		RecipeIngredientDTO modifyRecipeIngredient = optionService.processRecipeIngredient(ingredientId, recipeIngredientDTO);
+	public ResponseEntity<CustomOptionDTO> modifyProcessIngredients(@PathVariable Long ingredientId, @RequestBody CustomOptionDTO customOptionDTO){
+		CustomOptionDTO modifyRecipeIngredient = optionService.processRecipeIngredient(ingredientId, customOptionDTO);
 		return ResponseEntity.ok(modifyRecipeIngredient);
 	}
 
 	//기본 재료 정보 수정
 	@PutMapping("/ingredients/info/{ingredientId}")
-	public ResponseEntity<RecipeIngredientDTO> modifyIngredients(@PathVariable Long ingredientId, @RequestBody RecipeIngredientDTO recipeIngredientDTO){
-		RecipeIngredientDTO modifyRecipeIngredient = optionService.modifyRecipeIngredient(ingredientId, recipeIngredientDTO.getIngredientName(),recipeIngredientDTO.getIngredientUnit());
+	public ResponseEntity<CustomOptionDTO> modifyIngredients(@PathVariable Long ingredientId, @RequestBody CustomOptionDTO customOptionDTO){
+		CustomOptionDTO modifyRecipeIngredient = optionService.modifyRecipeIngredient(ingredientId, customOptionDTO.getIngredientName(),
+			customOptionDTO.getIngredientUnit());
 		return ResponseEntity.ok(modifyRecipeIngredient);
 	}
 
 	//모든 기본 재료 정보 불러오기
 	@GetMapping("/ingredients")
-	public ResponseEntity<List<RecipeIngredientDTO>> getAllIngredients(){
-		List<RecipeIngredientDTO> recipeIngredientDTO1 = optionService.getAllRecipeIngredient();
-		return ResponseEntity.ok(recipeIngredientDTO1);
+	public ResponseEntity<List<CustomOptionDTO>> getAllIngredients(){
+		List<CustomOptionDTO> customOptionDTO1 = optionService.getAllRecipeIngredient();
+		return ResponseEntity.ok(customOptionDTO1);
 	}
 
 	//특정 기본 재료 정보 불러오기
 	@GetMapping("/ingredients/{ingredientId}")
-	public ResponseEntity<RecipeIngredientDTO> getIngredients(@PathVariable Long ingredientId) {
-		RecipeIngredientDTO recipeIngredientDTO = optionService.getRecipeIngredient(ingredientId);
-		return ResponseEntity.ok(recipeIngredientDTO);
+	public ResponseEntity<CustomOptionDTO> getIngredients(@PathVariable Long ingredientId) {
+		CustomOptionDTO customOptionDTO = optionService.getRecipeIngredient(ingredientId);
+		return ResponseEntity.ok(customOptionDTO);
 	}
 
 	/*프렌차이즈 관련 메소드*/
