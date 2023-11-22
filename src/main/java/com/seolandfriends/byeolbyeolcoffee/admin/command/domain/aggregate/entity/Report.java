@@ -1,16 +1,51 @@
 package com.seolandfriends.byeolbyeolcoffee.admin.command.domain.aggregate.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
 @Entity
+@NoArgsConstructor
 public class Report {
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	// @Column(name = "report_id")
 	private Long reportId;
-	private Long reportedId;
-	private Long authorId;
-	private String reportContent;
+	// @Column(name = "reported_name")
+	private String reportedName;
+	// @Column(name = "author_name")
+	private String authorName;
+	// @Column(name = "report_reason")
+	private String reportReason;
+	// @Column(name = "reported_content")
+	private String reportedContent;
+	// @Column(name = "report_time")
 	private String reportTime;
-	private String getReportTitle;
+	// @Column(name = "content_title")
+	private String contentTitle;
+	// @Column(name = "process")
+	private boolean processing;
 
+	@Builder
+	public Report(String reportedName,String authorName,String reportReason,String reportedContent,String reportTime,String contentTitle,boolean processing){
+		this.reportedName = reportedName;
+		this.authorName = authorName;
+		this.reportReason = reportReason;
+		this.reportedContent = reportedContent;
+		this.reportTime = reportTime;
+		this.contentTitle = contentTitle;
+		this.processing = processing;
+	}
+
+	//처리 여부 변경 메소드
+	public void processingCompleted(){ this.processing = false;	}
+	public void processingBefore(){
+		this.processing = true;
+	}
 }
