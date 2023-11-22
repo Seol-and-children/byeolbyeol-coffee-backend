@@ -15,4 +15,5 @@ public class UserRolePK implements Serializable {
 	private int userid;
 	private int roleCode;
 
+
 }

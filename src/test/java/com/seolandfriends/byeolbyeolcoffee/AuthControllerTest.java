@@ -81,4 +81,5 @@ class AuthControllerTest {
 			.andExpect(jsonPath("$.message").value("로그인 성공"))
 			.andExpect(jsonPath("$.data").value("mockedAccessToken"));
 	}
+
 }

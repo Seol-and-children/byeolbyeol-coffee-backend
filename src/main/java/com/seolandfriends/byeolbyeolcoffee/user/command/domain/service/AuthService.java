@@ -38,24 +38,22 @@ public class AuthService {
 		this.userRoleRepository = userRoleRepository;
 	}
 
-	@Transactional   // DML작업은 Transactional 어노테이션 추가
+	@Transactional
 	public Object signup(UserDTO userDTO) {
 
 		log.info("[AuthService] signup Start ==================================");
 		log.info("[AuthService] memberDTO {} =======> ", userDTO);
 
-		/* 이메일 중복 유효성 검사(선택적) */
-		if(userRepository.findByUserEmail(userDTO.getUserEmail()) != null){ // 중복된 내용이 있으니 값을 가지고 온 것 (없으면 null)
+		if(userRepository.findByUserEmail(userDTO.getUserEmail()) != null){
 			log.info("[AuthService] 이메일이 종복됩니다.");
 			throw new DuplicatedMemberEmailException("이메일이 중복됩니다.");
 		}
 
 		User registUser = modelMapper.map(userDTO, User.class);
 
-		//registUser = registUser.getUserPassword(passwordEncoder.encode(registUser.getUserPassword())).build(); // 평문의 암호문자열을 암호화시켜서 전달
 		registUser.setUserPassword(passwordEncoder.encode(registUser.getUserPassword()));
 
-		User result1 = userRepository.save(registUser);    // 반환형이 int값이 아니다.
+		User result1 = userRepository.save(registUser);
 		log.info("[AuthService] result1 ================== {} ", result1);
 
 
@@ -69,12 +67,11 @@ public class AuthService {
 		return userDTO;
 	}
 
-	// AuthService에 추가
 	@Transactional
 	public TokenDTO login(UserDTO userDTO) {
 		User user = userRepository.findByUserEmail(userDTO.getUserEmail());
 		if (user != null && passwordEncoder.matches(userDTO.getUserPassword(), user.getUserPassword())) {
-			return tokenProvider.generateTokenDTO(user); // Generate the token with TokenProvider
+			return tokenProvider.generateTokenDTO(user);
 		} else {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}

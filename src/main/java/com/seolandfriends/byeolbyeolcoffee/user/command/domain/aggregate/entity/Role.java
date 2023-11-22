@@ -43,4 +43,5 @@ public class Role {
 	public Role build() {
 		return new Role(roleCode, roleName, roleDesc);
 	}
+
 }

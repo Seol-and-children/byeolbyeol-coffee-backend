@@ -21,4 +21,5 @@ public class BeanConfiguration {
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+
 }

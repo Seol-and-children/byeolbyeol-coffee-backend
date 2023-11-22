@@ -48,5 +48,4 @@ public class AuthController {
 		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "로그아웃 되었습니다.", null));
 	}
 
-
 }

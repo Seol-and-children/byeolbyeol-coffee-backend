@@ -11,4 +11,5 @@ public class RoleDTO {
 	private int roleCode;
 	private String roleName;
 	private String roleDesc;
+
 }

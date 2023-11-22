@@ -27,4 +27,5 @@ public class ApiExceptionAdvice {
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			.body(new ApiExceptionDTO(HttpStatus.BAD_REQUEST, e.getMessage()));
 	}
+
 }

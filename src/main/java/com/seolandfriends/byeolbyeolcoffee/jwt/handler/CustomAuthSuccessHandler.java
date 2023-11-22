@@ -49,6 +49,5 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 		out.println(objectMapper.writeValueAsString(responseDTO));
 		out.flush();
 		out.close();
-
 	}
 }

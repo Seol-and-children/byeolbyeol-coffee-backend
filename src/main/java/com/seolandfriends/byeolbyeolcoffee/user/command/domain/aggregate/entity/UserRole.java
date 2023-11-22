@@ -61,4 +61,5 @@ public class UserRole {
 	public UserRole build() {
 		return new UserRole(userid, roleCode, role);
 	}
+
 }

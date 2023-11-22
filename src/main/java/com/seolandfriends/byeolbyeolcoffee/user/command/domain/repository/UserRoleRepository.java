@@ -6,4 +6,5 @@ import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.
 import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.UserRolePK;
 
 public interface UserRoleRepository extends JpaRepository<UserRole, UserRolePK> {
+
 }

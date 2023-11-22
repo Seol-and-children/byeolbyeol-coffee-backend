@@ -17,4 +17,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 	@Query("SELECT a.userId FROM User a WHERE a.userAccount = ?1")
 	int findUserCodeByUserAccount(String orderMemberId);
 
+
 }

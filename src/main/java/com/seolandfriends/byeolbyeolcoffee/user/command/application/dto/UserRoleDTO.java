@@ -30,4 +30,5 @@ public class UserRoleDTO {
 		this.roleCode = roleCode;
 		this.role = role;
 	}
+
 }

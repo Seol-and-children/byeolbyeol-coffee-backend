@@ -22,4 +22,5 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 		JwtFilter customFilter = new JwtFilter(tokenProvider);    // JwtFilter를 jwt 패키지에 추가
 		http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class); // JwtFilter를 FilterChain 상에서 추가
 	}
+
 }

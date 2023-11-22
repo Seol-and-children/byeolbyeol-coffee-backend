@@ -53,4 +53,5 @@ public class UserController {
 		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "회원 탈퇴 성공", null));
 	}
 
+
 }

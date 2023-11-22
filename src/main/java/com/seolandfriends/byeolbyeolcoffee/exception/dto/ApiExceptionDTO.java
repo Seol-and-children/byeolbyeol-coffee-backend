@@ -20,4 +20,5 @@ public class ApiExceptionDTO {
 		this.status = status.value();
 		this.message = message;
 	}
+
 }
