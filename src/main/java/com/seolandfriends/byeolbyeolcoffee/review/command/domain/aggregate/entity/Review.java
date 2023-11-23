@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(name = "review")
+
 public class Review {
 
 	@Id
@@ -24,7 +26,7 @@ public class Review {
 	@Embedded
 	private ReviewUser author;
 
-	@Column(nullable = false)
+	@Column(name = "register_time" ,nullable = false)
 	private LocalDateTime registerTime;
 
 	@Column(nullable = false)
