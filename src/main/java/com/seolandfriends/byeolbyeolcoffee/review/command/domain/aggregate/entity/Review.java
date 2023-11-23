@@ -20,25 +20,26 @@ public class Review {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long reviewId;
 
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
 	private String reviewName;
 
 	@Embedded
 	private ReviewUser author;
 
-	@Column(name = "register_time" ,nullable = false)
+	@Column(name = "register_time", nullable = false)
 	private LocalDateTime registerTime;
 
-	@Column(nullable = false)
+	@Column(name = "likes_count", nullable = false)
 	private Integer likesCount = 0;
 
-	@Column(nullable = false)
+	@Column(name = "views_count", nullable = false)
 	private Integer viewsCount = 0;
 
 	@Lob
+	@Column(name = "content")
 	private String content;
 
-	@Column
+	@Column(name = "photo")
 	private String photoUrl;
 
 	@PrePersist
