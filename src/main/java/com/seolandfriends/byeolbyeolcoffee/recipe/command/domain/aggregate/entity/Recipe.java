@@ -1,11 +1,11 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.*;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverage;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOption;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafe;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUser;
 
@@ -16,40 +16,45 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "recipe")
 public class Recipe {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
 	private Long recipeId;
 
-	@Column
+	@Column(name = "name")
 	private String recipeName;
 
-	@Column
-	private String recipePhoto;
+	@Column(name = "photo")
+	private String photoUrl;
 
-	@Column
+	@Column(name = "description")
 	private String description;
 
-	@Embedded
+	@ManyToOne
+	@JoinColumn(name = "franchise_id")
 	private FranchiseCafe franchiseCafe;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private RecipeUser author;
 
 	@Embedded
 	private BaseBeverage baseBeverage;
 
-	@ElementCollection
-	private List<String> customOptions;
+	@ManyToOne
+	@JoinColumn(name = "custom_option_id")
+	private CustomOption customOptions;
 
-	@Column
+	@Column(name = "register_time")
 	private LocalDateTime registerTime;
 
-	@Embedded
-	private RecipeUser author;
-
-	@Column(nullable = false)
+	@Column(name = "likes_count", nullable = false)
 	private Integer likesCount = 0;
 
-	@Column(nullable = false)
+	@Column(name = "views_count", nullable = false)
 	private Integer viewsCount = 0;
 
 	@PrePersist
@@ -58,11 +63,11 @@ public class Recipe {
 	}
 
 	@Builder
-	public Recipe(String recipeName, String recipePhoto, String description,
+	public Recipe(String recipeName, String photoUrl, String description,
 		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		List<String> customOptions, RecipeUser author, Integer likesCount, Integer viewsCount) {
+		CustomOption customOptions, RecipeUser author, Integer likesCount, Integer viewsCount) {
 		this.recipeName = recipeName;
-		this.recipePhoto = recipePhoto;
+		this.photoUrl = photoUrl;
 		this.description = description;
 		this.franchiseCafe = franchiseCafe;
 		this.baseBeverage = baseBeverage;
@@ -73,15 +78,20 @@ public class Recipe {
 	}
 
 	/* 레시피 업데이트 메소드 */
-	public void updateRecipe(String recipeName, String recipePhoto, String description,
+	public void updateRecipe(String recipeName, String photoUrl, String description,
 		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		List<String> customOptions) {
+		CustomOption customOptions) {
 		this.recipeName = recipeName;
-		this.recipePhoto = recipePhoto;
+		this.photoUrl = photoUrl;
 		this.description = description;
 		this.franchiseCafe = franchiseCafe;
 		this.baseBeverage = baseBeverage;
 		this.customOptions = customOptions;
+	}
+
+	public Recipe recipeImageUrl(String photoUrl) {
+		this.photoUrl = photoUrl;
+		return this;
 	}
 
 	/* 좋아요 수 증가 메소드 */

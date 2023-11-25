@@ -1,7 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeComment;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CommentUser;
+import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,10 +11,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeCommentDto {
+public class RecipeCommentDto implements Serializable {
 	private Long commentId;
-	private CommentUser commentUser;
+	private String userId;
 	private String content;
-	private RecipeComment parent;
+	private Long parentId;
 	private int depth;
+	private Long recipeId;
 }

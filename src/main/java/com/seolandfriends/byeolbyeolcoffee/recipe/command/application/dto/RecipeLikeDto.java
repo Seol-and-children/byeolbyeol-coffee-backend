@@ -1,6 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.LikeUser;
+import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +11,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeLikeDto {
-	private LikeUser likeUser;
+public class RecipeLikeDto implements Serializable {
+	private Long recipeId;
+	private String userId;
 }

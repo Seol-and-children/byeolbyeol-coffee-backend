@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: jdbc:mysql://mysql.coffit.today:3306/coffee_db
+    username: syuproject
+    password: syuproject
+  jpa:
+    hibernate:
+    ddl-auto: update
+    show-sql: true
+  web:
+    resources:
+      static-locations: classpath:/recipeimgs/
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 2MB
+      max-request-size: 10MB
+
+image:
+  add-resource-locations: classpath:/static/recipeimgs/
+  add-resource-handler: /recipeimgs/**
+  image-dir: src/main/resources/static/recipeimgs
+  image-url: http://localhost:8080/recipeimgs/

@@ -8,10 +8,12 @@ import javax.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeCommentDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeComment;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CommentUser;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeCommentRepository;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeRepository;
 
@@ -27,13 +29,14 @@ public class RecipeCommentService {
 		this.recipeRepository = recipeRepository;
 	}
 
+	@Transactional
 	public RecipeCommentDto createRecipeComment(RecipeCommentDto recipeCommentDto, Long recipeId) {
 		Recipe recipe = recipeRepository.findById(recipeId)
 			.orElseThrow(() -> new EntityNotFoundException("레시피를 찾을 수 없습니다."));
 
 		RecipeComment parentComment = null;
-		if (recipeCommentDto.getParent() != null) {
-			parentComment = recipeCommentRepository.findById(recipeCommentDto.getParent().getCommentId())
+		if (recipeCommentDto.getParentId() != null) {
+			parentComment = recipeCommentRepository.findById(recipeCommentDto.getParentId())
 				.orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다."));
 
 			// 원 댓글에만 답글을 달 수 있도록 검증
@@ -45,8 +48,10 @@ public class RecipeCommentService {
 		// 답글의 경우 깊이를 1로 설정
 		int depth = (parentComment != null) ? 1 : 0;
 
+		CommentUser commentUser = new CommentUser(recipeCommentDto.getUserId());
+
 		RecipeComment newComment = RecipeComment.builder()
-			.commentUser(recipeCommentDto.getCommentUser())
+			.commentUser(commentUser)
 			.content(recipeCommentDto.getContent())
 			.parent(parentComment)
 			.depth(depth)
@@ -72,6 +77,7 @@ public class RecipeCommentService {
 	}
 
 	/* 댓글 수정 메소드 */
+	@Transactional
 	public RecipeCommentDto updateRecipeComment(Long commentId, RecipeCommentDto recipeCommentDto) {
 		RecipeComment existingComment = recipeCommentRepository.findById(commentId)
 			.orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다. ID: " + commentId));
