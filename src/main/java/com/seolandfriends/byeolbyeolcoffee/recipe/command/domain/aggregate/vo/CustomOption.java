@@ -1,10 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -16,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_user")
-public class RecipeUser {
+@Table(name = "custom_option")
+public class CustomOption {
 	@Id
-	@Column(name = "USER_ID")
-	private String userId;
+	@Column(name = "id")
+	private Long customOptionId;
 }

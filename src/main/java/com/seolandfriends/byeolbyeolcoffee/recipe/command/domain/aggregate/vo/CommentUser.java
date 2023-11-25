@@ -9,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
+@Entity
+@Table(name = "tbl_user")
 public class CommentUser {
-	private Long userId;
+	@Id
+	@Column(name = "USER_ID")
+	private String userId;
 }

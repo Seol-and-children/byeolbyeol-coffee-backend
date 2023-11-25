@@ -1,8 +1,5 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeComment;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CommentUser;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,8 +11,9 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RecipeCommentDto {
 	private Long commentId;
-	private CommentUser commentUser;
+	private String userId;
 	private String content;
-	private RecipeComment parent;
+	private Long parentId;
 	private int depth;
+	private Long recipeId;
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeLikeDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeLike;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.LikeUser;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeLikeRepository;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeRepository;
 
@@ -30,9 +31,10 @@ public class RecipeLikeService {
 	public RecipeLikeDto createRecipeLike(RecipeLikeDto recipeLikeDto, Long recipeId) {
 		Recipe recipe = recipeRepository.findById(recipeId)
 			.orElseThrow(() -> new EntityNotFoundException("레시피를 찾을 수 없습니다."));
+		LikeUser likeUser = new LikeUser(recipeLikeDto.getUserId());
 		RecipeLike newRecipeLike = RecipeLike.builder()
 			.recipe(recipe)
-			.likeUser(recipeLikeDto.getLikeUser())
+			.likeUser(likeUser)
 			.build();
 		RecipeLike savedLike = recipeLikeRepository.save(newRecipeLike);
 		recipe.incrementLikesCount();

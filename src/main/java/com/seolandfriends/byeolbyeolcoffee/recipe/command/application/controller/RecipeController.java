@@ -5,12 +5,16 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service.RecipeService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/recipes")
+@Slf4j
 public class RecipeController {
 
 	private final RecipeService recipeService;
@@ -22,15 +26,15 @@ public class RecipeController {
 
 	/* 새로운 레시피 생성 */
 	@PostMapping
-	public ResponseEntity<RecipeDto> createRecipe(@RequestBody RecipeDto recipeDto) {
-		RecipeDto newRecipe = recipeService.createRecipe(recipeDto);
+	public ResponseEntity<RecipeDto> createRecipe(@RequestPart MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
+		RecipeDto newRecipe = recipeService.createRecipe(recipeDto, recipeImage);
 		return ResponseEntity.ok(newRecipe);
 	}
 
 	/* 레시피 수정 */
 	@PutMapping("/{recipeId}")
-	public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long recipeId, @RequestBody RecipeDto recipeDto) {
-		RecipeDto updatedRecipe = recipeService.updateRecipe(recipeId, recipeDto);
+	public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long recipeId, @RequestBody RecipeDto recipeDto, @RequestParam(name = "recipeImage", required = false) MultipartFile recipeImage) {
+		RecipeDto updatedRecipe = recipeService.updateRecipe(recipeId, recipeDto, recipeImage);
 		return ResponseEntity.ok(updatedRecipe);
 	}
 
