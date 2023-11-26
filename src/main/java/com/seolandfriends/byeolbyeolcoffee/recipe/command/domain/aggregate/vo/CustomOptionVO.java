@@ -1,7 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -14,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "franchise")
-public class FranchiseCafe {
+@Table(name = "custom_option")
+public class CustomOptionVO {
 	@Id
 	@Column(name = "id")
-	private Long franchiseId;
+	private Long customOptionId;
 }

@@ -14,9 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOption;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafe;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUser;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOptionVO;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafeVO;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUserVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeRepository;
 import com.seolandfriends.byeolbyeolcoffee.util.FileUploadUtils;
 
@@ -47,18 +47,18 @@ public class RecipeService {
 			replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, recipeImage);
 
 			recipeDto.setPhotoUrl(replaceFileName);
-			FranchiseCafe franchiseCafe = new FranchiseCafe(recipeDto.getFranchiseId());
-			CustomOption customOption = new CustomOption(recipeDto.getCustomOptionId());
-			RecipeUser author = new RecipeUser(recipeDto.getAuthorId());
+			FranchiseCafeVO franchiseCafeVO = new FranchiseCafeVO(recipeDto.getFranchiseId());
+			CustomOptionVO customOptionVO = new CustomOptionVO(recipeDto.getCustomOptionId());
+			RecipeUserVO author = new RecipeUserVO(recipeDto.getAuthorId());
 
 			Recipe newRecipe = Recipe.builder()
 				.recipeName(recipeDto.getRecipeName())
 				.photoUrl(recipeDto.getPhotoUrl())
 				.description(recipeDto.getDescription())
-				.franchiseCafe(franchiseCafe)
+				.franchiseCafeVO(franchiseCafeVO)
 				.author(author)
-				.baseBeverage(recipeDto.getBaseBeverage())
-				.customOptions(customOption)
+				.baseBeverageVO(recipeDto.getBaseBeverageVO())
+				.customOptionsVO(customOptionVO)
 				.likesCount(0)
 				.viewsCount(0)
 				.build();
@@ -81,16 +81,16 @@ public class RecipeService {
 				.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
 			String oriImage = recipe.getPhotoUrl();
 
-			FranchiseCafe franchiseCafe = new FranchiseCafe(recipeDto.getFranchiseId());
-			CustomOption customOption = new CustomOption(recipeDto.getCustomOptionId());
+			FranchiseCafeVO franchiseCafeVO = new FranchiseCafeVO(recipeDto.getFranchiseId());
+			CustomOptionVO customOptionVO = new CustomOptionVO(recipeDto.getCustomOptionId());
 
 			recipe.updateRecipe(
 				recipeDto.getRecipeName(),
 				recipeDto.getPhotoUrl(),
 				recipeDto.getDescription(),
-				franchiseCafe,
-				recipeDto.getBaseBeverage(),
-				customOption
+				franchiseCafeVO,
+				recipeDto.getBaseBeverageVO(),
+				customOptionVO
 			);
 
 			if (recipeImage != null) {

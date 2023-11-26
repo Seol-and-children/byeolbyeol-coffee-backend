@@ -3,9 +3,7 @@ package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverage;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverageVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +20,7 @@ public class RecipeDto implements Serializable {
 	private String photoUrl;
 	private String description;
 	private Long franchiseId;
-	private BaseBeverage baseBeverage;
+	private BaseBeverageVO baseBeverageVO;
 	private Long customOptionId;
 	private String authorId;
 	private LocalDateTime registerTime;

@@ -1,7 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.LikeUser;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.LikeUserVO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -33,11 +32,11 @@ public class RecipeLike {
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private LikeUser likeUser;
+	private LikeUserVO likeUserVO;
 
 	@Builder
-	public RecipeLike(Recipe recipe, LikeUser likeUser) {
+	public RecipeLike(Recipe recipe, LikeUserVO likeUserVO) {
 		this.recipe = recipe;
-		this.likeUser = likeUser;
+		this.likeUserVO = likeUserVO;
 	}
 }
