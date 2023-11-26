@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseBeverage {
+public class BaseBeverageVO {
 	@Column(name = "base_beverage_name")
 	private String name;
 

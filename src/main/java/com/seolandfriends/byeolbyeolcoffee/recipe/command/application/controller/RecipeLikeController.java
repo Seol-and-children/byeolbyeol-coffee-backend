@@ -21,18 +21,11 @@ public class RecipeLikeController {
 		this.recipeLikeService = recipeLikeService;
 	}
 
-	/* 좋아요 등록 메소드 */
+	/* 좋아요 토글 메소드 */
 	@PostMapping
-	public ResponseEntity<RecipeLikeDto> createRecipeLike(@PathVariable("recipeId") Long recipeId,
+	public ResponseEntity<RecipeLikeDto> toggleRecipeLike(@PathVariable("recipeId") Long recipeId,
 		@RequestBody RecipeLikeDto recipeLikeDto) {
-		RecipeLikeDto newLike = recipeLikeService.createRecipeLike(recipeLikeDto, recipeId);
-		return ResponseEntity.ok(newLike);
-	}
-
-	/* 좋아요 삭제 메소드 */
-	@DeleteMapping("/{likeId}")
-	public ResponseEntity<?> deleteRecipeLike(@PathVariable Long likeId, @PathVariable Long recipeId) {
-		recipeLikeService.deleteRecipeLike(likeId, recipeId);
-		return ResponseEntity.ok( "좋아요 삭제 완료");
+		RecipeLikeDto toggledLike = recipeLikeService.toggleRecipeLike(recipeLikeDto, recipeId);
+		return ResponseEntity.ok(toggledLike);
 	}
 }

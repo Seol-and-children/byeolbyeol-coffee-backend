@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "custom_option")
-public class CustomOption {
+@Table(name = "franchise")
+public class FranchiseCafeVO {
 	@Id
 	@Column(name = "id")
-	private Long customOptionId;
+	private Long franchiseId;
 }

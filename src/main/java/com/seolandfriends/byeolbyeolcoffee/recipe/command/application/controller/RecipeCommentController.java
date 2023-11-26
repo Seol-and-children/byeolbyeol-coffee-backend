@@ -46,8 +46,8 @@ public class RecipeCommentController {
 
 	/* 레시피에 달린 모든 댓글 정보 불러오기 */
 	@GetMapping
-	public ResponseEntity<List<RecipeCommentDto>> getAllRecipeComments(@PathVariable Long recipeId) {
-		List<RecipeCommentDto> comments = recipeCommentService.getAllRecipeComments();
+	public ResponseEntity<List<RecipeCommentDto>> getAllRecipeComments(@PathVariable("recipeId") Long recipeId) {
+		List<RecipeCommentDto> comments = recipeCommentService.getAllRecipeComments(recipeId);
 		return ResponseEntity.ok(comments);
 	}
 

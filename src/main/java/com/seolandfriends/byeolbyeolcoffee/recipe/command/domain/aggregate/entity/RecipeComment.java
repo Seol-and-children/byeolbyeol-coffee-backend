@@ -1,7 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CommentUser;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CommentUserVO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -24,12 +23,12 @@ public class RecipeComment {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", nullable = false)
 	private Long commentId;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private CommentUser commentUser;
+	private CommentUserVO commentUserVO;
 
 	@Column(name = "content")
 	private String content;
@@ -46,9 +45,9 @@ public class RecipeComment {
 	private Recipe recipe;
 
 	@Builder
-	public RecipeComment(CommentUser commentUser, String content,
+	public RecipeComment(CommentUserVO commentUserVO, String content,
 		RecipeComment parent, int depth, Recipe recipe) {
-		this.commentUser = commentUser;
+		this.commentUserVO = commentUserVO;
 		this.content = content;
 		this.parent = parent;
 		this.depth = depth;

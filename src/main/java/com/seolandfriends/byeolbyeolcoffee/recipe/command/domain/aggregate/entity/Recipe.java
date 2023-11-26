@@ -4,10 +4,10 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverage;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOption;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafe;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUser;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverageVO;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOptionVO;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafeVO;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUserVO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -21,7 +21,7 @@ public class Recipe {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "id", nullable = false)
 	private Long recipeId;
 
 	@Column(name = "name")
@@ -35,18 +35,18 @@ public class Recipe {
 
 	@ManyToOne
 	@JoinColumn(name = "franchise_id")
-	private FranchiseCafe franchiseCafe;
+	private FranchiseCafeVO franchiseCafeVO;
 
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private RecipeUser author;
+	private RecipeUserVO author;
 
 	@Embedded
-	private BaseBeverage baseBeverage;
+	private BaseBeverageVO baseBeverageVO;
 
 	@ManyToOne
 	@JoinColumn(name = "custom_option_id")
-	private CustomOption customOptions;
+	private CustomOptionVO customOptionsVO;
 
 	@Column(name = "register_time")
 	private LocalDateTime registerTime;
@@ -64,14 +64,14 @@ public class Recipe {
 
 	@Builder
 	public Recipe(String recipeName, String photoUrl, String description,
-		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		CustomOption customOptions, RecipeUser author, Integer likesCount, Integer viewsCount) {
+		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO,
+		CustomOptionVO customOptionsVO, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
 		this.recipeName = recipeName;
 		this.photoUrl = photoUrl;
 		this.description = description;
-		this.franchiseCafe = franchiseCafe;
-		this.baseBeverage = baseBeverage;
-		this.customOptions = customOptions;
+		this.franchiseCafeVO = franchiseCafeVO;
+		this.baseBeverageVO = baseBeverageVO;
+		this.customOptionsVO = customOptionsVO;
 		this.author = author;
 		this.likesCount = likesCount != null ? likesCount : this.likesCount;
 		this.viewsCount = viewsCount != null ? viewsCount : this.viewsCount;
@@ -79,14 +79,14 @@ public class Recipe {
 
 	/* 레시피 업데이트 메소드 */
 	public void updateRecipe(String recipeName, String photoUrl, String description,
-		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		CustomOption customOptions) {
+		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO,
+		CustomOptionVO customOptionsVO) {
 		this.recipeName = recipeName;
 		this.photoUrl = photoUrl;
 		this.description = description;
-		this.franchiseCafe = franchiseCafe;
-		this.baseBeverage = baseBeverage;
-		this.customOptions = customOptions;
+		this.franchiseCafeVO = franchiseCafeVO;
+		this.baseBeverageVO = baseBeverageVO;
+		this.customOptionsVO = customOptionsVO;
 	}
 
 	public Recipe recipeImageUrl(String photoUrl) {

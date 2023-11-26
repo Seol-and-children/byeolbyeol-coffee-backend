@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeCommentDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeComment;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CommentUser;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CommentUserVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeCommentRepository;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeRepository;
 
@@ -48,10 +48,10 @@ public class RecipeCommentService {
 		// 답글의 경우 깊이를 1로 설정
 		int depth = (parentComment != null) ? 1 : 0;
 
-		CommentUser commentUser = new CommentUser(recipeCommentDto.getUserId());
+		CommentUserVO commentUserVO = new CommentUserVO(recipeCommentDto.getUserId());
 
 		RecipeComment newComment = RecipeComment.builder()
-			.commentUser(commentUser)
+			.commentUserVO(commentUserVO)
 			.content(recipeCommentDto.getContent())
 			.parent(parentComment)
 			.depth(depth)
@@ -69,8 +69,8 @@ public class RecipeCommentService {
 		return modelMapper.map(comment, RecipeCommentDto.class);
 	}
 
-	public List<RecipeCommentDto> getAllRecipeComments() {
-		List<RecipeComment> comments = recipeCommentRepository.findAll();
+	public List<RecipeCommentDto> getAllRecipeComments(Long recipeId) {
+		List<RecipeComment> comments = recipeCommentRepository.findByRecipe_RecipeId(recipeId);
 		return comments.stream()
 			.map(comment -> modelMapper.map(comment, RecipeCommentDto.class))
 			.collect(Collectors.toList());

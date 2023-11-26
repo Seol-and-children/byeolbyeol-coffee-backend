@@ -1,6 +1,10 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo;
 
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "tbl_user")
-public class CommentUser {
+public class LikeUserVO {
 	@Id
 	@Column(name = "USER_ID")
 	private String userId;
