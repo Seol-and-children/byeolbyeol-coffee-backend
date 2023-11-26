@@ -1,9 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +15,12 @@ import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entit
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOptionVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafeVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUserVO;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeRepository;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeCommandRepository;
 import com.seolandfriends.byeolbyeolcoffee.util.FileUploadUtils;
 
 @Service
-public class RecipeService {
-	private final RecipeRepository recipeRepository;
+public class RecipeCommandService {
+	private final RecipeCommandRepository recipeCommandRepository;
 	ModelMapper modelMapper = new ModelMapper();
 
 	/* 이미지 저장 할 위치 및 응답 할 이미지 주소 */
@@ -33,8 +31,8 @@ public class RecipeService {
 	private String IMAGE_URL;
 
 	@Autowired
-	public RecipeService(RecipeRepository recipeRepository) {
-		this.recipeRepository = recipeRepository;
+	public RecipeCommandService(RecipeCommandRepository recipeCommandRepository) {
+		this.recipeCommandRepository = recipeCommandRepository;
 	}
 
 	/* 새로운 레시피 생성 메소드 */
@@ -63,7 +61,7 @@ public class RecipeService {
 				.viewsCount(0)
 				.build();
 
-			Recipe savedRecipe = recipeRepository.save(newRecipe);
+			Recipe savedRecipe = recipeCommandRepository.save(newRecipe);
 			return modelMapper.map(savedRecipe, RecipeDto.class);
 		} catch (Exception e) {
 			FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
@@ -77,7 +75,7 @@ public class RecipeService {
 		String replaceFileName = null;
 
 		try {
-			Recipe recipe = recipeRepository.findById(recipeId)
+			Recipe recipe = recipeCommandRepository.findById(recipeId)
 				.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
 			String oriImage = recipe.getPhotoUrl();
 
@@ -104,7 +102,7 @@ public class RecipeService {
 				recipe = recipe.recipeImageUrl(oriImage);
 			}
 
-			Recipe savedRecipe = recipeRepository.save(recipe);
+			Recipe savedRecipe = recipeCommandRepository.save(recipe);
 			return modelMapper.map(savedRecipe, RecipeDto.class);
 		} catch (IOException e) {
 			FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
@@ -112,29 +110,12 @@ public class RecipeService {
 		}
 	}
 
-	/* 모든 레시피 정보 불러오기 */
-	public List<RecipeDto> getAllRecipes() {
-		List<Recipe> savedRecipes = recipeRepository.findAll();
-		return savedRecipes.stream()
-			.map(recipe -> modelMapper.map(recipe, RecipeDto.class))
-			.collect(Collectors.toList());
-	}
-
-	/* {recipeId}를 가진 레시피 정보 불러오기 */
-	public RecipeDto getRecipeById(Long recipeId) {
-		Recipe savedRecipe = recipeRepository.findById(recipeId)
-			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
-		savedRecipe.incrementViewsCount();
-		savedRecipe = recipeRepository.save(savedRecipe);
-		return modelMapper.map(savedRecipe, RecipeDto.class);
-	}
-
 	/* {recipeId}를 가진 레시피 삭제하기 */
 	public void deleteRecipe(Long recipeId) {
-		if (!recipeRepository.existsById(recipeId)) {
+		if (!recipeCommandRepository.existsById(recipeId)) {
 			throw new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId);
 		}
-		recipeRepository.deleteById(recipeId);
+		recipeCommandRepository.deleteById(recipeId);
 	}
 
 }

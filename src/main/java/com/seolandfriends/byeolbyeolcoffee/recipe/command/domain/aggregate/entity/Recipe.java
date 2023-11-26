@@ -24,21 +24,21 @@ public class Recipe {
 	@Column(name = "id", nullable = false)
 	private Long recipeId;
 
-	@Column(name = "name")
+	@Column(name = "name", nullable = false, length = 128)
 	private String recipeName;
 
 	@Column(name = "photo")
 	private String photoUrl;
 
-	@Column(name = "description")
+	@Column(name = "description", length = 255)
 	private String description;
 
 	@ManyToOne
-	@JoinColumn(name = "franchise_id")
+	@JoinColumn(name = "franchise_id", nullable = false)
 	private FranchiseCafeVO franchiseCafeVO;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", nullable = false)
 	private RecipeUserVO author;
 
 	@Embedded
