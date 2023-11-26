@@ -1,61 +1,45 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service.RecipeService;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service.RecipeCommandService;
 
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/recipes")
 @Slf4j
-public class RecipeController {
+public class RecipeCommandController {
 
-	private final RecipeService recipeService;
+	private final RecipeCommandService recipeCommandService;
 
 	@Autowired
-	public RecipeController(RecipeService recipeService) {
-		this.recipeService = recipeService;
+	public RecipeCommandController(RecipeCommandService recipeCommandService) {
+		this.recipeCommandService = recipeCommandService;
 	}
 
-	/* 새로운 레시피 생성 */
+	/* 새로운 레시피 생성 (create) */
 	@PostMapping
 	public ResponseEntity<RecipeDto> createRecipe(@RequestPart MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
-		RecipeDto newRecipe = recipeService.createRecipe(recipeDto, recipeImage);
+		RecipeDto newRecipe = recipeCommandService.createRecipe(recipeDto, recipeImage);
 		return ResponseEntity.ok(newRecipe);
 	}
 
-	/* 레시피 수정 */
+	/* 레시피 수정 (update) */
 	@PutMapping("/{recipeId}")
 	public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long recipeId, @RequestBody RecipeDto recipeDto, @RequestParam(name = "recipeImage", required = false) MultipartFile recipeImage) {
-		RecipeDto updatedRecipe = recipeService.updateRecipe(recipeId, recipeDto, recipeImage);
+		RecipeDto updatedRecipe = recipeCommandService.updateRecipe(recipeId, recipeDto, recipeImage);
 		return ResponseEntity.ok(updatedRecipe);
 	}
 
-	/* 모든 레시피 정보 가져오기 */
-	@GetMapping
-	public ResponseEntity<List<RecipeDto>> getAllRecipes() {
-		List<RecipeDto> recipes = recipeService.getAllRecipes();
-		return ResponseEntity.ok(recipes);
-	}
-
-	/* Id로 레시피 가져오기 */
-	@GetMapping("/{recipeId}")
-	public ResponseEntity<RecipeDto> getRecipeById(@PathVariable Long recipeId) {
-		RecipeDto recipe = recipeService.getRecipeById(recipeId);
-		return ResponseEntity.ok(recipe);
-	}
-
-	/* Id로 레시피 삭제하기 */
+	/* Id로 레시피 삭제하기 (delete) */
 	@DeleteMapping("/{recipeId}")
 	public ResponseEntity<?> deleteRecipe(@PathVariable Long recipeId) {
-		recipeService.deleteRecipe(recipeId);
+		recipeCommandService.deleteRecipe(recipeId);
 		return ResponseEntity.ok( "삭제 완료");
 	}
 

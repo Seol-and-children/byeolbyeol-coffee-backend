@@ -8,6 +8,6 @@ import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entit
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeLike;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.LikeUserVO;
 
-public interface RecipeLikeRepository extends JpaRepository<RecipeLike, Long> {
+public interface RecipeLikeCommandRepository extends JpaRepository<RecipeLike, Long> {
 	Optional<RecipeLike> findByRecipeAndLikeUserVO(Recipe recipe, LikeUserVO likeUserVO);
 }

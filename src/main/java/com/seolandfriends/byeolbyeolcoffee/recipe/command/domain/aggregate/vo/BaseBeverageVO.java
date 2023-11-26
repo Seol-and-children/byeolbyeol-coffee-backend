@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseBeverageVO {
-	@Column(name = "base_beverage_name")
+	@Column(name = "base_beverage_name", nullable = false, length = 128)
 	private String name;
 
 	@Column(name = "base_beverage_size")

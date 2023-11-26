@@ -27,21 +27,21 @@ public class RecipeComment {
 	private Long commentId;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id")
+	@JoinColumn(name = "user_id", nullable = false)
 	private CommentUserVO commentUserVO;
 
-	@Column(name = "content")
+	@Column(name = "content", length = 255)
 	private String content;
 
 	@ManyToOne
 	@JoinColumn(name = "parent_comment_id")
 	private RecipeComment parent;
 
-	@Column(name = "depth")
+	@Column(name = "depth", nullable = false)
 	private int depth;
 
 	@ManyToOne
-	@JoinColumn(name = "recipe_id")
+	@JoinColumn(name = "recipe_id", nullable = false)
 	private Recipe recipe;
 
 	@Builder
