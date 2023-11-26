@@ -69,8 +69,8 @@ public class RecipeCommentService {
 		return modelMapper.map(comment, RecipeCommentDto.class);
 	}
 
-	public List<RecipeCommentDto> getAllRecipeComments() {
-		List<RecipeComment> comments = recipeCommentRepository.findAll();
+	public List<RecipeCommentDto> getAllRecipeComments(Long recipeId) {
+		List<RecipeComment> comments = recipeCommentRepository.findByRecipe_RecipeId(recipeId);
 		return comments.stream()
 			.map(comment -> modelMapper.map(comment, RecipeCommentDto.class))
 			.collect(Collectors.toList());
