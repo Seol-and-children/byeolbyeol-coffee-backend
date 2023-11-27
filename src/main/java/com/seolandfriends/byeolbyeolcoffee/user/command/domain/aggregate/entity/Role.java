@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Table(name = "TBL_Role")
+@Table(name = "Role")
 @AllArgsConstructor
 @Getter
 @ToString

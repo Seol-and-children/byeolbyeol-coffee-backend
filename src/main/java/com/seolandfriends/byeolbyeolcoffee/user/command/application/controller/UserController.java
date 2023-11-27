@@ -17,7 +17,7 @@ import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.UserDTO;
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/users")
 @Slf4j
 public class UserController {
 
@@ -28,7 +28,7 @@ public class UserController {
 	}
 
 	@ApiOperation(value = "회원 조회 요청", notes = "회원 한명이 조회됩니다.", tags = { "MemberController" })
-	@GetMapping("/users/{userId}")
+	@GetMapping("/{userId}")
 	public ResponseEntity<ResponseDTO> selectMyUserInfo(@PathVariable String memberId){
 
 		log.info("[MemberController]  selectMyMemberInfo   Start =============== ");
@@ -40,14 +40,14 @@ public class UserController {
 			.body(new ResponseDTO(HttpStatus.OK, "조회 성공", userService.selectMyInfo(memberId)));
 	}
 
-	@PutMapping("/users/{userId}")
+	@PutMapping("/{userId}")
 	public ResponseEntity<ResponseDTO> updateUserInfo(@PathVariable String userAccount, @RequestBody UserDTO userDTO) {
 		UserDTO updatedUserDTO = userService.updateUserInfo(userAccount, userDTO);
 		return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "회원 정보 수정 성공", updatedUserDTO));
 	}
 
 	@ApiOperation(value = "회원 탈퇴 요청", notes = "사용자 계정을 삭제합니다.", tags = { "UserController" })
-	@DeleteMapping("/users/{userId}")
+	@DeleteMapping("/{userId}")
 	public ResponseEntity<ResponseDTO> deleteUser(@PathVariable String userAccount) {
 		userService.deleteUserByAccount(userAccount);
 		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "회원 탈퇴 성공", null));

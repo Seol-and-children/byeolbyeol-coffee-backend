@@ -19,7 +19,7 @@ import java.util.UUID;
 @Entity
 @Getter
 @AllArgsConstructor
-@Table(name = "TBL_USER")
+@Table(name = "USER")
 @ToString
 public class User {
 
@@ -30,7 +30,7 @@ public class User {
 	private UUID userId;
 
 	// 로그인 아이디
-	@Column(name = "user_account", nullable = false, unique = true)
+	@Column(name = "user_Account", nullable = false, unique = true)
 	private String userAccount;
 
 	// 비밀번호

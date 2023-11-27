@@ -1,7 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.user.command.application.service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.UserDTO;
 import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.User;
