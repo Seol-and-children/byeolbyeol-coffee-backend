@@ -10,8 +10,8 @@ import org.springframework.http.HttpStatus;
 @ToString
 public class ApiExceptionDTO {
 
-	private int status;         // 코드
-	private String message;     // 에러 메세지
+	private int status;
+	private String message;
 
 	public ApiExceptionDTO() {
 	}

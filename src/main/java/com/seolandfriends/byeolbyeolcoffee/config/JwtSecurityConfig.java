@@ -19,8 +19,8 @@ public class JwtSecurityConfig extends SecurityConfigurerAdapter<DefaultSecurity
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
-		JwtFilter customFilter = new JwtFilter(tokenProvider);    // JwtFilter를 jwt 패키지에 추가
-		http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class); // JwtFilter를 FilterChain 상에서 추가
+		JwtFilter customFilter = new JwtFilter(tokenProvider);
+		http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 
 }

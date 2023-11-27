@@ -3,23 +3,21 @@ package com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity
 
 import java.util.UUID;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "TBL_USER_ROLE")
+@Table(name = "USER_ROLE")
 @IdClass(UserRolePK.class)
 @Getter
 @ToString
 public class UserRole {
 
 	@Id
-	@Column(name = "USER_CODE", nullable = false)
-	private UUID userid;
+	@Column(name = "USER_ID", nullable = false)
+	private UUID userId;
 
 	@Id
 	@Column(name = "ROLE_CODE", nullable = false)
@@ -32,19 +30,19 @@ public class UserRole {
 	protected UserRole() {
 	}
 
-	public UserRole(UUID userid, int roleCode) {
-		this.userid = userid;
+	public UserRole(UUID userId, int roleCode) {
+		this.userId = userId;
 		this.roleCode = roleCode;
 	}
 
-	public UserRole(UUID userid, int roleCode, Role role) {
-		this.userid = userid;
+	public UserRole(UUID userId, int roleCode, Role role) {
+		this.userId = userId;
 		this.roleCode = roleCode;
 		this.role = role;
 	}
 
-	public UserRole userid(UUID userid) {
-		this.userid = userid;
+	public UserRole userId(UUID userId) {
+		this.userId = userId;
 		return this;
 	}
 
@@ -59,7 +57,7 @@ public class UserRole {
 	}
 
 	public UserRole build() {
-		return new UserRole(userid, roleCode, role);
+		return new UserRole(userId, roleCode, role);
 	}
 
 }

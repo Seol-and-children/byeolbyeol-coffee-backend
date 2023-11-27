@@ -2,7 +2,6 @@ package com.seolandfriends.byeolbyeolcoffee.user.command.application.dto;
 
 import lombok.*;
 
-/* 토큰 정보 담을 객체*/
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
