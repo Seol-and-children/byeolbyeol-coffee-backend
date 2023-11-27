@@ -29,11 +29,20 @@ public class RecipeQueryService {
 		this.recipeQueryRepository = recipeQueryRepository;
 	}
 
+	/* 레시피 아이디로 작성자 닉네임 가져오기 */
+	public String getUserNicknameByRecipeId(Long recipeId) {
+		return recipeQueryRepository.findUserNicknameByRecipeId(recipeId);
+	}
+
 	/* 모든 레시피 정보 불러오기 */
 	public List<RecipeDto> getAllRecipes() {
-		List<Recipe> savedRecipes = recipeQueryRepository.findAll();
-		return savedRecipes.stream()
-			.map(recipe -> modelMapper.map(recipe, RecipeDto.class))
+		List<Recipe> savedRecipesWithUser = recipeQueryRepository.findAllRecipesWithUser();
+		return savedRecipesWithUser.stream()
+			.map(recipe -> {
+				RecipeDto recipeDto = modelMapper.map(recipe, RecipeDto.class);
+				recipeDto.setUserNickname(recipe.getAuthor().getUserNickname());
+				return recipeDto;
+			})
 			.collect(Collectors.toList());
 	}
 
@@ -43,6 +52,8 @@ public class RecipeQueryService {
 			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
 		savedRecipe.incrementViewsCount();
 		savedRecipe = recipeQueryRepository.save(savedRecipe);
-		return modelMapper.map(savedRecipe, RecipeDto.class);
+		RecipeDto recipeDto = modelMapper.map(savedRecipe, RecipeDto.class);
+		recipeDto.setUserNickname(getUserNicknameByRecipeId(savedRecipe.getRecipeId()));
+		return recipeDto;
 	}
 }

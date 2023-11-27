@@ -62,20 +62,29 @@ public class RecipeCommentCommandService {
 
 	/* 댓글 수정 메소드 */
 	@Transactional
-	public RecipeCommentDto updateRecipeComment(Long commentId, RecipeCommentDto recipeCommentDto) {
-		RecipeComment existingComment = recipeCommentCommandRepository.findById(commentId)
+	public RecipeCommentDto updateRecipeComment(Long commentId, RecipeCommentDto recipeCommentDto, Long recipeId) {
+		RecipeComment comment = recipeCommentCommandRepository.findById(commentId)
 			.orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다. ID: " + commentId));
 
-		existingComment.updateContent(recipeCommentDto.getContent());
+		if (!comment.getRecipe().getRecipeId().equals(recipeId)) {
+			throw new SecurityException("이 레시피의 댓글이 아닙니다.");
+		}
 
-		RecipeComment updatedComment = recipeCommentCommandRepository.save(existingComment);
+		comment.updateContent(recipeCommentDto.getContent());
+
+		RecipeComment updatedComment = recipeCommentCommandRepository.save(comment);
 		return modelMapper.map(updatedComment, RecipeCommentDto.class);
 	}
 
 	/* 댓글 삭제 메소드 */
-	public void deleteRecipeComment(Long commentId) {
+	@Transactional
+	public void deleteRecipeComment(Long recipeId, Long commentId) {
 		RecipeComment comment = recipeCommentCommandRepository.findById(commentId)
 			.orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다. ID: " + commentId));
+
+		if (!comment.getRecipe().getRecipeId().equals(recipeId)) {
+			throw new SecurityException("이 레시피의 댓글이 아닙니다.");
+		}
 
 		// 댓글이 원 댓글인 경우
 		if (comment.getDepth() == 0) {
