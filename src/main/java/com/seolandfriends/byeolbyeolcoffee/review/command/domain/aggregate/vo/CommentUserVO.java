@@ -1,6 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,10 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Embeddable
-public class ReviewUser {
-    private Long userId;
+@Entity
+@Table(name = "tbl_user")
+public class CommentUserVO {
+	@Id
+	@Column(name = "USER_ID")
+	private String userId;
 }

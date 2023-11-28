@@ -1,8 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo.ReviewUser;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,12 +12,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviewDTO {
+public class ReviewDTO implements Serializable{
 	private Long reviewId;
 	private String reviewName;
+	private String authorId;
 	private String content;
 	private String photoUrl;
-	private ReviewUser author;
 	private LocalDateTime registerTime;
 	private Integer likesCount;
 	private Integer viewsCount;
