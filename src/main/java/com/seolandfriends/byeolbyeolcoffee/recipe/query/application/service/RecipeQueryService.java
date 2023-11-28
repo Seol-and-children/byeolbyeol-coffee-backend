@@ -34,6 +34,10 @@ public class RecipeQueryService {
 		return recipeQueryRepository.findUserNicknameByRecipeId(recipeId);
 	}
 
+	public String getFranchiseNameByRecipeId(Long recipeId) {
+		return recipeQueryRepository.findFranchiseNameByRecipeId(recipeId);
+	}
+
 	/* 모든 레시피 정보 불러오기 */
 	public List<RecipeDto> getAllRecipes() {
 		List<Recipe> savedRecipesWithUser = recipeQueryRepository.findAllRecipesWithUser();
@@ -41,6 +45,7 @@ public class RecipeQueryService {
 			.map(recipe -> {
 				RecipeDto recipeDto = modelMapper.map(recipe, RecipeDto.class);
 				recipeDto.setUserNickname(recipe.getAuthor().getUserNickname());
+				recipeDto.setFranchiseName(recipe.getFranchiseCafeVO().getFranchiseName());
 				return recipeDto;
 			})
 			.collect(Collectors.toList());
@@ -54,6 +59,7 @@ public class RecipeQueryService {
 		savedRecipe = recipeQueryRepository.save(savedRecipe);
 		RecipeDto recipeDto = modelMapper.map(savedRecipe, RecipeDto.class);
 		recipeDto.setUserNickname(getUserNicknameByRecipeId(savedRecipe.getRecipeId()));
+		recipeDto.setFranchiseName(getFranchiseNameByRecipeId(savedRecipe.getRecipeId()));
 		return recipeDto;
 	}
 }

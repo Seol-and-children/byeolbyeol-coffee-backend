@@ -19,4 +19,11 @@ public class LikeUserVO {
 	@Id
 	@Column(name = "USER_ID")
 	private String userId;
+
+	@Column(name = "user_nickname")
+	private String userNickname;
+
+	public LikeUserVO(String userId) {
+		this.userId = userId;
+	}
 }
