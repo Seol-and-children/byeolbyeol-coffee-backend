@@ -36,14 +36,16 @@ public class RecipeCommentCommandController {
 	@PutMapping("/{commentId}")
 	public ResponseEntity<RecipeCommentDto> updateRecipeComment(@PathVariable Long commentId,
 		@RequestBody RecipeCommentDto recipeCommentDto, @PathVariable Long recipeId) {
-		RecipeCommentDto updatedComment = recipeCommentCommandService.updateRecipeComment(commentId, recipeCommentDto);
+		RecipeCommentDto updatedComment = recipeCommentCommandService.updateRecipeComment(commentId, recipeCommentDto, recipeId);
 		return ResponseEntity.ok(updatedComment);
 	}
 
 	/* 댓글 삭제하기 (delete) */
 	@DeleteMapping("/{commentId}")
-	public ResponseEntity<?> deleteRecipeComment(@PathVariable Long commentId, @PathVariable Long recipeId) {
-		recipeCommentCommandService.deleteRecipeComment(commentId);
-		return ResponseEntity.ok("댓글 삭제 완료");
+	public ResponseEntity<Void> deleteRecipeComment(
+		@PathVariable Long commentId,
+		@PathVariable Long recipeId) {
+		recipeCommentCommandService.deleteRecipeComment(recipeId, commentId);
+		return ResponseEntity.ok().build();
 	}
 }

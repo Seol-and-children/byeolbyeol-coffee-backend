@@ -13,9 +13,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_user")
+@Table(name = "user")
 public class RecipeUserVO {
 	@Id
 	@Column(name = "USER_ID")
 	private String userId;
+
+	@Column(name = "user_nickname")
+	private String userNickname;
+
+	public RecipeUserVO(String userId) {
+		this.userId = userId;
+	}
 }

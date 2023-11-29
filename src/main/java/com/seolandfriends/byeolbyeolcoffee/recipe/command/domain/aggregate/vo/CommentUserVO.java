@@ -10,9 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_user")
+@Table(name = "user")
 public class CommentUserVO {
 	@Id
 	@Column(name = "USER_ID")
 	private String userId;
+
+	@Column(name = "user_nickname")
+	private String userNickname;
+
+	public CommentUserVO(String userId) {
+		this.userId = userId;
+	}
 }
