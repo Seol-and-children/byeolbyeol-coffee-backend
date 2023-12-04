@@ -1,5 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +29,7 @@ public class RecipeCommentCommandController {
 	@PostMapping
 	public ResponseEntity<RecipeCommentDto> createRecipeComment(
 		@PathVariable("recipeId") Long recipeId,
-		@RequestBody RecipeCommentDto recipeCommentDto) {
+		@RequestBody @Valid RecipeCommentDto recipeCommentDto) {
 		RecipeCommentDto newComment = recipeCommentCommandService.createRecipeComment(recipeCommentDto, recipeId);
 		return ResponseEntity.ok(newComment);
 	}
@@ -35,7 +37,7 @@ public class RecipeCommentCommandController {
 	/* 댓글 수정하기 (update) */
 	@PutMapping("/{commentId}")
 	public ResponseEntity<RecipeCommentDto> updateRecipeComment(@PathVariable Long commentId,
-		@RequestBody RecipeCommentDto recipeCommentDto, @PathVariable Long recipeId) {
+		@RequestBody @Valid RecipeCommentDto recipeCommentDto, @PathVariable Long recipeId) {
 		RecipeCommentDto updatedComment = recipeCommentCommandService.updateRecipeComment(commentId, recipeCommentDto, recipeId);
 		return ResponseEntity.ok(updatedComment);
 	}
