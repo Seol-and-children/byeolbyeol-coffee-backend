@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "RecipeLikeUserVO")
 @Table(name = "user")
 public class LikeUserVO {
 	@Id
