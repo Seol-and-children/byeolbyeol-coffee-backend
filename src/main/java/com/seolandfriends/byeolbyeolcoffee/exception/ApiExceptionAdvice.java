@@ -29,8 +29,8 @@ public class ApiExceptionAdvice {
 			.body(new ApiExceptionDTO(HttpStatus.UNAUTHORIZED, e.getMessage()));
 	}
 
-	@ExceptionHandler(DuplicatedMemberEmailException.class)
-	public ResponseEntity<ApiExceptionDTO> exceptionHandler(DuplicatedMemberEmailException e){
+	@ExceptionHandler(DuplicatedUserEmailException.class)
+	public ResponseEntity<ApiExceptionDTO> exceptionHandler(DuplicatedUserEmailException e){
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 			.body(new ApiExceptionDTO(HttpStatus.BAD_REQUEST, e.getMessage()));
 	}

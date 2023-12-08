@@ -1,26 +1,25 @@
 package com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 
 @Entity
-@Table(name = "Role")
+@Table(name = "role")
 @AllArgsConstructor
 @Getter
 @ToString
 public class Role {
 
 	@Id
-	@Column(name = "Role_CODE", nullable = false)
+	@Column(name = "role_code", nullable = false)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int roleCode;
 
-	@Column(name = "Role_NAME", length = 255, nullable = false)
+	@Column(name = "role_name", length = 255, nullable = false)
 	private String roleName;
 
-	@Column(name = "Role_DESC", length = 4000, nullable = false)
+	@Column(name = "role_desc", length = 4000, nullable = false)
 	private String roleDesc;
 
 	protected Role() {}

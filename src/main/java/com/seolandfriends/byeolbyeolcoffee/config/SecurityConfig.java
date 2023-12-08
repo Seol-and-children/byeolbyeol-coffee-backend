@@ -94,6 +94,4 @@ public class SecurityConfig {
 		customAuthenticationFilter.afterPropertiesSet();
 		return customAuthenticationFilter;
 	}
-
-
 }

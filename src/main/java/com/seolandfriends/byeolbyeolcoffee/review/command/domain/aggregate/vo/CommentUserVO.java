@@ -9,8 +9,8 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "tbl_user")
+@Entity(name = "ReviewCommentUserVO")
+@Table(name = "user")
 public class CommentUserVO {
 	@Id
 	@Column(name = "USER_ID")
