@@ -23,7 +23,7 @@ public class RecipeDto implements Serializable {
 	private String franchiseName;
 	private BaseBeverageVO baseBeverageVO;
 	private Long customOptionId;
-	private String authorId;
+	private int authorId;
 	private String userNickname;
 	private LocalDateTime registerTime;
 	private Integer likesCount;

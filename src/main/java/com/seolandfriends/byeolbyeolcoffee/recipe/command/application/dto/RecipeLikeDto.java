@@ -13,5 +13,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RecipeLikeDto implements Serializable {
 	private Long recipeId;
-	private String userId;
+	private int userId;
 }
