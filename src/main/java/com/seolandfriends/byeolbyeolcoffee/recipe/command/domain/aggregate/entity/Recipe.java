@@ -62,7 +62,7 @@ public class Recipe {
 		registerTime = LocalDateTime.now();
 	}
 
-	@Builder
+	@Builder(toBuilder = true)
 	public Recipe(String recipeName, String photoUrl, String description,
 		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO,
 		CustomOptionVO customOptionsVO, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
@@ -75,23 +75,6 @@ public class Recipe {
 		this.author = author;
 		this.likesCount = likesCount != null ? likesCount : this.likesCount;
 		this.viewsCount = viewsCount != null ? viewsCount : this.viewsCount;
-	}
-
-	/* 레시피 업데이트 메소드 */
-	public void updateRecipe(String recipeName, String photoUrl, String description,
-		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO,
-		CustomOptionVO customOptionsVO) {
-		this.recipeName = recipeName;
-		this.photoUrl = photoUrl;
-		this.description = description;
-		this.franchiseCafeVO = franchiseCafeVO;
-		this.baseBeverageVO = baseBeverageVO;
-		this.customOptionsVO = customOptionsVO;
-	}
-
-	public Recipe recipeImageUrl(String photoUrl) {
-		this.photoUrl = photoUrl;
-		return this;
 	}
 
 	/* 좋아요 수 증가 메소드 */
