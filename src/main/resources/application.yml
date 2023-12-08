@@ -15,9 +15,18 @@ spring:
       enabled: true
       max-file-size: 2MB
       max-request-size: 10MB
-
 image:
   add-resource-locations: classpath:/static/recipeimgs/
   add-resource-handler: /recipeimgs/**
   image-dir: src/main/resources/static/recipeimgs
   image-url: http://localhost:8080/recipeimgs/
+
+jwt:
+  key: "dohsdfhfblkcvblhvjbcxhlhvu4seppoqoiquweoiqfjbkv019ujfodsh01lr4u55o2nj91u091fcsnsboq,134293y9skdnfk"
+  tokenValidateTime: 86400000
+jackson:
+  serialization:
+    indent_output: true
+
+server:
+  port: 8080

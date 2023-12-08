@@ -6,10 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
-
-import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.UserRole;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,27 +13,33 @@ import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.
 @Setter
 @ToString
 public class UserDTO implements UserDetails {
-	private UUID userId;
+	private Integer userId;
 	private String userAccount;
 	private String userPassword;
 	private String userNickName;
 	private String userEmail;
 	private String kakaoId;
 	private String kakaoName;
-	private boolean status;
-	private List<UserRole> userRole;
+	private Boolean status = true;
+	private Integer userRole = 2;
 	private Collection<GrantedAuthority> roles;
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
-		if(userRole != null) {
-			userRole.forEach(role -> {
-				roles.add(() -> role.getRole().getRoleName());
-			});
-			return authorities;
+
+		// userRole이 2인 경우 'ROLE_USER' 권한 부여
+		if (this.userRole != null) {
+			if (this.userRole == 2) {
+				authorities.add(() -> "ROLE_USER");
+			}
+			// userRole이 3인 경우 'ROLE_ADMIN' 권한 부여
+			else if (this.userRole == 3) {
+				authorities.add(() -> "ROLE_ADMIN");
+			}
+			// 추가적인 역할 조건을 여기에 추가할 수 있습니다.
 		}
-		return new ArrayList<>();
+		return authorities;
 	}
 
 	@Override

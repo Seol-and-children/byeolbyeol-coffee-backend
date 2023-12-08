@@ -30,23 +30,26 @@ public class AuthController {
 	@ApiOperation(value = "회원 가입 요청", notes = "회원 가입이 진행됩니다.", tags = {"AuthController"})
 	@PostMapping("/signup")
 	public ResponseEntity<ResponseDTO> signup(@RequestBody UserDTO userDTO){
+
+		Object signupResult = authService.signup(userDTO);
+		boolean signupSuccess = signupResult != null;
+
 		return ResponseEntity
 			.ok()
-			.body(new ResponseDTO(HttpStatus.CREATED, "회원가입 성공", authService.signup(userDTO)));
-
+			.body(new ResponseDTO(HttpStatus.CREATED, "회원가입 성공", signupSuccess, signupResult));
 	}
 
 	@PostMapping("/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody UserDTO userDTO) {
 		TokenDTO tokenDTO = authService.login(userDTO);
 		String accessToken = tokenDTO.getAccessToken();
-		return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공", accessToken));
+		return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공", true, accessToken));
 	}
 
 	@PostMapping("/logout")
 	public ResponseEntity<ResponseDTO> logout() {
 		/* 로그아웃 로직 블랙리스트 처리 */
-		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "로그아웃 되었습니다.", null));
+		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "로그아웃 되었습니다.",true, null));
 	}
 
 }
