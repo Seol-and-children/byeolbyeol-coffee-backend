@@ -18,4 +18,11 @@ public class FranchiseCafeVO {
 	@Id
 	@Column(name = "id")
 	private Long franchiseId;
+
+	@Column(name = "name")
+	private String franchiseName;
+
+	public FranchiseCafeVO(Long franchiseId) {
+		this.franchiseId = franchiseId;
+	}
 }

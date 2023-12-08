@@ -1,4 +1,5 @@
-package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo;
+package com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,16 +14,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "user")
-public class RecipeUserVO {
+@Table(name = "tbl_user")
+public class LikeUserVO {
 	@Id
 	@Column(name = "USER_ID")
 	private String userId;
-
-	@Column(name = "user_nickname")
-	private String userNickname;
-
-	public RecipeUserVO(String userId) {
-		this.userId = userId;
-	}
 }

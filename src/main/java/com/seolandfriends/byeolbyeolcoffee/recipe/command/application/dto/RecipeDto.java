@@ -20,9 +20,11 @@ public class RecipeDto implements Serializable {
 	private String photoUrl;
 	private String description;
 	private Long franchiseId;
+	private String franchiseName;
 	private BaseBeverageVO baseBeverageVO;
 	private Long customOptionId;
 	private String authorId;
+	private String userNickname;
 	private LocalDateTime registerTime;
 	private Integer likesCount;
 	private Integer viewsCount;
