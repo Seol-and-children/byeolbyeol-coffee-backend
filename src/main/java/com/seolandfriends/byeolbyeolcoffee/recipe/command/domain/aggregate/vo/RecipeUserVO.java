@@ -17,12 +17,12 @@ import lombok.NoArgsConstructor;
 public class RecipeUserVO {
 	@Id
 	@Column(name = "USER_ID")
-	private String userId;
+	private int userId;
 
 	@Column(name = "user_nickname")
 	private String userNickname;
 
-	public RecipeUserVO(String userId) {
+	public RecipeUserVO(int userId) {
 		this.userId = userId;
 	}
 }

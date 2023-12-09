@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 public class CommentUserVO {
 	@Id
 	@Column(name = "USER_ID")
-	private String userId;
+	private int userId;
 
 	@Column(name = "user_nickname")
 	private String userNickname;
 
-	public CommentUserVO(String userId) {
+	public CommentUserVO(int userId) {
 		this.userId = userId;
 	}
 }

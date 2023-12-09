@@ -1,6 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -44,9 +45,13 @@ public class Recipe {
 	@Embedded
 	private BaseBeverageVO baseBeverageVO;
 
-	@ManyToOne
-	@JoinColumn(name = "custom_option_id")
-	private CustomOptionVO customOptionsVO;
+	@ManyToMany
+	@JoinTable(
+		name = "recipe_custom_option",
+		joinColumns = @JoinColumn(name = "recipe_id"),
+		inverseJoinColumns = @JoinColumn(name = "custom_option_id")
+	)
+	private List<CustomOptionVO> customOptions;
 
 	@Column(name = "register_time")
 	private LocalDateTime registerTime;
@@ -65,13 +70,13 @@ public class Recipe {
 	@Builder(toBuilder = true)
 	public Recipe(String recipeName, String photoUrl, String description,
 		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO,
-		CustomOptionVO customOptionsVO, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
+		List<CustomOptionVO> customOptions, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
 		this.recipeName = recipeName;
 		this.photoUrl = photoUrl;
 		this.description = description;
 		this.franchiseCafeVO = franchiseCafeVO;
 		this.baseBeverageVO = baseBeverageVO;
-		this.customOptionsVO = customOptionsVO;
+		this.customOptions = customOptions;
 		this.author = author;
 		this.likesCount = likesCount != null ? likesCount : this.likesCount;
 		this.viewsCount = viewsCount != null ? viewsCount : this.viewsCount;

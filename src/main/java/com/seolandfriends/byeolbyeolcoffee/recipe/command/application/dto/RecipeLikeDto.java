@@ -17,6 +17,5 @@ public class RecipeLikeDto implements Serializable {
 	@NotNull
 	private Long recipeId;
 
-	@NotNull
-	private String userId;
+	private int userId;
 }

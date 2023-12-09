@@ -18,8 +18,8 @@ public class RecipeCommentDto implements Serializable {
 	@NotNull
 	private Long commentId;
 
-	@NotNull
-	private String userId;
+  @NotNull
+	private int userId;
 
 	@NotBlank
 	private String content;

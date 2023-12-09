@@ -2,6 +2,7 @@ package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -37,11 +38,9 @@ public class RecipeDto implements Serializable {
 	@NotBlank
 	private BaseBeverageVO baseBeverageVO;
 
-	@NotNull
-	private Long customOptionId;
-
-	@NotNull
-	private String authorId;
+	private List<Long> customOptionId;
+  
+	private int authorId;
 
 	private String userNickname;
 
