@@ -1,5 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,7 @@ public class RecipeLikeCommandController {
 	/* 좋아요 토글 메소드 */
 	@PostMapping
 	public ResponseEntity<RecipeLikeDto> toggleRecipeLike(@PathVariable("recipeId") Long recipeId,
-		@RequestBody RecipeLikeDto recipeLikeDto) {
+		@RequestBody @Valid RecipeLikeDto recipeLikeDto) {
 		RecipeLikeDto toggledLike = recipeLikeCommandService.toggleRecipeLike(recipeLikeDto, recipeId);
 		return ResponseEntity.ok(toggledLike);
 	}

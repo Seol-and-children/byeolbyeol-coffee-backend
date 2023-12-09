@@ -1,5 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,14 +26,14 @@ public class RecipeCommandController {
 
 	/* 새로운 레시피 생성 (create) */
 	@PostMapping
-	public ResponseEntity<RecipeDto> createRecipe(@RequestPart MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
+	public ResponseEntity<RecipeDto> createRecipe(@RequestPart MultipartFile recipeImage, @RequestPart @Valid RecipeDto recipeDto) {
 		RecipeDto newRecipe = recipeCommandService.createRecipe(recipeDto, recipeImage);
 		return ResponseEntity.ok(newRecipe);
 	}
 
 	/* 레시피 수정 (update) */
 	@PutMapping("/{recipeId}")
-	public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long recipeId, @RequestPart MultipartFile recipeImage, @RequestPart RecipeDto recipeDto) {
+	public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long recipeId, @RequestPart MultipartFile recipeImage, @RequestPart @Valid RecipeDto recipeDto) {
 		RecipeDto updatedRecipe = recipeCommandService.updateRecipe(recipeId, recipeDto, recipeImage);
 		return ResponseEntity.ok(updatedRecipe);
 	}

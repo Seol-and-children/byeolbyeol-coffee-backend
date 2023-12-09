@@ -2,6 +2,8 @@ package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeLikeDto implements Serializable {
+	@NotNull
 	private Long recipeId;
+
 	private int userId;
 }

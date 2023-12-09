@@ -90,27 +90,27 @@ public class RecipeCommandService {
 				.map(CustomOptionVO::new)
 				.collect(Collectors.toList());
 
-			recipe.updateRecipe(
-				recipeDto.getRecipeName(),
-				recipeDto.getPhotoUrl(),
-				recipeDto.getDescription(),
-				franchiseCafeVO,
-				recipeDto.getBaseBeverageVO(),
-				customOptions
-			);
+			Recipe updatedRecipe = Recipe.builder()
+				.recipeName(recipeDto.getRecipeName())
+        .photoUrl(recipeDto.getPhotoUrl())
+				.description(recipeDto.getDescription())
+				.franchiseCafeVO(franchiseCafeVO)
+				.baseBeverageVO(recipeDto.getBaseBeverageVO())
+				.customOptions(customOptions)
+				.build();
 
 			if (recipeImage != null) {
 				String imageName = UUID.randomUUID().toString().replace("-", "");
 				replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, recipeImage);
 
-				recipe = recipe.recipeImageUrl(replaceFileName);
+				updatedRecipe = updatedRecipe.toBuilder().photoUrl(replaceFileName).build();
 
 			} else {
 				/* 이미지 변경 없을 시 */
-				recipe = recipe.recipeImageUrl(oriImage);
+				updatedRecipe = updatedRecipe.toBuilder().photoUrl(oriImage).build();
 			}
 
-			Recipe savedRecipe = recipeCommandRepository.save(recipe);
+			Recipe savedRecipe = recipeCommandRepository.save(updatedRecipe);
 			return modelMapper.map(savedRecipe, RecipeDto.class);
 		} catch (IOException e) {
 			FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
