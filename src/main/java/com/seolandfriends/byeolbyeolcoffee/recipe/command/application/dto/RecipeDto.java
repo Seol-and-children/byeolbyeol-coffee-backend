@@ -2,6 +2,7 @@ package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverageVO;
 
@@ -22,7 +23,7 @@ public class RecipeDto implements Serializable {
 	private Long franchiseId;
 	private String franchiseName;
 	private BaseBeverageVO baseBeverageVO;
-	private Long customOptionId;
+	private List<Long> customOptionId;
 	private int authorId;
 	private String userNickname;
 	private LocalDateTime registerTime;

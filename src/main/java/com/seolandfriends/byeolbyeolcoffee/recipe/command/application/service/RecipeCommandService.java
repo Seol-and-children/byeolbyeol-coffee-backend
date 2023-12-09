@@ -1,7 +1,9 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +48,10 @@ public class RecipeCommandService {
 
 			recipeDto.setPhotoUrl(replaceFileName);
 			FranchiseCafeVO franchiseCafeVO = new FranchiseCafeVO(recipeDto.getFranchiseId());
-			CustomOptionVO customOptionVO = new CustomOptionVO(recipeDto.getCustomOptionId());
+			// CustomOptionVO 리스트 생성
+			List<CustomOptionVO> customOptions = recipeDto.getCustomOptionId().stream()
+				.map(CustomOptionVO::new)
+				.collect(Collectors.toList());
 			RecipeUserVO author = new RecipeUserVO(recipeDto.getAuthorId());
 
 			Recipe newRecipe = Recipe.builder()
@@ -56,7 +61,7 @@ public class RecipeCommandService {
 				.franchiseCafeVO(franchiseCafeVO)
 				.author(author)
 				.baseBeverageVO(recipeDto.getBaseBeverageVO())
-				.customOptionsVO(customOptionVO)
+				.customOptions(customOptions)
 				.likesCount(0)
 				.viewsCount(0)
 				.build();
@@ -80,7 +85,10 @@ public class RecipeCommandService {
 			String oriImage = recipe.getPhotoUrl();
 
 			FranchiseCafeVO franchiseCafeVO = new FranchiseCafeVO(recipeDto.getFranchiseId());
-			CustomOptionVO customOptionVO = new CustomOptionVO(recipeDto.getCustomOptionId());
+			// CustomOptionVO 리스트 생성 및 업데이트
+			List<CustomOptionVO> customOptions = recipeDto.getCustomOptionId().stream()
+				.map(CustomOptionVO::new)
+				.collect(Collectors.toList());
 
 			recipe.updateRecipe(
 				recipeDto.getRecipeName(),
@@ -88,7 +96,7 @@ public class RecipeCommandService {
 				recipeDto.getDescription(),
 				franchiseCafeVO,
 				recipeDto.getBaseBeverageVO(),
-				customOptionVO
+				customOptions
 			);
 
 			if (recipeImage != null) {
