@@ -92,7 +92,7 @@ public class RecipeCommandService {
 
 			Recipe updatedRecipe = Recipe.builder()
 				.recipeName(recipeDto.getRecipeName())
-        .photoUrl(recipeDto.getPhotoUrl())
+				.photoUrl(recipeDto.getPhotoUrl())
 				.description(recipeDto.getDescription())
 				.franchiseCafeVO(franchiseCafeVO)
 				.baseBeverageVO(recipeDto.getBaseBeverageVO())
