@@ -54,4 +54,14 @@ public class RecipeLikeCommandService {
 		recipeCommandRepository.save(recipe);
 		return modelMapper.map(recipeLikeDto, RecipeLikeDto.class);
 	}
+
+	public boolean checkIfUserLikedRecipe(Long recipeId, int userId) {
+		Recipe recipe = recipeCommandRepository.findById(recipeId)
+			.orElseThrow(() -> new EntityNotFoundException("레시피를 찾을 수 없습니다."));
+		LikeUserVO likeUserVO = new LikeUserVO(userId);
+
+		// 좋아요 상태 확인
+		Optional<RecipeLike> existingLike = recipeLikeCommandRepository.findByRecipeAndLikeUserVO(recipe, likeUserVO);
+		return existingLike.isPresent();
+	}
 }

@@ -19,7 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeDto implements Serializable {
-	@NotNull
+
 	private Long recipeId;
 
 	@NotBlank
@@ -35,11 +35,11 @@ public class RecipeDto implements Serializable {
 
 	private String franchiseName;
 
-	@NotBlank
+	@NotNull
 	private BaseBeverageVO baseBeverageVO;
 
-	private List<Long> customOptionId;
-  
+	private List<RecipeCustomOptionDto> customOptions;
+
 	private int authorId;
 
 	private String userNickname;

@@ -45,13 +45,8 @@ public class Recipe {
 	@Embedded
 	private BaseBeverageVO baseBeverageVO;
 
-	@ManyToMany
-	@JoinTable(
-		name = "recipe_custom_option",
-		joinColumns = @JoinColumn(name = "recipe_id"),
-		inverseJoinColumns = @JoinColumn(name = "custom_option_id")
-	)
-	private List<CustomOptionVO> customOptions;
+	@OneToMany(mappedBy = "recipe")
+	private List<RecipeCustomOption> customOptions;
 
 	@Column(name = "register_time")
 	private LocalDateTime registerTime;
@@ -70,7 +65,7 @@ public class Recipe {
 	@Builder(toBuilder = true)
 	public Recipe(String recipeName, String photoUrl, String description,
 		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO,
-		List<CustomOptionVO> customOptions, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
+		List<RecipeCustomOption> customOptions, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
 		this.recipeName = recipeName;
 		this.photoUrl = photoUrl;
 		this.description = description;

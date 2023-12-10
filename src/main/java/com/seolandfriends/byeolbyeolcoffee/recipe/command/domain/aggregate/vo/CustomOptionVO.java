@@ -18,4 +18,14 @@ public class CustomOptionVO {
 	@Id
 	@Column(name = "id")
 	private Long customOptionId;
+
+	@Column(name = "name")
+	private String ingredientName;
+
+	@Column(name = "ingredient_unit")
+	private String ingredientUnit;
+
+	public CustomOptionVO(Long customOptionId) {
+		this.customOptionId = customOptionId;
+	}
 }
