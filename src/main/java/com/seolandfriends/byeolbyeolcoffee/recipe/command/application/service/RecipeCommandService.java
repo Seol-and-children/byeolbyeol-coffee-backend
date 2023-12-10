@@ -1,6 +1,7 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeCustomOptionDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeCustomOption;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOptionVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafeVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUserVO;
@@ -48,9 +51,12 @@ public class RecipeCommandService {
 
 			recipeDto.setPhotoUrl(replaceFileName);
 			FranchiseCafeVO franchiseCafeVO = new FranchiseCafeVO(recipeDto.getFranchiseId());
-			// CustomOptionVO 리스트 생성
-			List<CustomOptionVO> customOptions = recipeDto.getCustomOptionId().stream()
-				.map(CustomOptionVO::new)
+			List<RecipeCustomOptionDto> customOptionsDto = recipeDto.getCustomOptions();
+			List<RecipeCustomOption> customOptions = customOptionsDto.stream()
+				.map(dto -> RecipeCustomOption.builder()
+					.customOptionId(new CustomOptionVO(dto.getCustomOptionId()))
+					.quantity(dto.getQuantity())
+					.build())
 				.collect(Collectors.toList());
 			RecipeUserVO author = new RecipeUserVO(recipeDto.getAuthorId());
 
@@ -85,9 +91,12 @@ public class RecipeCommandService {
 			String oriImage = recipe.getPhotoUrl();
 
 			FranchiseCafeVO franchiseCafeVO = new FranchiseCafeVO(recipeDto.getFranchiseId());
-			// CustomOptionVO 리스트 생성 및 업데이트
-			List<CustomOptionVO> customOptions = recipeDto.getCustomOptionId().stream()
-				.map(CustomOptionVO::new)
+			List<RecipeCustomOptionDto> customOptionsDto = recipeDto.getCustomOptions();
+			List<RecipeCustomOption> customOptions = customOptionsDto.stream()
+				.map(dto -> RecipeCustomOption.builder()
+					.customOptionId(new CustomOptionVO(dto.getCustomOptionId()))
+					.quantity(dto.getQuantity())
+					.build())
 				.collect(Collectors.toList());
 
 			Recipe updatedRecipe = Recipe.builder()

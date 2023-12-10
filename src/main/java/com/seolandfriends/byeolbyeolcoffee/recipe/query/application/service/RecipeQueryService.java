@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeCustomOptionDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
 import com.seolandfriends.byeolbyeolcoffee.recipe.query.domain.repository.RecipeQueryRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class RecipeQueryService {
 	private final RecipeQueryRepository recipeQueryRepository;
 	ModelMapper modelMapper = new ModelMapper();
@@ -60,6 +64,17 @@ public class RecipeQueryService {
 		RecipeDto recipeDto = modelMapper.map(savedRecipe, RecipeDto.class);
 		recipeDto.setUserNickname(getUserNicknameByRecipeId(savedRecipe.getRecipeId()));
 		recipeDto.setFranchiseName(getFranchiseNameByRecipeId(savedRecipe.getRecipeId()));
+
+		List<RecipeCustomOptionDto> customOptionDtos = savedRecipe.getCustomOptions().stream()
+			.map(customOption -> new RecipeCustomOptionDto(
+				customOption.getCustomOptionId().getCustomOptionId(),
+				customOption.getQuantity(),
+				customOption.getCustomOptionId().getIngredientName(),
+				customOption.getCustomOptionId().getIngredientUnit()
+				))
+			.collect(Collectors.toList());
+		recipeDto.setCustomOptions(customOptionDtos);
+
 		return recipeDto;
 	}
 }
