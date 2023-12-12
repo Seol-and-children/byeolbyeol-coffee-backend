@@ -37,6 +37,7 @@ public class RecipeQueryController {
 	@GetMapping("/{recipeId}")
 	public ResponseEntity<RecipeDto> getRecipeById(@PathVariable Long recipeId) {
 		RecipeDto recipe = recipeQueryService.getRecipeById(recipeId);
+		log.info("query: {}",recipeId);
 		return ResponseEntity.ok(recipe);
 	}
 }
