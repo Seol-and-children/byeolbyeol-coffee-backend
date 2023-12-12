@@ -20,9 +20,9 @@ spring:
       max-request-size: 10MB
 
 image:
-  add-resource-locations: classpath:/static/recipeimgs/
+  add-resource-locations: file:///C:/byeolbyeol/images/
   add-resource-handler: /recipeimgs/**
-  image-dir: src/main/resources/static/recipeimgs
+  image-dir: C:/byeolbyeol/images
   image-url: http://localhost:8080/recipeimgs/
 
 jwt:
