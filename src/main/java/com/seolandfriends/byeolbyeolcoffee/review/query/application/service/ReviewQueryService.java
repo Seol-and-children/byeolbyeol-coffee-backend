@@ -29,11 +29,19 @@ public class ReviewQueryService {
 		this.reviewQueryRepository = reviewQueryRepository;
 	}
 
+	public String getUserNicknameByReviewId(Long reviewId) {
+		return reviewQueryRepository.findUserNicknameByReviewId(reviewId);
+	}
+
 	/* 모든 리뷰 정보 불러오기 */
 	public List<ReviewDTO> getAllReviews() {
-		List<Review> savedReviews = reviewQueryRepository.findAll();
+		List<Review> savedReviews = reviewQueryRepository.findAllReviewsWithUser();
 		return savedReviews.stream()
-			.map(review -> modelMapper.map(review, ReviewDTO.class))
+			.map(review -> {
+				ReviewDTO reviewDto = modelMapper.map(review, ReviewDTO.class);
+				reviewDto.setUserNickname(review.getAuthor().getUserNickname());
+				return reviewDto;
+			})
 			.collect(Collectors.toList());
 	}
 

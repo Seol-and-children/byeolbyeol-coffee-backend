@@ -1,6 +1,9 @@
 package com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "ReviewCommentUserVO")
+@Entity
 @Table(name = "user")
 public class CommentUserVO {
 	@Id

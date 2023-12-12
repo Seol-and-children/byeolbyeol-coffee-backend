@@ -15,10 +15,11 @@ import lombok.Setter;
 public class ReviewDTO implements Serializable{
 	private Long reviewId;
 	private String reviewName;
-	private String authorId;
+	private Integer authorId;
 	private String content;
 	private String photoUrl;
 	private LocalDateTime registerTime;
 	private Integer likesCount;
 	private Integer viewsCount;
+	private String userNickname;
 }

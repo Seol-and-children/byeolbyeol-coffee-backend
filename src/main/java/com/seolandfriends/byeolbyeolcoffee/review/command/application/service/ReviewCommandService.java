@@ -72,24 +72,25 @@ public class ReviewCommandService {
 				.orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다. ID: " + reviewId));
 			String oriImage = review.getPhotoUrl();
 
-			review.updateReview(
-				reviewDTO.getReviewName(),
-				reviewDTO.getPhotoUrl(),
-				reviewDTO.getContent()
-			);
+			Review updateReview = Review.builder()
+				.reviewName(reviewDTO.getReviewName())
+				.photoUrl(reviewDTO.getPhotoUrl())
+				.content(reviewDTO.getContent())
+				.build();
 
 			if (reviewImage != null) {
 				String imageName = UUID.randomUUID().toString().replace("-", "");
 				replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, reviewImage);
 
-				review = review.reviewImageUrl(replaceFileName);
+				updateReview = updateReview.toBuilder().photoUrl(replaceFileName).build();
+
 
 			} else {
 				/* 이미지 변경 없을 시 */
-				review = review.reviewImageUrl(oriImage);
+				updateReview = updateReview.toBuilder().photoUrl(oriImage).build();
 			}
 
-			Review savedReview = reviewCommandRepository.save(review);
+			Review savedReview = reviewCommandRepository.save(updateReview);
 			return modelMapper.map(savedReview, ReviewDTO.class);
 		} catch (IOException e) {
 			FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
