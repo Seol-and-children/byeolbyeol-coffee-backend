@@ -1,6 +1,5 @@
 package com.seolandfriends.byeolbyeolcoffee.user.command.application.dto;
 
-import java.util.UUID;
 
 import lombok.*;
 
@@ -14,6 +13,9 @@ public class TokenDTO {
 	private int userId;
 	private String accessToken;
 
-	public TokenDTO(String tokenType, int userId, String accessToken) {
+	public TokenDTO(String grantType, int userId, String accessToken) {
+		this.grantType = grantType;
+		this.userId = userId;
+		this.accessToken = accessToken;
 	}
 }

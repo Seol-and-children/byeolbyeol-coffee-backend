@@ -22,6 +22,8 @@ public class UserDTO implements UserDetails {
 	private String kakaoName;
 	private Boolean status = true;
 	private Integer userRole = 2;
+	private String currentPassword; // 추가된 필드: 현재 비밀번호 확인용
+	private String newPassword; // 추가된 필드: 새 비밀번호 설정용
 	private Collection<GrantedAuthority> roles;
 
 	@Override
@@ -51,6 +53,10 @@ public class UserDTO implements UserDetails {
 	public String getUsername() {
 		return this.userNickName;
 	}
+
+	public String getCurrentPassword() { return currentPassword; }
+
+	public String getNewPassword() { return newPassword; }
 
 	@Override
 	public boolean isAccountNonExpired() {

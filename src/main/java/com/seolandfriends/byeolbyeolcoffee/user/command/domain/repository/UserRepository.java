@@ -19,8 +19,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	User findByUserRole(Integer userRole);
 	User findByUserNickName(String userNickName);
 
-	// @Query("SELECT a.userId FROM User a WHERE a.userAccount = ?1")
-	// UUID findUserIdByUserAccount(String orderUserAccount);
-
-
 }

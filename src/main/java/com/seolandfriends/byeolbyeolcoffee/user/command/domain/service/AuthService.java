@@ -73,10 +73,18 @@ public class AuthService {
 			log.warn("로그인 실패: 계정 {}의 비밀번호 불일치", userDTO.getUserAccount());
 			throw new UsernameNotFoundException("사용자 이름 또는 비밀번호가 잘못되었습니다.");
 		} else {
-			log.info("로그인 성공 - 사용자: {}", userDTO.getUserAccount());
-			return tokenProvider.generateTokenDTO(user);
+			TokenDTO tokenDTO = tokenProvider.generateTokenDTO(user);
+			log.info("로그인 성공 - 사용자: {}, 토큰: {}", userDTO.getUserAccount(), tokenDTO.getAccessToken());
+
+			// 추가적으로, 사용자의 닉네임과 계정 정보도 로그에 기록할 수 있습니다.
+			log.info("사용자 닉네임: {}", user.getUserNickName());
+			log.info("사용자 계정: {}", user.getUserAccount());
+
+			return tokenDTO;
 		}
+
 	}
+
 	@Transactional
 	public void logout(String token) {
 		tokenProvider.blacklistToken(token);
