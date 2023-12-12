@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOptionVO;
 
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class RecipeCustomOption {
 	private Long id;
 
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name = "recipe_id")
 	private Recipe recipe;
 
