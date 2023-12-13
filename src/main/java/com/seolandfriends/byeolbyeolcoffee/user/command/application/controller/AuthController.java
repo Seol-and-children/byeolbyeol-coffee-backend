@@ -60,6 +60,7 @@ public class AuthController {
 		String userAccount = user.getUserAccount();
 		Integer userId = user.getUserId();
 		Integer userRole = user.getUserRole();
+		String userBio = user.getUserBio();
 
 		// 로그인한 사용자의 계정 정보를 포함시킵니다.
 		Map<String, Object> responseData = new HashMap<>();
@@ -68,6 +69,7 @@ public class AuthController {
 		responseData.put("userAccount", userAccount);
 		responseData.put("userId", userId);
 		responseData.put("userRole", userRole);
+		responseData.put("userBio", userBio);
 
 		return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공", true, responseData));
 	}

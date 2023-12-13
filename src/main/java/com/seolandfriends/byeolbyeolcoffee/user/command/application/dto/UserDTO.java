@@ -18,6 +18,7 @@ public class UserDTO implements UserDetails {
 	private String userPassword;
 	private String userNickName;
 	private String userEmail;
+	private String userBio;
 	private String kakaoId;
 	private String kakaoName;
 	private Boolean status = true;

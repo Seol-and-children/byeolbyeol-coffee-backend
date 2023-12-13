@@ -40,6 +40,12 @@ public class UserController {
 		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "회원 정보 수정 성공", true, updatedUserDTO));
 	}
 
+	@PutMapping("/{userAccount}/bio")
+	public ResponseEntity<ResponseDTO> updateUserBio(@PathVariable String userAccount, @RequestBody String userBio) {
+		UserDTO updatedUserDTO = userService.updateUserBio(userAccount, userBio);
+		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "회원 자기소개 수정 성공", true, updatedUserDTO));
+	}
+
 
 	@ApiOperation(value = "회원 탈퇴 요청", notes = "사용자 계정을 삭제합니다.", tags = { "UserController" })
 	@DeleteMapping("/{userAccount}")
