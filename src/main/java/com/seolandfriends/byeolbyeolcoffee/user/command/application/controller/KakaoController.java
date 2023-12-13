@@ -3,6 +3,7 @@ package com.seolandfriends.byeolbyeolcoffee.user.command.application.controller;
 import java.io.IOException;
 import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import com.seolandfriends.byeolbyeolcoffee.user.command.application.service.Kaka
 @RequestMapping(value="/users")
 public class KakaoController {
 
+	@Autowired
 	private KakaoService kakaoService;
 
 	@RequestMapping(value="/kakaoLogin", method=RequestMethod.GET)
@@ -24,7 +26,8 @@ public class KakaoController {
 		System.out.println("###access_Token#### : " + access_Token);
 		System.out.println("###nickname#### : " + userInfo.get("nickname"));
 		System.out.println("###email#### : " + userInfo.get("email"));
-		return "member/testPage";
+
+		return "user/update";
 	}
 
 }

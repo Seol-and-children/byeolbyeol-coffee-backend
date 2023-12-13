@@ -79,6 +79,31 @@ public class UserService {
 		return updatedUserDTO;
 	}
 
+	@Transactional
+	public UserDTO updateUserBio(String userAccount, String newBio) {
+		log.info("[사용자 서비스] 회원 자기소개 수정 시작 - 계정: {}", userAccount);
+
+		// 사용자 조회
+		User user = userRepository.findByUserAccount(userAccount);
+		if (user == null) {
+			log.warn("[사용자 서비스] 회원 자기소개 수정 - 계정 {}에 해당하는 사용자 없음", userAccount);
+			throw new UsernameNotFoundException("계정 " + userAccount + "에 해당하는 사용자를 찾을 수 없습니다.");
+		}
+
+		// 자기소개 업데이트
+		user.setUserBio(newBio);
+		userRepository.save(user);
+		log.info("[사용자 서비스] 회원 자기소개 수정 - 사용자 자기소개 업데이트 완료, 계정: {}", userAccount);
+
+		// DTO 변환 및 반환
+		UserDTO updatedUserDTO = modelMapper.map(user, UserDTO.class);
+		log.info("[사용자 서비스] 회원 자기소개 수정 종료 - 업데이트된 UserDTO: {}", updatedUserDTO);
+
+		return updatedUserDTO;
+	}
+
+
+
 
 	@Transactional
 	public void deleteUserByAccount(String userAccount) {

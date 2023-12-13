@@ -42,6 +42,10 @@ public class User {
 	@Column(name = "user_email", unique = true)
 	private String userEmail;
 
+	//자기소개
+	@Column(name = "user_bio")
+	private String userBio;
+
 	// 카카오 아이디
 	@Column(name = "kakao_id")
 	private String kakaoId;
@@ -86,6 +90,8 @@ public class User {
 		this.userEmail = userEmail;
 	}
 
+	public void setUserBio(String userBio) { this.userBio = userBio; }
+
 	public void setKakaoId(String kakaoId) {
 		this.kakaoId = kakaoId;
 	}
@@ -109,7 +115,7 @@ public class User {
 	}
 
 	public User build() {
-		return new User(userId, userAccount, userPassword, userNickName, userEmail, kakaoId, kakaoName, status, userRole, provider, provideID);
+		return new User(userId, userAccount, userPassword, userNickName, userEmail, userBio, kakaoId, kakaoName, status, userRole, provider, provideID);
 	}
 
 	@Override
@@ -120,6 +126,7 @@ public class User {
 			", userPassword='" + userPassword + '\'' +
 			", userNickName='" + userNickName + '\'' +
 			", userEmail='" + userEmail + '\'' +
+			", userBio='" + userBio + '\'' +
 			", kakaoId='" + kakaoId + '\'' +
 			", kakaoName='" + kakaoName + '\'' +
 			", status=" + status +
