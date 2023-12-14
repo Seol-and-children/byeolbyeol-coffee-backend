@@ -13,9 +13,9 @@ public class RecipeCustomOptionDto {
 
 	private Long customOptionId;
 
-	private Integer quantity;
+	private String customOptionName;
 
-	private String ingredientName;
+	private String quantity;
 
-	private String ingredientUnit;
+	private Long recipeId;
 }

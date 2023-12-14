@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeCustomOptionDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeCustomOption;
+import com.seolandfriends.byeolbyeolcoffee.recipe.query.domain.repository.RecipeCustomOptionQueryRepository;
 import com.seolandfriends.byeolbyeolcoffee.recipe.query.domain.repository.RecipeQueryRepository;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RecipeQueryService {
 	private final RecipeQueryRepository recipeQueryRepository;
+	private final RecipeCustomOptionQueryRepository customOptionRepository;
 	ModelMapper modelMapper = new ModelMapper();
 
 	/* 이미지 저장 할 위치 및 응답 할 이미지 주소 */
@@ -29,8 +32,10 @@ public class RecipeQueryService {
 	private String IMAGE_URL;
 
 	@Autowired
-	public RecipeQueryService(RecipeQueryRepository recipeQueryRepository) {
+	public RecipeQueryService(RecipeQueryRepository recipeQueryRepository,
+		RecipeCustomOptionQueryRepository customOptionRepository) {
 		this.recipeQueryRepository = recipeQueryRepository;
+		this.customOptionRepository = customOptionRepository;
 	}
 
 	/* 레시피 아이디로 작성자 닉네임 가져오기 */
@@ -61,18 +66,20 @@ public class RecipeQueryService {
 			.orElseThrow(() -> new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId));
 		savedRecipe.incrementViewsCount();
 		savedRecipe = recipeQueryRepository.save(savedRecipe);
+
 		RecipeDto recipeDto = modelMapper.map(savedRecipe, RecipeDto.class);
 		recipeDto.setUserNickname(getUserNicknameByRecipeId(savedRecipe.getRecipeId()));
 		recipeDto.setFranchiseName(getFranchiseNameByRecipeId(savedRecipe.getRecipeId()));
 
-		List<RecipeCustomOptionDto> customOptionDtos = savedRecipe.getCustomOptions().stream()
-			.map(customOption -> new RecipeCustomOptionDto(
-				customOption.getCustomOptionId().getCustomOptionId(),
-				customOption.getQuantity(),
-				customOption.getCustomOptionId().getIngredientName(),
-				customOption.getCustomOptionId().getIngredientUnit()
-				))
+		List<RecipeCustomOption> customOptions = customOptionRepository.findByRecipeId(recipeId);
+		List<RecipeCustomOptionDto> customOptionDtos = customOptions.stream()
+			.map(option -> {
+				RecipeCustomOptionDto dto = modelMapper.map(option, RecipeCustomOptionDto.class);
+				dto.setRecipeId(recipeId);
+				return dto;
+			})
 			.collect(Collectors.toList());
+
 		recipeDto.setCustomOptions(customOptionDtos);
 
 		return recipeDto;

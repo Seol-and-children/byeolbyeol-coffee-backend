@@ -1,12 +1,10 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.*;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverageVO;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.CustomOptionVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafeVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUserVO;
 
@@ -45,9 +43,6 @@ public class Recipe {
 	@Embedded
 	private BaseBeverageVO baseBeverageVO;
 
-	@OneToMany(mappedBy = "recipe")
-	private List<RecipeCustomOption> customOptions;
-
 	@Column(name = "register_time")
 	private LocalDateTime registerTime;
 
@@ -64,14 +59,13 @@ public class Recipe {
 
 	@Builder(toBuilder = true)
 	public Recipe(String recipeName, String photoUrl, String description,
-		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO,
-		List<RecipeCustomOption> customOptions, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
+		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO
+		, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
 		this.recipeName = recipeName;
 		this.photoUrl = photoUrl;
 		this.description = description;
 		this.franchiseCafeVO = franchiseCafeVO;
 		this.baseBeverageVO = baseBeverageVO;
-		this.customOptions = customOptions;
 		this.author = author;
 		this.likesCount = likesCount != null ? likesCount : this.likesCount;
 		this.viewsCount = viewsCount != null ? viewsCount : this.viewsCount;
