@@ -1,10 +1,14 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverage;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafe;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUser;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverageVO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,15 +19,35 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RecipeDto {
-	private Long id;
+public class RecipeDto implements Serializable {
+
+	private Long recipeId;
+
+	@NotBlank
 	private String recipeName;
-	private String recipePhoto;
+
+	private String photoUrl;
+
+	@NotBlank
 	private String description;
-	private FranchiseCafe franchiseCafe;
-	private BaseBeverage baseBeverage;
-	private List<String> customOptions;
-	private RecipeUser author;
+
+	@NotNull
+	private Long franchiseId;
+
+	private String franchiseName;
+
+	@NotNull
+	private BaseBeverageVO baseBeverageVO;
+
+	private List<RecipeCustomOptionDto> customOptions;
+
+	private int authorId;
+
+	private String userNickname;
+
+	private LocalDateTime registerTime;
+
 	private Integer likesCount;
+
 	private Integer viewsCount;
 }

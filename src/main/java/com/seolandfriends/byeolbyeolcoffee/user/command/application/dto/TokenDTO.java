@@ -1,17 +1,21 @@
 package com.seolandfriends.byeolbyeolcoffee.user.command.application.dto;
 
+
 import lombok.*;
 
-/* 토큰 정보 담을 객체*/
 @NoArgsConstructor
-@AllArgsConstructor
 @Setter
 @Getter
 @ToString
 public class TokenDTO {
 
 	private String grantType;
-	private String userNickName;
+	private int userId;
 	private String accessToken;
 
+	public TokenDTO(String grantType, int userId, String accessToken) {
+		this.grantType = grantType;
+		this.userId = userId;
+		this.accessToken = accessToken;
+	}
 }

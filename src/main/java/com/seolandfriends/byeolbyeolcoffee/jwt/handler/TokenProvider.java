@@ -23,18 +23,27 @@ public class TokenProvider {
 	private final UserDetailsService userDetailsService;
 	private ModelMapper modelMapper;
 
-	public TokenProvider(UserDetailsService userDetailsService, ModelMapper modelMapper ){
+	public TokenProvider(UserDetailsService userDetailsService, ModelMapper modelMapper) {
 		this.userDetailsService = userDetailsService;
 		this.modelMapper = modelMapper;
 	}
 
-	public TokenDTO generateTokenDTO(User user){
-
+	public TokenDTO generateTokenDTO(User user) {
 		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
 
-		return new TokenDTO(AuthConstants.TOKEN_TYPE,
-			user.getUserNickName(),
-			TokenUtils.generateJwtToken(userDTO));
+		if (userDTO == null || userDTO.getUserAccount() == null || userDTO.getUserRole() == 0) {
+			throw new IllegalArgumentException("UserDTO 매핑 오류");
+		}
+
+		String jwtToken;
+		try {
+			jwtToken = TokenUtils.generateJwtToken(userDTO);
+		} catch (Exception e) {
+			log.error("JWT 토큰 생성 중 오류 발생", e);
+			throw new RuntimeException("JWT 토큰 생성 실패");
+		}
+
+		return new TokenDTO(AuthConstants.TOKEN_TYPE, user.getUserId(), jwtToken);
 	}
 
 	public String getUserId(String token) {

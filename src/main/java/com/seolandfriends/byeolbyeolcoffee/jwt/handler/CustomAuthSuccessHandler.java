@@ -37,7 +37,7 @@ public class CustomAuthSuccessHandler extends SavedRequestAwareAuthenticationSuc
 		User user = modelMapper.map(authentication.getPrincipal(), User.class);
 		TokenDTO tokenDTO = tokenProvider.generateTokenDTO(user);
 
-		ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK, "로그인 성공", tokenDTO);
+		ResponseDTO responseDTO = new ResponseDTO(HttpStatus.OK, "로그인 성공", true, tokenDTO);
 		response.addHeader(AuthConstants.AUTH_HEADER, AuthConstants.TOKEN_TYPE + " " + tokenDTO.getAccessToken());
 
 		response.setCharacterEncoding("UTF-8");

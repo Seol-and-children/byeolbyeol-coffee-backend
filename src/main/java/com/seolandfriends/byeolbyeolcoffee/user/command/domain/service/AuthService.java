@@ -7,14 +7,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.seolandfriends.byeolbyeolcoffee.exception.DuplicatedMemberEmailException;
 import com.seolandfriends.byeolbyeolcoffee.jwt.handler.TokenProvider;
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.TokenDTO;
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.UserDTO;
 import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.User;
-import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.UserRole;
 import com.seolandfriends.byeolbyeolcoffee.user.command.domain.repository.UserRepository;
-import com.seolandfriends.byeolbyeolcoffee.user.command.domain.repository.UserRoleRepository;
 
 @Service
 @Slf4j
@@ -24,63 +21,72 @@ public class AuthService {
 	private final PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
 	private final ModelMapper modelMapper;
-	private final UserRoleRepository userRoleRepository;
 
 	public AuthService(UserRepository userRepository
 		, PasswordEncoder passwordEncoder
 		, TokenProvider tokenProvider
-		, ModelMapper modelMapper
-		, UserRoleRepository userRoleRepository){
+		, ModelMapper modelMapper) {
 		this.userRepository = userRepository;
 		this.passwordEncoder = passwordEncoder;
 		this.tokenProvider = tokenProvider;
 		this.modelMapper = modelMapper;
-		this.userRoleRepository = userRoleRepository;
 	}
+
 
 	@Transactional
 	public Object signup(UserDTO userDTO) {
-
 		log.info("[AuthService] signup Start ==================================");
-		log.info("[AuthService] memberDTO {} =======> ", userDTO);
+		log.info("[AuthService] UserDTO {} =======> ", userDTO);
 
-		if(userRepository.findByUserEmail(userDTO.getUserEmail()) != null){
-			log.info("[AuthService] 이메일이 종복됩니다.");
-			throw new DuplicatedMemberEmailException("이메일이 중복됩니다.");
-		}
+		log.info("[AuthService] Before ModelMapper UserDTO: {}", userDTO);
 
 		User registUser = modelMapper.map(userDTO, User.class);
 
+		log.info("[AuthService] After ModelMapper User: {}", registUser);
+
 		registUser.setUserPassword(passwordEncoder.encode(registUser.getUserPassword()));
+		registUser.setStatus(true);
+		registUser.setUserRole(2);
 
-		User result1 = userRepository.save(registUser);
-		log.info("[AuthService] result1 ================== {} ", result1);
+		log.info("[AuthService] Before saving User: {}", registUser);
 
+		User result = userRepository.save(registUser);
 
-		UserRole registUserRole = new UserRole(result1.getUserId(), 2);
-		UserRole result2 = userRoleRepository.save(registUserRole);
-		log.info("[AuthService] MemberInsert Result {}",
-			(result1 != null && result2 != null)? "회원 가입 성공" : "회원 가입 실패");
+		log.info("[AuthService] After saving User: {}", result);
 
 		log.info("[AuthService] signup End ==================================");
 
 		return userDTO;
 	}
 
+
 	@Transactional
 	public TokenDTO login(UserDTO userDTO) {
-		User user = userRepository.findByUserEmail(userDTO.getUserEmail());
-		if (user != null && passwordEncoder.matches(userDTO.getUserPassword(), user.getUserPassword())) {
-			return tokenProvider.generateTokenDTO(user);
+		log.info("로그인 시도 - 계정: {}", userDTO.getUserAccount());
+
+		User user = userRepository.findByUserAccount(userDTO.getUserAccount());
+
+		if (user == null) {
+			log.warn("로그인 실패: 계정 {}에 해당하는 사용자 없음", userDTO.getUserAccount());
+			throw new UsernameNotFoundException("사용자 이름 또는 비밀번호가 잘못되었습니다.");
+		} else if (!passwordEncoder.matches(userDTO.getUserPassword(), user.getUserPassword())) {
+			log.warn("로그인 실패: 계정 {}의 비밀번호 불일치", userDTO.getUserAccount());
+			throw new UsernameNotFoundException("사용자 이름 또는 비밀번호가 잘못되었습니다.");
 		} else {
-			throw new UsernameNotFoundException("Invalid username or password.");
+			TokenDTO tokenDTO = tokenProvider.generateTokenDTO(user);
+			log.info("로그인 성공 - 사용자: {}, 토큰: {}", userDTO.getUserAccount(), tokenDTO.getAccessToken());
+
+			// 추가적으로, 사용자의 닉네임과 계정 정보도 로그에 기록할 수 있습니다.
+			log.info("사용자 닉네임: {}", user.getUserNickName());
+			log.info("사용자 계정: {}", user.getUserAccount());
+
+			return tokenDTO;
 		}
+
 	}
 
 	@Transactional
 	public void logout(String token) {
 		tokenProvider.blacklistToken(token);
 	}
-
-
 }

@@ -2,7 +2,6 @@ package com.seolandfriends.byeolbyeolcoffee.util;
 
 import com.seolandfriends.byeolbyeolcoffee.exception.TokenException;
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.UserDTO;
-import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.UserRole;
 
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +12,6 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Component
 @Slf4j
@@ -27,7 +25,7 @@ public class TokenUtils {
 		TokenUtils.jwtSecretKey = jwtSecretKey;
 	}
 
-	@Value("${jwt.time}")
+	@Value("${jwt.tokenValidateTime}")
 	public void setTokenValidateTime(Long tokenValidateTime) {
 		TokenUtils.tokenValidateTime = tokenValidateTime;
 	}
@@ -74,18 +72,23 @@ public class TokenUtils {
 	}
 
 	public static String generateJwtToken(UserDTO user) {
-		Date expireTime = new Date(System.currentTimeMillis() + tokenValidateTime);
+		try {
+			Date expireTime = new Date(System.currentTimeMillis() + tokenValidateTime);
 
-		JwtBuilder builder = Jwts
-			.builder()
-			.setHeader(createHeader())
-			.setClaims(createClaims(user))
-			.setSubject(user.getUserAccount())
-			.setExpiration(expireTime)
-			.signWith(SignatureAlgorithm.HS256, createSignature());
+			JwtBuilder builder = Jwts.builder()
+				.setHeader(createHeader())
+				.setClaims(createClaims(user))
+				.setSubject(user.getUserAccount())
+				.setExpiration(expireTime)
+				.signWith(SignatureAlgorithm.HS256, createSignature());
 
-		return builder.compact();
+			return builder.compact();
+		} catch (Exception e) {
+			log.error("JWT 토큰 생성 중 오류 발생: ", e);
+			throw e;
+		}
 	}
+
 
 	private static Map<String, Object> createHeader() {
 		Map<String, Object> header = new HashMap<>();
@@ -100,13 +103,12 @@ public class TokenUtils {
 	private static Map<String, Object> createClaims(UserDTO user) {
 		Map<String, Object> claims = new HashMap<>();
 
-		List<String> roles = new ArrayList<>();
-		for(UserRole userRole : user.getUserRole()){
-			roles.add(userRole.getRole().getRoleName());
-		}
+		// userRole 값을 기반으로 권한 이름 설정
+		String role = user.getUserRole() == 2 ? "ROLE_USER" :
+			user.getUserRole() == 3 ? "ROLE_ADMIN" : "UNKNOWN";
 
 		claims.put("memberName", user.getUserNickName());
-		claims.put("auth", roles);
+		claims.put("auth", Collections.singletonList(role));
 
 		return claims;
 	}

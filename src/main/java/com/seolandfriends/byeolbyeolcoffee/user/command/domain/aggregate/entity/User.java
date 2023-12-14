@@ -1,7 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,37 +12,39 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import java.util.List;
-import java.util.UUID;
 
 
 @Entity
 @Getter
 @AllArgsConstructor
-@Table(name = "TBL_USER")
-@ToString
+@Table(name = "user")
 public class User {
 
 	// 회원 고유 식별자
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "USER_ID")
-	private UUID userId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "user_id", unique = true)
+	private Integer userId;
 
 	// 로그인 아이디
-	@Column(name = "user_account", nullable = false, unique = true)
+	@Column(name = "user_Account", unique = true)
 	private String userAccount;
 
 	// 비밀번호
-	@Column(name = "user_password", nullable = false)
+	@Column(name = "user_password")
 	private String userPassword;
 
 	// 닉네임
-	@Column(name = "user_nickname", nullable = false, unique = true)
+	@Column(name = "user_nickname", unique = true)
 	private String userNickName;
 
 	// 이메일 주소
-	@Column(name = "user_email", nullable = false, unique = true)
+	@Column(name = "user_email", unique = true)
 	private String userEmail;
+
+	//자기소개
+	@Column(name = "user_bio")
+	private String userBio;
 
 	// 카카오 아이디
 	@Column(name = "kakao_id")
@@ -54,13 +55,12 @@ public class User {
 	private String kakaoName;
 
 	// 회원 상태 (true = 정상 회원, false = 삭제된 회원)
-	@Column(name = "user_status")
-	private boolean status;
+	@Column(name = "user_status", columnDefinition = "boolean default true")
+	private Boolean status = true;
 
-	// 회원 역할 (Admin 또는 User)
-	@OneToMany
-	@JoinColumn(name = "USER_ID")
-	private List<UserRole> userRole;
+	// 회원 역활
+	@Column(name = "user_role", columnDefinition = "boolean default 2")
+	private int userRole = 2;
 
 	// OAuth 인증 제공자 (kakao 등)
 	private String provider;
@@ -70,7 +70,7 @@ public class User {
 
 	protected User() {}
 
-	public void setUserId(UUID userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 
@@ -90,6 +90,8 @@ public class User {
 		this.userEmail = userEmail;
 	}
 
+	public void setUserBio(String userBio) { this.userBio = userBio; }
+
 	public void setKakaoId(String kakaoId) {
 		this.kakaoId = kakaoId;
 	}
@@ -98,14 +100,11 @@ public class User {
 		this.kakaoName = kakaoName;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(Boolean status) {
 		this.status = status;
 	}
 
-	public void setUserRole(
-		List<UserRole> userRole) {
-		this.userRole = userRole;
-	}
+	public  void  setUserRole(Integer userRole) { this.userRole = userRole; }
 
 	public void setProvider(String provider) {
 		this.provider = provider;
@@ -116,7 +115,7 @@ public class User {
 	}
 
 	public User build() {
-		return new User(userId, userAccount, userPassword, userNickName, userEmail, kakaoId, kakaoName, status, userRole, provider, provideID);
+		return new User(userId, userAccount, userPassword, userNickName, userEmail, userBio, kakaoId, kakaoName, status, userRole, provider, provideID);
 	}
 
 	@Override
@@ -127,6 +126,7 @@ public class User {
 			", userPassword='" + userPassword + '\'' +
 			", userNickName='" + userNickName + '\'' +
 			", userEmail='" + userEmail + '\'' +
+			", userBio='" + userBio + '\'' +
 			", kakaoId='" + kakaoId + '\'' +
 			", kakaoName='" + kakaoName + '\'' +
 			", status=" + status +

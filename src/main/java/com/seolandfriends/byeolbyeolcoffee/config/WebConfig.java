@@ -1,36 +1,22 @@
 package com.seolandfriends.byeolbyeolcoffee.config;
 
-import org.springframework.beans.factory.annotation.Value;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.seolandfriends.byeolbyeolcoffee.jwt.filter.HeaderFilter;
-
 @Configuration
-@ComponentScan(basePackages = "com.seolandfriends.byeolbyeolcoffee")
 public class WebConfig implements WebMvcConfigurer {
 
-	@Value("${image.add-resource-locations}")
-	private String ADD_RESOURCE_LOCATION;
-
-	@Value("${image.add-resource-handler}")
-	private String ADD_RESOURCE_HANDLER;
-
+	@Autowired
 	private final HeaderFilter headerFilter;
 
 	public WebConfig(HeaderFilter headerFilter) {
 		this.headerFilter = headerFilter;
-	}
-
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry){
-		registry.addResourceHandler(ADD_RESOURCE_HANDLER)
-			.addResourceLocations(ADD_RESOURCE_LOCATION);
 	}
 
 	@Bean
@@ -41,12 +27,8 @@ public class WebConfig implements WebMvcConfigurer {
 		return registrationBean;
 	}
 
-	public void addCorsMappings(CorsRegistry registry) {
-		registry.addMapping("/**")
-			.allowedOrigins("http://localhost:3000") // 또는 "*"로 모든 출처 허용
-			.allowedMethods("GET", "POST", "PUT", "DELETE") // 등등.
-			.allowedHeaders("*")
-			.allowCredentials(true);
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
-
 }

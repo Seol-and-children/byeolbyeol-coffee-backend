@@ -2,7 +2,15 @@ package com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.enti
 
 import java.time.LocalDateTime;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
 
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo.ReviewUserVO;
 
@@ -48,7 +56,7 @@ public class Review {
 		registerTime = LocalDateTime.now();
 	}
 
-	@Builder
+	@Builder(toBuilder = true)
 	public Review(String reviewName, String photoUrl, String content,
 		ReviewUserVO author, Integer likesCount, Integer viewsCount) {
 		this.reviewName = reviewName;
@@ -57,13 +65,6 @@ public class Review {
 		this.author = author;
 		this.likesCount = likesCount != null ? likesCount : this.likesCount;
 		this.viewsCount = viewsCount != null ? viewsCount : this.viewsCount;
-	}
-
-	/* 리뷰 업데이트 메소드 */
-	public void updateReview(String reviewName, String photoUrl, String content) {
-		this.reviewName = reviewName;
-		this.photoUrl = photoUrl;
-		this.content = content;
 	}
 
 	public Review reviewImageUrl(String photoUrl) {

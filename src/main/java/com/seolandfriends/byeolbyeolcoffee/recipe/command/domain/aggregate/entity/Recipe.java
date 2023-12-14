@@ -1,13 +1,12 @@
 package com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import javax.persistence.*;
 
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverage;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafe;
-import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUser;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.BaseBeverageVO;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.FranchiseCafeVO;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUserVO;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -16,40 +15,41 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @Entity
+@Table(name = "recipe")
 public class Recipe {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id", nullable = false)
 	private Long recipeId;
 
-	@Column
+	@Column(name = "name", nullable = false, length = 128)
 	private String recipeName;
 
-	@Column
-	private String recipePhoto;
+	@Column(name = "photo")
+	private String photoUrl;
 
-	@Column
+	@Column(name = "description", length = 255)
 	private String description;
 
-	@Embedded
-	private FranchiseCafe franchiseCafe;
+	@ManyToOne
+	@JoinColumn(name = "franchise_id", nullable = false)
+	private FranchiseCafeVO franchiseCafeVO;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id", nullable = false)
+	private RecipeUserVO author;
 
 	@Embedded
-	private BaseBeverage baseBeverage;
+	private BaseBeverageVO baseBeverageVO;
 
-	@ElementCollection
-	private List<String> customOptions;
-
-	@Column
+	@Column(name = "register_time")
 	private LocalDateTime registerTime;
 
-	@Embedded
-	private RecipeUser author;
-
-	@Column(nullable = false)
+	@Column(name = "likes_count", nullable = false)
 	private Integer likesCount = 0;
 
-	@Column(nullable = false)
+	@Column(name = "views_count", nullable = false)
 	private Integer viewsCount = 0;
 
 	@PrePersist
@@ -57,31 +57,18 @@ public class Recipe {
 		registerTime = LocalDateTime.now();
 	}
 
-	@Builder
-	public Recipe(String recipeName, String recipePhoto, String description,
-		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		List<String> customOptions, RecipeUser author, Integer likesCount, Integer viewsCount) {
+	@Builder(toBuilder = true)
+	public Recipe(String recipeName, String photoUrl, String description,
+		FranchiseCafeVO franchiseCafeVO, BaseBeverageVO baseBeverageVO
+		, RecipeUserVO author, Integer likesCount, Integer viewsCount) {
 		this.recipeName = recipeName;
-		this.recipePhoto = recipePhoto;
+		this.photoUrl = photoUrl;
 		this.description = description;
-		this.franchiseCafe = franchiseCafe;
-		this.baseBeverage = baseBeverage;
-		this.customOptions = customOptions;
+		this.franchiseCafeVO = franchiseCafeVO;
+		this.baseBeverageVO = baseBeverageVO;
 		this.author = author;
 		this.likesCount = likesCount != null ? likesCount : this.likesCount;
 		this.viewsCount = viewsCount != null ? viewsCount : this.viewsCount;
-	}
-
-	/* 레시피 업데이트 메소드 */
-	public void updateRecipe(String recipeName, String recipePhoto, String description,
-		FranchiseCafe franchiseCafe, BaseBeverage baseBeverage,
-		List<String> customOptions) {
-		this.recipeName = recipeName;
-		this.recipePhoto = recipePhoto;
-		this.description = description;
-		this.franchiseCafe = franchiseCafe;
-		this.baseBeverage = baseBeverage;
-		this.customOptions = customOptions;
 	}
 
 	/* 좋아요 수 증가 메소드 */

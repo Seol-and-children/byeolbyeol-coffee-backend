@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.ReviewCommentDTO;
+import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.ReviewComment;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo.CommentUserVO;
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewCommentCommandRepository;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewCommandRepository;
+import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewCommentCommandRepository;
 
 @Service
 public class ReviewCommentCommandService {

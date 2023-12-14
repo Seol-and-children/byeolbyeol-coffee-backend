@@ -5,8 +5,11 @@ spring:
     password: syuproject
   jpa:
     hibernate:
-    ddl-auto: update
+      ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
   web:
     resources:
       static-locations: classpath:/recipeimgs/
@@ -17,7 +20,28 @@ spring:
       max-request-size: 10MB
 
 image:
-  add-resource-locations: classpath:/static/recipeimgs/
+  add-resource-locations: file:///C:/byeolbyeol/images/
   add-resource-handler: /recipeimgs/**
-  image-dir: src/main/resources/static/recipeimgs
+  image-dir: C:/byeolbyeol/images
   image-url: http://localhost:8080/recipeimgs/
+
+jwt:
+  key: "dohsdfhfblkcvblhvjbcxhlhvu4seppoqoiquweoiqfjbkv019ujfodsh01lr4u55o2nj91u091fcsnsboq,134293y9skdnfk"
+  tokenValidateTime: 86400000
+
+jackson:
+  serialization:
+    indent_output: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE

@@ -12,8 +12,8 @@ import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.Review
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.ReviewLike;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.vo.LikeUserVO;
-import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewLikeCommandRepository;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewCommandRepository;
+import com.seolandfriends.byeolbyeolcoffee.review.command.domain.repository.ReviewLikeCommandRepository;
 
 @Service
 public class ReviewLikeCommandService {
