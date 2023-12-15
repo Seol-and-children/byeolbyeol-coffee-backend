@@ -9,4 +9,6 @@ import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entit
 @Repository
 public interface SearchRecipeRepository extends JpaRepository<Recipe, Long> {
 	List<Recipe> findByRecipeNameContaining(String query);
+	List<Recipe> findByAuthorUserNicknameContaining(String query);
+
 }

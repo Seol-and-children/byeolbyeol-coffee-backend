@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
 import com.seolandfriends.byeolbyeolcoffee.search.command.application.service.SearchService;
+import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.User;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,9 +25,21 @@ public class SearchController {
 
 	/*데이터 베이스가 없으므로 임시로 Report로 설정
 	  검색 기능*/
-	@GetMapping("/recipe/{recipeName}")
-	public List<Recipe> search(@PathVariable String recipeName) {
+	@GetMapping("/recipe/recipename/{recipeName}")
+	public List<Recipe> searchRecipe(@PathVariable String recipeName) {
 		log.info("query: {}",recipeName);
-		return searchService.search(recipeName);
+		return searchService.searchRecipe(recipeName);
+	}
+
+	@GetMapping("/recipe/nickname/{nickName}")
+	public List<Recipe> searchNickname(@PathVariable String nickName) {
+		log.info("query: {}",nickName);
+		return searchService.searchNickname(nickName);
+	}
+
+	@GetMapping("/user/{userName}")
+	public List<User> searchUser(@PathVariable String userName) {
+		log.info("query: {}",userName);
+		return searchService.searchUser(userName);
 	}
 }
