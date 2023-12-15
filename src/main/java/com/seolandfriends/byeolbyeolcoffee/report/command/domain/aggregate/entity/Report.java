@@ -31,6 +31,8 @@ public class Report {
 	private String reportCategory;
 	@Column(name = "report_reason")
 	private String reportReason;
+	@Column(name = "authoor_name")
+	private String authorName;
 	@Column(name = "report_time")
 	private LocalDateTime reportTime;
 	@Column(name = "process")
@@ -45,9 +47,10 @@ public class Report {
 	}
 
 	@Builder
-	public Report(String reportCategory, String reportReason, boolean processing, Recipe recipe){
+	public Report(String reportCategory, String reportReason, String authorName, boolean processing, Recipe recipe){
 		this.reportCategory = reportCategory;
 		this.reportReason = reportReason;
+		this.authorName = authorName;
 		this.processing = processing;
 		this.recipe = recipe;
 	}

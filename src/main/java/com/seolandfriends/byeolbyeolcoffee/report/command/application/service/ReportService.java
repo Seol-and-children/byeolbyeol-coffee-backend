@@ -36,6 +36,7 @@ public class ReportService {
 		String recipeContent = recipe.getDescription();
 		Report report = Report.builder()
 			.reportCategory(reportDTO.getReportCategory())
+			.authorName(reportDTO.getAuthorName())
 			.reportReason(reportDTO.getReportReason())
 			.processing(reportDTO.isProcessing())
 			.recipe(recipe)
@@ -43,7 +44,6 @@ public class ReportService {
 		Report savedReport = reportRepository.save(report);
 		ReportDTO reportDTO1 = modelMapper.map(savedReport, ReportDTO.class);
 		reportDTO1.setReportedName(recipeReported);
-		reportDTO1.setAuthorName("박형준");
 		reportDTO1.setReportedContent(recipeContent);
 		reportDTO1.setContentTitle(recipeTitle);
 		return reportDTO1;
