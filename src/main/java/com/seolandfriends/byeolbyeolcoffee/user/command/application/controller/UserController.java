@@ -19,7 +19,7 @@ public class UserController {
 
 	private final UserService userService;
 
-	public UserController(UserService userService) {
+	public UserController(UserService userService)	 {
 		this.userService = userService;
 	}
 
@@ -31,6 +31,16 @@ public class UserController {
 		UserDTO userDTO = userService.selectMyInfo(userAccount);
 
 		log.info("[UserController] selectMyUserInfo End - userAccount: {}", userAccount);
+		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회 성공", true, userDTO));
+	}
+
+	@GetMapping("/other/{userId}")
+	public ResponseEntity<ResponseDTO> selectAnotherUserInfo(@PathVariable Integer userId){
+		log.info("[UserController] selectAnotherUserInfo Start - userId: {}", userId);
+
+		UserDTO userDTO = userService.selectAnotherUserInfo(userId);
+
+		log.info("[UserController] selectAnotherUserInfo End - userId: {}", userId);
 		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회 성공", true, userDTO));
 	}
 
