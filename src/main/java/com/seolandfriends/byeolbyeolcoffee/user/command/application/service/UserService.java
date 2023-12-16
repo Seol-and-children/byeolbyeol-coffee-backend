@@ -29,6 +29,18 @@ public class UserService {
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	public UserDTO selectAnotherUserInfo(Integer userId) {
+		log.info("[UserService] selectAnotherUserInfo Start - userId: {}", userId);
+
+		User user = userRepository.findByUserId(userId);
+		if (user == null) {
+			throw new UsernameNotFoundException("User not found with userId: " + userId);
+		}
+
+		log.info("[UserService] selectAnotherUserInfo End - userId: {}", userId);
+		return modelMapper.map(user, UserDTO.class);
+	}
+
 	public UserDTO selectMyInfo(String userAccount) {
 		log.info("[UserService] selectMyInfo Start - userAccount: {}", userAccount);
 
@@ -101,9 +113,6 @@ public class UserService {
 
 		return updatedUserDTO;
 	}
-
-
-
 
 	@Transactional
 	public void deleteUserByAccount(String userAccount) {
