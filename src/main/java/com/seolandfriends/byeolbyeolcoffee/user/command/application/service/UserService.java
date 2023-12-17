@@ -1,7 +1,6 @@
 package com.seolandfriends.byeolbyeolcoffee.user.command.application.service;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import com.seolandfriends.byeolbyeolcoffee.exception.InvalidPasswordException;
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.UserDTO;
@@ -27,30 +26,6 @@ public class UserService {
 		this.userRepository = userRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
-	}
-
-	public UserDTO selectAnotherUserInfo(Integer userId) {
-		log.info("[UserService] selectAnotherUserInfo Start - userId: {}", userId);
-
-		User user = userRepository.findByUserId(userId);
-		if (user == null) {
-			throw new UsernameNotFoundException("User not found with userId: " + userId);
-		}
-
-		log.info("[UserService] selectAnotherUserInfo End - userId: {}", userId);
-		return modelMapper.map(user, UserDTO.class);
-	}
-
-	public UserDTO selectMyInfo(String userAccount) {
-		log.info("[UserService] selectMyInfo Start - userAccount: {}", userAccount);
-
-		User user = userRepository.findByUserAccount(userAccount);
-		if (user == null) {
-			throw new UsernameNotFoundException("User not found with Account: " + userAccount);
-		}
-
-		log.info("[UserService] selectMyInfo End - userAccount: {}", userAccount);
-		return modelMapper.map(user, UserDTO.class);
 	}
 
 	@Transactional
