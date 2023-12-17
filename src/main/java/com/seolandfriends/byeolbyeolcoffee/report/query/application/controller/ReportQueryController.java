@@ -28,15 +28,15 @@ public class ReportQueryController {
 	//모든 신고 불러오기
 	@GetMapping
 	public ResponseEntity<List<ReportDTO>> getAllReport(){
-		List<ReportDTO> reoprtDTO = reportQueryService.getAllReport();
-		return ResponseEntity.ok(reoprtDTO);
+		List<ReportDTO> reportDTO = reportQueryService.getAllReport();
+		return ResponseEntity.ok(reportDTO);
 	}
 
 
 
 	//특정 신고 불러오기
 	@GetMapping("/{reportId}")
-	public ResponseEntity<ReportDTO> getRepoert(@PathVariable Long reportId) {
+	public ResponseEntity<ReportDTO> getReport(@PathVariable Long reportId) {
 		ReportDTO reportDTO = reportQueryService.getReport(reportId);
 		return ResponseEntity.ok(reportDTO);
 	}

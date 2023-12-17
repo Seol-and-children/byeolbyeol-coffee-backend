@@ -9,5 +9,5 @@ import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.
 
 @Repository
 public interface SearchNicknameRepository extends JpaRepository<User, Long> {
-	List<User> findByUserNickNameContaining(String query);
+	//List<User> findByUserNickNameContaining(String query);
 }

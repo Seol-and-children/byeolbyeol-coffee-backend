@@ -27,15 +27,15 @@ public class ReportController {
 	}
 
 	//새로운 신고 생성
-	@PostMapping
-	public ResponseEntity<ReportDTO> createReport(@RequestBody ReportDTO reportDTO) {
-		ReportDTO reportDTo = reportService.createReport(reportDTO);
+	@PostMapping("/recipe")
+	public ResponseEntity<ReportDTO> createRecipeReport(@RequestBody ReportDTO reportDTO) {
+		ReportDTO reportDTo = reportService.createRecipeReport(reportDTO);
 		return ResponseEntity.ok(reportDTo);
 	}
 
 	//신고 처리 수정(true/false)
 	@PutMapping("/{reportId}")
-	public ResponseEntity<ReportDTO> modifyReport(@PathVariable Long reportId, @RequestBody ReportDTO reportDTO){
+	public ResponseEntity<ReportDTO> modifyRecipeReport(@PathVariable Long reportId, @RequestBody ReportDTO reportDTO){
 		ReportDTO modifyreport = reportService.updateReport(reportId, reportDTO);
 		return ResponseEntity.ok(modifyreport);
 	}
