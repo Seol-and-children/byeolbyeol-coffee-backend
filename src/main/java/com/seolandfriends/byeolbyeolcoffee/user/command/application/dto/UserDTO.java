@@ -23,8 +23,8 @@ public class UserDTO implements UserDetails {
 	private String kakaoName;
 	private Boolean status = true;
 	private Integer userRole = 2;
-	private String currentPassword; // 추가된 필드: 현재 비밀번호 확인용
-	private String newPassword; // 추가된 필드: 새 비밀번호 설정용
+	private String currentPassword;
+	private String newPassword;
 	private Collection<GrantedAuthority> roles;
 
 	@Override

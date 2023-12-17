@@ -1,7 +1,5 @@
 package com.seolandfriends.byeolbyeolcoffee.user.command.application.controller;
 
-import java.util.UUID;
-
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -21,27 +19,6 @@ public class UserController {
 
 	public UserController(UserService userService)	 {
 		this.userService = userService;
-	}
-
-	@ApiOperation(value = "회원 조회 요청", notes = "회원 한명이 조회됩니다.", tags = { "UserController" })
-	@GetMapping("/{userAccount}")
-	public ResponseEntity<ResponseDTO> selectMyUserInfo(@PathVariable String userAccount){
-		log.info("[UserController] selectMyUserInfo Start - userAccount: {}", userAccount);
-
-		UserDTO userDTO = userService.selectMyInfo(userAccount);
-
-		log.info("[UserController] selectMyUserInfo End - userAccount: {}", userAccount);
-		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회 성공", true, userDTO));
-	}
-
-	@GetMapping("/other/{userId}")
-	public ResponseEntity<ResponseDTO> selectAnotherUserInfo(@PathVariable Integer userId){
-		log.info("[UserController] selectAnotherUserInfo Start - userId: {}", userId);
-
-		UserDTO userDTO = userService.selectAnotherUserInfo(userId);
-
-		log.info("[UserController] selectAnotherUserInfo End - userId: {}", userId);
-		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회 성공", true, userDTO));
 	}
 
 	@PutMapping("/{userAccount}")

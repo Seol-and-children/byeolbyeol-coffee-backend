@@ -20,7 +20,6 @@ import com.seolandfriends.byeolbyeolcoffee.user.command.domain.repository.UserRe
 import com.seolandfriends.byeolbyeolcoffee.user.command.domain.service.AuthService;
 
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
@@ -62,7 +61,7 @@ public class AuthController {
 		Integer userRole = user.getUserRole();
 		String userBio = user.getUserBio();
 
-		// 로그인한 사용자의 계정 정보를 포함시킵니다.
+		// 로그인한 사용자의 계정 정보를 포함
 		Map<String, Object> responseData = new HashMap<>();
 		responseData.put("accessToken", accessToken);
 		responseData.put("userNickName", userNickName);
