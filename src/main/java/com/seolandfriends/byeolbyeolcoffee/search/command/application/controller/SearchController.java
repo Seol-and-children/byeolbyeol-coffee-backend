@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
+import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.search.command.application.service.SearchService;
 import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.User;
 
@@ -32,14 +33,26 @@ public class SearchController {
 	}
 
 	@GetMapping("/recipe/nickname/{nickName}")
-	public List<Recipe> searchNickname(@PathVariable String nickName) {
+	public List<Recipe> searchRecipeNickname(@PathVariable String nickName) {
 		log.info("query: {}",nickName);
-		return searchService.searchNickname(nickName);
+		return searchService.searchRecipeNickname(nickName);
 	}
 
-	@GetMapping("/user/{userName}")
-	public List<User> searchUser(@PathVariable String userName) {
-		log.info("query: {}",userName);
-		return searchService.searchUser(userName);
+	@GetMapping("/review/reviewname/{reviewName}")
+	public List<Review> searchReview(@PathVariable String reviewName) {
+		log.info("query: {}",reviewName);
+		return searchService.searchReview(reviewName);
 	}
+
+	@GetMapping("/review/nickname/{nickName}")
+	public List<Review> searchReviewNickname(@PathVariable String nickName) {
+		log.info("query: {}",nickName);
+		return searchService.searchReviewNickname(nickName);
+	}
+
+	// @GetMapping("/user/{userName}")
+	// public List<User> searchUser(@PathVariable String userName) {
+	// 	log.info("query: {}",userName);
+	// 	return searchService.searchUser(userName);
+	// }
 }

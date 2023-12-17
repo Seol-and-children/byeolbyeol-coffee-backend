@@ -29,7 +29,7 @@ public class ReportService {
 
 	// 새로운 신고 생성
 	@Transactional
-	public ReportDTO createReport(ReportDTO reportDTO) {
+	public ReportDTO createRecipeReport(ReportDTO reportDTO) {
 		Recipe recipe = recipeIdRepository.findById(reportDTO.getRecipeId()).orElseThrow(() -> new RuntimeException("신고 정보를 찾을 수 없습니다.. ID: " + reportDTO.getRecipeId()));
 		String recipeTitle = recipe.getRecipeName();
 		String recipeReported = recipe.getAuthor().getUserNickname();
