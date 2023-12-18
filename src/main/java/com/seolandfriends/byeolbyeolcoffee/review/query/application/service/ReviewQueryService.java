@@ -56,6 +56,6 @@ public class ReviewQueryService {
 		ReviewDTO reviewDTO = modelMapper.map(savedReview, ReviewDTO.class);
 		reviewDTO.setUserNickname(getUserNicknameByReviewId(savedReview.getReviewId()));
 
-		return modelMapper.map(savedReview, ReviewDTO.class);
+		return reviewDTO;
 	}
 }
