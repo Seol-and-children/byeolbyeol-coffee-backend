@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.seolandfriends.byeolbyeolcoffee.report.command.application.dto.ReportDTO;
+import com.seolandfriends.byeolbyeolcoffee.report.command.application.dto.ReportReviewDTO;
 import com.seolandfriends.byeolbyeolcoffee.report.command.application.service.ReportService;
 
 @RestController
@@ -30,6 +31,12 @@ public class ReportController {
 	@PostMapping("/recipe")
 	public ResponseEntity<ReportDTO> createRecipeReport(@RequestBody ReportDTO reportDTO) {
 		ReportDTO reportDTo = reportService.createRecipeReport(reportDTO);
+		return ResponseEntity.ok(reportDTo);
+	}
+
+	@PostMapping("/review")
+	public ResponseEntity<ReportReviewDTO> createReviewReport(@RequestBody ReportReviewDTO reportDTO) {
+		ReportReviewDTO reportDTo = reportService.createReportReview(reportDTO);
 		return ResponseEntity.ok(reportDTo);
 	}
 
