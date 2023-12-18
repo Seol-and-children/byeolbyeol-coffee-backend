@@ -56,9 +56,9 @@ public class SearchService {
 		return review;
 	}
 
-	// public List<User> searchUser(String query) {
-	// 	List<User> user = searchNicknameRepository.findByUserNickNameContaining(query);
-	// 	log.info("result: {}",user);
-	// 	return user;
-	// }
+	public List<User> searchUser(String query) {
+		List<User> user = searchNicknameRepository.findByUserNickNameContaining(query);
+		log.info("result: {}",user);
+		return user;
+	}
 }
