@@ -27,7 +27,7 @@ public class RecipeComment {
 	@Column(name = "id", nullable = false)
 	private Long commentId;
 
-	@ManyToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne
 	@JoinColumn(name = "user_id", nullable = false)
 	private CommentUserVO commentUserVO;
 
