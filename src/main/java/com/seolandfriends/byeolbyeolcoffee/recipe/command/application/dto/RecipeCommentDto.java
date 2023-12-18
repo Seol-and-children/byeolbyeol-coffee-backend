@@ -17,7 +17,6 @@ import lombok.Setter;
 public class RecipeCommentDto implements Serializable {
 	private Long commentId;
 
-	@NotNull
 	private int userId;
 
 	@NotBlank
