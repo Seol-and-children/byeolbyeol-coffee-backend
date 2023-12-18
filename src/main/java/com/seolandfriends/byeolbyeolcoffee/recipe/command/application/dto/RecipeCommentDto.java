@@ -15,10 +15,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecipeCommentDto implements Serializable {
-	@NotNull
 	private Long commentId;
 
-  @NotNull
+	@NotNull
 	private int userId;
 
 	@NotBlank

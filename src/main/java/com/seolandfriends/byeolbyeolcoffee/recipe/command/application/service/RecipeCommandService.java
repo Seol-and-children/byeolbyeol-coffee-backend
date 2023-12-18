@@ -19,12 +19,14 @@ import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.Fr
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.RecipeUserVO;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeCommandRepository;
 import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeCustomOptionCommandRepository;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.repository.RecipeLikeCommandRepository;
 import com.seolandfriends.byeolbyeolcoffee.util.FileUploadUtils;
 
 @Service
 public class RecipeCommandService {
 	private final RecipeCommandRepository recipeCommandRepository;
 	private final RecipeCustomOptionCommandRepository customOptionRepository;
+	private final RecipeLikeCommandRepository recipeLikeCommandRepository;
 	ModelMapper modelMapper = new ModelMapper();
 
 	/* 이미지 저장 할 위치 및 응답 할 이미지 주소 */
@@ -36,9 +38,11 @@ public class RecipeCommandService {
 
 	@Autowired
 	public RecipeCommandService(RecipeCommandRepository recipeCommandRepository,
-		RecipeCustomOptionCommandRepository customOptionRepository) {
+		RecipeCustomOptionCommandRepository customOptionRepository,
+		RecipeLikeCommandRepository recipeLikeCommandRepository) {
 		this.recipeCommandRepository = recipeCommandRepository;
 		this.customOptionRepository = customOptionRepository;
+		this.recipeLikeCommandRepository = recipeLikeCommandRepository;
 	}
 
 	/* 새로운 레시피 생성 메소드 */
@@ -122,11 +126,11 @@ public class RecipeCommandService {
 	}
 
 	/* {recipeId}를 가진 레시피 삭제하기 */
+	@Transactional
 	public void deleteRecipe(Long recipeId) {
 		if (!recipeCommandRepository.existsById(recipeId)) {
 			throw new RuntimeException("레시피를 찾을 수 없습니다. ID: " + recipeId);
 		}
 		recipeCommandRepository.deleteById(recipeId);
 	}
-
 }

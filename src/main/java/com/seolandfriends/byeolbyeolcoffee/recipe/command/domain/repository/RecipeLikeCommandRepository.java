@@ -10,4 +10,5 @@ import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.Li
 
 public interface RecipeLikeCommandRepository extends JpaRepository<RecipeLike, Long> {
 	Optional<RecipeLike> findByRecipeAndLikeUserVO(Recipe recipe, LikeUserVO likeUserVO);
+
 }
