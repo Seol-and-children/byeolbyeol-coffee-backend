@@ -23,9 +23,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
-@Table(name="report")
+@Table(name="report_review")
 @NoArgsConstructor
-public class Report {
+public class ReportReview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -42,8 +42,8 @@ public class Report {
 	private boolean processing;
 	@ManyToOne
 	@Cascade(org.hibernate.annotations.CascadeType.REMOVE)
-	@JoinColumn(name = "report_recipe_id") // Recipe 엔터티의 기본 키를 참조
-	private Recipe recipe;
+	@JoinColumn(name = "report_review_id") // Recipe 엔터티의 기본 키를 참조
+	private Review review;
 
 
 	@PrePersist
@@ -52,12 +52,12 @@ public class Report {
 	}
 
 	@Builder
-	public Report(String reportCategory, String reportReason, String authorName, boolean processing, Recipe recipe){
+	public ReportReview(String reportCategory, String reportReason, String authorName, boolean processing, Review review){
 		this.reportCategory = reportCategory;
 		this.reportReason = reportReason;
 		this.authorName = authorName;
 		this.processing = processing;
-		this.recipe = recipe;
+		this.review = review;
 	}
 
 	//처리 여부 변경 메소드
