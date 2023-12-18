@@ -50,9 +50,9 @@ public class SearchController {
 		return searchService.searchReviewNickname(nickName);
 	}
 
-	// @GetMapping("/user/{userName}")
-	// public List<User> searchUser(@PathVariable String userName) {
-	// 	log.info("query: {}",userName);
-	// 	return searchService.searchUser(userName);
-	// }
+	@GetMapping("/user/{userName}")
+	public List<User> searchUser(@PathVariable String userName) {
+		log.info("query: {}",userName);
+		return searchService.searchUser(userName);
+	}
 }
