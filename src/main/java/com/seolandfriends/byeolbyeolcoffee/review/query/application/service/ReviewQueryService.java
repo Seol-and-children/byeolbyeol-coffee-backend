@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeDto;
 import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.ReviewDTO;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.query.domain.repository.ReviewQueryRepository;
@@ -51,6 +52,10 @@ public class ReviewQueryService {
 			.orElseThrow(() -> new RuntimeException("리뷰를 찾을 수 없습니다. ID: " + reviewId));
 		savedReview.incrementViewsCount();
 		savedReview = reviewQueryRepository.save(savedReview);
+
+		ReviewDTO reviewDTO = modelMapper.map(savedReview, ReviewDTO.class);
+		reviewDTO.setUserNickname(getUserNicknameByReviewId(savedReview.getReviewId()));
+
 		return modelMapper.map(savedReview, ReviewDTO.class);
 	}
 }

@@ -41,8 +41,8 @@ public class ReviewCommandService {
 
 		try {
 			replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, reviewImage);
-
 			reviewDTO.setPhotoUrl(replaceFileName);
+
 			ReviewUserVO author = new ReviewUserVO(reviewDTO.getAuthorId());
 
 			Review newReview = Review.builder()
@@ -55,6 +55,7 @@ public class ReviewCommandService {
 				.build();
 
 			Review savedReview = reviewCommandRepository.save(newReview);
+
 			return modelMapper.map(savedReview, ReviewDTO.class);
 		} catch (Exception e) {
 			FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);

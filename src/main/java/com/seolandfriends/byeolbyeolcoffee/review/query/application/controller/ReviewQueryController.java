@@ -37,6 +37,7 @@ public class ReviewQueryController {
 	@GetMapping("/{reviewId}")
 	public ResponseEntity<ReviewDTO> getReviewById(@PathVariable Long reviewId) {
 		ReviewDTO review = reviewQueryService.getReviewById(reviewId);
+		log.info("query: {}",reviewId);
 		return ResponseEntity.ok(review);
 	}
 }
