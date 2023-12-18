@@ -27,7 +27,7 @@ public class RecipeComment {
 	private Long commentId;
 
 	@ManyToOne
-	@JoinColumn(name = "user_id", nullable = false)
+	@JoinColumn(name = "user_id")
 	private CommentUserVO commentUserVO;
 
 	@Column(name = "content", length = 255)
@@ -57,5 +57,17 @@ public class RecipeComment {
 	/* 댓글 내용 수정 메소드 */
 	public void updateContent(String content) {
 		this.content = content;
+	}
+
+	@Override
+	public String toString() {
+		return "RecipeComment{" +
+			"commentId=" + commentId +
+			", commentUserVO=" + commentUserVO +
+			", content='" + content + '\'' +
+			", parent=" + parent +
+			", depth=" + depth +
+			", recipe=" + recipe +
+			'}';
 	}
 }

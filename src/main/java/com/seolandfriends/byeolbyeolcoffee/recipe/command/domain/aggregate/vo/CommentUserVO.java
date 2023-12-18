@@ -5,10 +5,12 @@ import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 @Entity(name = "RecipeCommentUserVO")
 @Table(name = "user")
 public class CommentUserVO {
