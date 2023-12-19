@@ -29,7 +29,9 @@ public class RecipeCommentQueryService {
 		RecipeComment comment = recipeCommentQueryRepository.findById(commentId)
 			.orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다. ID: " + commentId));
 
-		return modelMapper.map(comment, RecipeCommentDto.class);
+		RecipeCommentDto commentDto = modelMapper.map(comment, RecipeCommentDto.class);
+		commentDto.setUserNickname(comment.getCommentUserVO().getUserNickname());
+		return commentDto;
 	}
 
 	/* 특정 레시피의 모든 댓글 가져오기 */
@@ -37,7 +39,11 @@ public class RecipeCommentQueryService {
 	public List<RecipeCommentDto> getAllRecipeComments(Long recipeId) {
 		List<RecipeComment> comments = recipeCommentQueryRepository.findByRecipe_RecipeId(recipeId);
 		return comments.stream()
-			.map(comment -> modelMapper.map(comment, RecipeCommentDto.class))
+			.map(comment -> {
+				RecipeCommentDto commentDto = modelMapper.map(comment, RecipeCommentDto.class);
+				commentDto.setUserNickname(comment.getCommentUserVO().getUserNickname());
+				return commentDto;
+			})
 			.collect(Collectors.toList());
 	}
 }

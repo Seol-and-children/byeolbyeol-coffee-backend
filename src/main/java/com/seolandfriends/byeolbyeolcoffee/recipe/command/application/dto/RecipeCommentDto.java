@@ -29,4 +29,6 @@ public class RecipeCommentDto implements Serializable {
 
 	@NotNull
 	private Long recipeId;
+
+	private String userNickname;
 }
