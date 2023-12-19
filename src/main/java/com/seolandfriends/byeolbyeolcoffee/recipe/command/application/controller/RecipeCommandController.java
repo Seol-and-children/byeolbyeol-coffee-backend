@@ -33,7 +33,9 @@ public class RecipeCommandController {
 
 	/* 레시피 수정 (update) */
 	@PutMapping("/{recipeId}")
-	public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long recipeId, @RequestPart MultipartFile recipeImage, @RequestPart @Valid RecipeDto recipeDto) {
+	public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long recipeId,
+		@RequestPart(required = false) MultipartFile recipeImage,
+		@RequestPart @Valid RecipeDto recipeDto) {
 		RecipeDto updatedRecipe = recipeCommandService.updateRecipe(recipeId, recipeDto, recipeImage);
 		return ResponseEntity.ok(updatedRecipe);
 	}

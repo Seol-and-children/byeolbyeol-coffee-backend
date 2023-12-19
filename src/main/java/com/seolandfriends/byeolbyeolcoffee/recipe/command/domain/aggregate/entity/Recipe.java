@@ -11,11 +11,13 @@ import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.vo.Re
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "recipe")
+@Setter
 public class Recipe {
 
 	@Id

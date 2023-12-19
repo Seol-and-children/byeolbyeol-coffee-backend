@@ -97,28 +97,22 @@ public class RecipeCommandService {
 			if (recipeImage != null && !recipeImage.isEmpty()) {
 				String imageName = UUID.randomUUID().toString().replace("-", "");
 				replaceFileName = FileUploadUtils.saveFile(IMAGE_DIR, imageName, recipeImage);
-				recipeDto.setPhotoUrl(replaceFileName);
-			} else {
-				recipeDto.setPhotoUrl(existingRecipe.getPhotoUrl());
+				existingRecipe.setPhotoUrl(replaceFileName);
 			}
 
-			Recipe updatedRecipe = Recipe.builder()
-				.recipeName(recipeDto.getRecipeName())
-				.photoUrl(recipeDto.getPhotoUrl())
-				.description(recipeDto.getDescription())
-				.franchiseCafeVO(new FranchiseCafeVO(recipeDto.getFranchiseId()))
-				.baseBeverageVO(recipeDto.getBaseBeverageVO())
-				.build();
+			// 기존 레시피 업데이트
+			existingRecipe.setRecipeName(recipeDto.getRecipeName());
+			existingRecipe.setDescription(recipeDto.getDescription());
+			existingRecipe.setFranchiseCafeVO(new FranchiseCafeVO(recipeDto.getFranchiseId()));
+			existingRecipe.setBaseBeverageVO(recipeDto.getBaseBeverageVO());
 
-			Recipe savedRecipe = recipeCommandRepository.save(updatedRecipe);
-
+			customOptionRepository.deleteByRecipeId(recipeId);
 			List<RecipeCustomOption> customOptions = recipeDto.getCustomOptions().stream()
-				.map(dto -> new RecipeCustomOption(dto.getCustomOptionName(), dto.getQuantity(), savedRecipe.getRecipeId()))
+				.map(dto -> new RecipeCustomOption(dto.getCustomOptionName(), dto.getQuantity(), recipeId))
 				.collect(Collectors.toList());
+			customOptionRepository.saveAll(customOptions); // 새 커스텀 옵션 저장
 
-			customOptionRepository.saveAll(customOptions);
-
-			return modelMapper.map(savedRecipe, RecipeDto.class);
+			return modelMapper.map(existingRecipe, RecipeDto.class);
 		} catch (IOException e) {
 			FileUploadUtils.deleteFile(IMAGE_DIR, replaceFileName);
 			throw new RuntimeException(e);
