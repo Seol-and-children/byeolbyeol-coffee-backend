@@ -17,4 +17,7 @@ public interface UserQueryRepository extends JpaRepository<User, Integer> {
 	User findByUserNickName(String userNickName);
 	Boolean existsByUserNickName(String userNickName);
 
+	Boolean existsByUserPassword(String userPassword);
+
+
 }

@@ -56,7 +56,6 @@ public class UserQueryController {
 		boolean isAvailable = userQueryService.isUserNickNameAvailable(userNickName);
 		return ResponseEntity.ok(isAvailable);
 	}
-
 	@GetMapping("/other/{userId}")
 	public ResponseEntity<ResponseDTO> selectAnotherUserInfo(@PathVariable Integer userId){
 		log.info("[UserController] selectAnotherUserInfo Start - userId: {}", userId);

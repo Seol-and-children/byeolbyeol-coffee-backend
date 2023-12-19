@@ -14,6 +14,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 @Service
 @Slf4j
 public class UserService {
@@ -21,6 +24,7 @@ public class UserService {
 	private final UserRepository userRepository;
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
@@ -88,6 +92,22 @@ public class UserService {
 
 		return updatedUserDTO;
 	}
+
+	public boolean checkUserPassword(Integer userId, String userPassword) {
+		logger.info("Checking password for user ID: {}", userId);
+
+		User user = userRepository.findByUserId(userId);
+		if (user == null) {
+			logger.warn("User not found for ID: {}", userId);
+			throw new UsernameNotFoundException("User not found");
+		}
+
+		boolean passwordMatches = passwordEncoder.matches(userPassword, user.getUserPassword());
+		logger.info("Password match for user ID {}: {}", userId, passwordMatches);
+
+		return passwordMatches;
+	}
+
 
 	@Transactional
 	public void deleteUserByAccount(String userAccount) {

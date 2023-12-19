@@ -5,8 +5,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.seolandfriends.byeolbyeolcoffee.common.ResponseDTO;
+import com.seolandfriends.byeolbyeolcoffee.common.UserPasswordCheckRequest;
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.UserDTO;
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.service.UserService;
 
@@ -14,6 +17,7 @@ import com.seolandfriends.byeolbyeolcoffee.user.command.application.service.User
 @RequestMapping("/users")
 @Slf4j
 public class UserController {
+	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
 	private final UserService userService;
 
@@ -31,6 +35,13 @@ public class UserController {
 	public ResponseEntity<ResponseDTO> updateUserBio(@PathVariable String userAccount, @RequestBody String userBio) {
 		UserDTO updatedUserDTO = userService.updateUserBio(userAccount, userBio);
 		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "회원 자기소개 수정 성공", true, updatedUserDTO));
+	}
+
+	@PostMapping("/checkUserPassword")
+	public ResponseEntity<?> checkUserPassword(@RequestBody UserPasswordCheckRequest request) {
+		logger.info("Received checkUserPassword request for user ID: {}, password: {}", request.getUserId(), request.getUserPassword());
+		boolean isPasswordCorrect = userService.checkUserPassword(request.getUserId(), request.getUserPassword());
+		return ResponseEntity.ok(isPasswordCorrect);
 	}
 
 
