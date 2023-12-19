@@ -25,15 +25,36 @@ public class UserQueryController {
 		this.userQueryService = userQueryService;
 	}
 
-	@ApiOperation(value = "회원 조회 요청", notes = "회원 한명이 조회됩니다.", tags = { "UserController" })
 	@GetMapping("/{userAccount}")
-	public ResponseEntity<ResponseDTO> selectMyUserInfo(@PathVariable String userAccount){
+	public ResponseEntity<ResponseDTO> selectMyUserInfo(@PathVariable String userAccount) {
 		log.info("[UserController] selectMyUserInfo Start - userAccount: {}", userAccount);
 
 		UserDTO userDTO = userQueryService.selectMyInfo(userAccount);
+		if (userDTO == null) {
+			// 사용자가 존재하지 않을 경우 404 상태 코드 반환
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseDTO(HttpStatus.NOT_FOUND, "User not found", false, null));
+		}
 
 		log.info("[UserController] selectMyUserInfo End - userAccount: {}", userAccount);
 		return ResponseEntity.ok(new ResponseDTO(HttpStatus.OK, "조회 성공", true, userDTO));
+	}
+
+	@GetMapping("/checkUserAccount/{userAccount}")
+	public ResponseEntity<?> checkUserAccountAvailability(@PathVariable String userAccount) {
+		boolean isAvailable = userQueryService.isUserAccountAvailable(userAccount);
+		return ResponseEntity.ok(isAvailable);
+	}
+
+	@GetMapping("/checkUserEmail/{userEmail}")
+	public ResponseEntity<?> checkUserEmailAvailability(@PathVariable String userEmail) {
+		boolean isAvailable = userQueryService.isUserEmailAvailable(userEmail);
+		return ResponseEntity.ok(isAvailable);
+	}
+
+	@GetMapping("/checkUserNickName/{userNickName}")
+	public ResponseEntity<?> checkUserNickNameAvailability(@PathVariable String userNickName) {
+		boolean isAvailable = userQueryService.isUserNickNameAvailable(userNickName);
+		return ResponseEntity.ok(isAvailable);
 	}
 
 	@GetMapping("/other/{userId}")

@@ -80,7 +80,7 @@ public class AuthService {
 			log.info("사용자 닉네임: {}", user.getUserNickName());
 			log.info("사용자 계정: {}", user.getUserAccount());
 
-			return tokenDTO;
+			return tokenProvider.generateTokenDTO(user);
 		}
 
 	}
