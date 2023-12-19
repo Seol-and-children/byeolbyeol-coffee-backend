@@ -102,14 +102,35 @@ public class KakaoService {
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
 
-			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
-			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+			JsonElement kakaoAccountElement = element.getAsJsonObject().get("kakao_account");
+			JsonObject kakao_account = kakaoAccountElement != null && kakaoAccountElement.isJsonObject()
+				? kakaoAccountElement.getAsJsonObject()
+				: null;
 
-			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-			String email = kakao_account.getAsJsonObject().get("email").getAsString();
+			String kakaoEmail = kakao_account != null && kakao_account.has("email")
+				? kakao_account.get("email").getAsString()
+				: null;
+			String kakaoName = kakao_account != null && kakao_account.has("profile")
+				&& kakao_account.getAsJsonObject("profile").has("nickname")
+				? kakao_account.getAsJsonObject("profile").get("nickname").getAsString()
+				: null;
 
-			userInfo.put("nickname", nickname);
-			userInfo.put("email", email);
+			userInfo.put("kakaoEmail", kakaoEmail);
+			userInfo.put("kakaoName", kakaoName);
+			JsonElement propertiesElement = element.getAsJsonObject().get("properties");
+			JsonObject properties = propertiesElement != null && propertiesElement.isJsonObject()
+				? propertiesElement.getAsJsonObject()
+				: null;
+
+			if (kakao_account != null) {
+				String userEmail = kakao_account.has("email") ? kakao_account.get("email").getAsString() : null;
+				String userNickName = properties.has("nickname") ? properties.get("nickname").getAsString() : null;
+				String userAccount = userNickName; // 혹은 다른 정보를 userAccount에 저장
+
+				if (userEmail != null) userInfo.put("userEmail", userEmail);
+				if (userNickName != null) userInfo.put("userNickName", userNickName);
+				if (userAccount != null) userInfo.put("userAccount", userAccount);
+			}
 
 		} catch (IOException e) {
 			LOGGER.severe("IOException occurred in getUserInfo: " + e.getMessage());
