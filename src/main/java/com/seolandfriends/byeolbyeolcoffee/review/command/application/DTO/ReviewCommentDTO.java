@@ -13,9 +13,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReviewCommentDTO implements Serializable {
 	private Long commentId;
-	private String userId;
+	private int userId;
 	private String content;
 	private Long parentId;
 	private int depth;
 	private Long recipeId;
+	private String userNickname;
 }

@@ -36,14 +36,14 @@ public class ReviewCommentCommandController {
 	@PutMapping("/{commentId}")
 	public ResponseEntity<ReviewCommentDTO> updateReviewComment(@PathVariable Long commentId,
 		@RequestBody ReviewCommentDTO reviewCommentDTO, @PathVariable Long reviewId) {
-		ReviewCommentDTO updatedComment = reviewCommentCommandService.updateReviewComment(commentId, reviewCommentDTO);
+		ReviewCommentDTO updatedComment = reviewCommentCommandService.updateReviewComment(commentId, reviewCommentDTO, reviewId);
 		return ResponseEntity.ok(updatedComment);
 	}
 
 	/* 댓글 삭제하기 (delete) */
 	@DeleteMapping("/{commentId}")
 	public ResponseEntity<?> deleteReviewComment(@PathVariable Long commentId, @PathVariable Long reviewId) {
-		reviewCommentCommandService.deleteReviewComment(commentId);
+		reviewCommentCommandService.deleteReviewComment(reviewId, commentId);
 		return ResponseEntity.ok("댓글 삭제 완료");
 	}
 }

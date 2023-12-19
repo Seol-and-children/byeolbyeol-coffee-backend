@@ -17,5 +17,13 @@ import lombok.NoArgsConstructor;
 public class CommentUserVO {
 	@Id
 	@Column(name = "USER_ID")
-	private String userId;
+	private int userId;
+
+	@Column(name = "USER_NICKNAME")
+	private String userNickname;
+
+	public CommentUserVO(int userId) {
+		this.userId = userId;
+	}
 }
+

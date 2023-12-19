@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.Recipe;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeLike;
 import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.ReviewLikeDTO;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.ReviewLike;
@@ -53,5 +55,14 @@ public class ReviewLikeCommandService {
 		}
 		reviewCommandRepository.save(review);
 		return modelMapper.map(reviewLikeDTO, ReviewLikeDTO.class);
+	}
+
+	public boolean checkIfUserLikedReview(Long reviewId, int userId) {
+		Review review = reviewCommandRepository.findById(reviewId)
+			.orElseThrow(() -> new EntityNotFoundException("리뷰를 찾을 수 없습니다."));
+		LikeUserVO likeUserVO = new LikeUserVO(userId);
+		// 좋아요 상태 확인
+		Optional<ReviewLike> existingLike = reviewLikeCommandRepository.findByReviewAndLikeUserVO(review, likeUserVO);
+		return existingLike.isPresent();
 	}
 }

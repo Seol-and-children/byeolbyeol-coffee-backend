@@ -18,5 +18,12 @@ import lombok.NoArgsConstructor;
 public class LikeUserVO {
 	@Id
 	@Column(name = "USER_ID")
-	private String userId;
+	private int userId;
+
+	@Column(name = "user_nickname")
+	private String userNickname;
+
+	public LikeUserVO(int userId) {
+		this.userId = userId;
+	}
 }

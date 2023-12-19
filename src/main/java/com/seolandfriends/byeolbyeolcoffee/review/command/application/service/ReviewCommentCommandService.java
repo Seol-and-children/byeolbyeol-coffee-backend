@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.application.dto.RecipeCommentDto;
+import com.seolandfriends.byeolbyeolcoffee.recipe.command.domain.aggregate.entity.RecipeComment;
 import com.seolandfriends.byeolbyeolcoffee.review.command.application.DTO.ReviewCommentDTO;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.Review;
 import com.seolandfriends.byeolbyeolcoffee.review.command.domain.aggregate.entity.ReviewComment;
@@ -62,20 +64,28 @@ public class ReviewCommentCommandService {
 
 	/* 댓글 수정 메소드 */
 	@Transactional
-	public ReviewCommentDTO updateReviewComment(Long commentId, ReviewCommentDTO reviewCommentDTO) {
-		ReviewComment existingComment = reviewCommentCommandRepository.findById(commentId)
+	public ReviewCommentDTO updateReviewComment(Long commentId, ReviewCommentDTO reviewCommentDTO, Long reviewId) {
+		ReviewComment comment = reviewCommentCommandRepository.findById(commentId)
 			.orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다. ID: " + commentId));
 
-		existingComment.updateContent(reviewCommentDTO.getContent());
+		if (!comment.getReview().getReviewId().equals(reviewId)) {
+			throw new SecurityException("이 리뷰의 댓글이 아닙니다.");
+		}
 
-		ReviewComment updatedComment = reviewCommentCommandRepository.save(existingComment);
+		comment.updateContent(reviewCommentDTO.getContent());
+
+		ReviewComment updatedComment = reviewCommentCommandRepository.save(comment);
 		return modelMapper.map(updatedComment, ReviewCommentDTO.class);
 	}
 
 	/* 댓글 삭제 메소드 */
-	public void deleteReviewComment(Long commentId) {
+	public void deleteReviewComment(Long reviewId, Long commentId) {
 		ReviewComment comment = reviewCommentCommandRepository.findById(commentId)
 			.orElseThrow(() -> new EntityNotFoundException("댓글을 찾을 수 없습니다. ID: " + commentId));
+
+		if (!comment.getReview().getReviewId().equals(reviewId)) {
+			throw new SecurityException("이 리뷰의 댓글이 아닙니다.");
+		}
 
 		// 댓글이 원 댓글인 경우
 		if (comment.getDepth() == 0) {

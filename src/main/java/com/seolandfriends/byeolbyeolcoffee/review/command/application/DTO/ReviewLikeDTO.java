@@ -13,5 +13,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReviewLikeDTO implements Serializable {
 	private Long recipeId;
-	private String userId;
+
+	private int userId;
 }
