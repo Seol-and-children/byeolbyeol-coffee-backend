@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import org.modelmapper.ModelMapper;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -56,9 +57,11 @@ public class UserQueryService {
 
 	public boolean isUserNickNameAvailable(String userNickName) {
 		boolean isAvailable = !userQueryRepository.existsByUserNickName(userNickName);
-		logger.info("Checking if userEmail '{}' is available: {}", userNickName, isAvailable);
+		logger.info("Checking if userNickName '{}' is available: {}", userNickName, isAvailable);
 		return isAvailable;
 	}
+
+
 
 	public UserDTO selectMyInfo(String userAccount) {
 		log.info("[UserService] selectMyInfo Start - userAccount: {}", userAccount);

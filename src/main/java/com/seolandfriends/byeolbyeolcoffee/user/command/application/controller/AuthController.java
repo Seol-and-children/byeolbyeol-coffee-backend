@@ -59,6 +59,7 @@ public class AuthController {
 			Integer userId = user.getUserId();
 			Integer userRole = user.getUserRole();
 			String userBio = user.getUserBio();
+			String userPassword = user.getUserPassword();
 
 			Map<String, Object> responseData = new HashMap<>();
 			responseData.put("accessToken", accessToken);
@@ -67,6 +68,7 @@ public class AuthController {
 			responseData.put("userId", userId);
 			responseData.put("userRole", userRole);
 			responseData.put("userBio", userBio);
+			responseData.put("userPassword", userPassword);
 
 			return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공", true, responseData));
 		} catch (UsernameNotFoundException e) {
