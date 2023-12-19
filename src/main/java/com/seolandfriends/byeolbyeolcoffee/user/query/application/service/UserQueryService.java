@@ -1,25 +1,31 @@
 package com.seolandfriends.byeolbyeolcoffee.user.query.application.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.modelmapper.ModelMapper;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.seolandfriends.byeolbyeolcoffee.user.command.application.dto.UserDTO;
 import com.seolandfriends.byeolbyeolcoffee.user.command.domain.aggregate.entity.User;
-import com.seolandfriends.byeolbyeolcoffee.user.command.domain.repository.UserRepository;
+import com.seolandfriends.byeolbyeolcoffee.user.query.domain.repository.UserQueryRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
 public class UserQueryService {
-	private final UserRepository userRepository;
+	private static final Logger logger = LoggerFactory.getLogger(UserQueryService.class);
+
+	private final UserQueryRepository userQueryRepository;
 	private final ModelMapper modelMapper;
 	private final PasswordEncoder passwordEncoder;
 
-	public UserQueryService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
+	public UserQueryService(UserQueryRepository userQueryRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+		this.userQueryRepository = userQueryRepository;
 		this.modelMapper = modelMapper;
 		this.passwordEncoder = passwordEncoder;
 	}
@@ -27,7 +33,7 @@ public class UserQueryService {
 	public UserDTO selectAnotherUserInfo(Integer userId) {
 		log.info("[UserService] selectAnotherUserInfo Start - userId: {}", userId);
 
-		User user = userRepository.findByUserId(userId);
+		User user = userQueryRepository.findByUserId(userId);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with userId: " + userId);
 		}
@@ -36,10 +42,28 @@ public class UserQueryService {
 		return modelMapper.map(user, UserDTO.class);
 	}
 
+	public boolean isUserAccountAvailable(String userAccount) {
+		boolean isAvailable = !userQueryRepository.existsByUserAccount(userAccount);
+		logger.info("Checking if userAccount '{}' is available: {}", userAccount, isAvailable);
+		return isAvailable;
+	}
+
+	public boolean isUserEmailAvailable(String userEmail) {
+		boolean isAvailable = !userQueryRepository.existsByUserEmail(userEmail);
+		logger.info("Checking if userEmail '{}' is available: {}", userEmail, isAvailable);
+		return isAvailable;
+	}
+
+	public boolean isUserNickNameAvailable(String userNickName) {
+		boolean isAvailable = !userQueryRepository.existsByUserNickName(userNickName);
+		logger.info("Checking if userEmail '{}' is available: {}", userNickName, isAvailable);
+		return isAvailable;
+	}
+
 	public UserDTO selectMyInfo(String userAccount) {
 		log.info("[UserService] selectMyInfo Start - userAccount: {}", userAccount);
 
-		User user = userRepository.findByUserAccount(userAccount);
+		User user = userQueryRepository.findByUserAccount(userAccount);
 		if (user == null) {
 			throw new UsernameNotFoundException("User not found with Account: " + userAccount);
 		}

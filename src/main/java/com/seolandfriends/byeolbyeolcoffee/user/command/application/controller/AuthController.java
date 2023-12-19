@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,30 +49,32 @@ public class AuthController {
 
 	@PostMapping("/login")
 	public ResponseEntity<ResponseDTO> login(@RequestBody UserDTO userDTO) {
-		TokenDTO tokenDTO = authService.login(userDTO);
-		String accessToken = tokenDTO.getAccessToken();
+		try {
+			TokenDTO tokenDTO = authService.login(userDTO);
+			String accessToken = tokenDTO.getAccessToken();
 
-		User user = userRepository.findByUserAccount(userDTO.getUserAccount());
-		if (user == null) {
-			// 적절한 예외 처리
+			User user = userRepository.findByUserAccount(userDTO.getUserAccount());
+			String userNickName = user.getUserNickName();
+			String userAccount = user.getUserAccount();
+			Integer userId = user.getUserId();
+			Integer userRole = user.getUserRole();
+			String userBio = user.getUserBio();
+
+			Map<String, Object> responseData = new HashMap<>();
+			responseData.put("accessToken", accessToken);
+			responseData.put("userNickName", userNickName);
+			responseData.put("userAccount", userAccount);
+			responseData.put("userId", userId);
+			responseData.put("userRole", userRole);
+			responseData.put("userBio", userBio);
+
+			return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공", true, responseData));
+		} catch (UsernameNotFoundException e) {
+			ResponseDTO responseDTO = new ResponseDTO(HttpStatus.UNAUTHORIZED, e.getMessage(), false, null);
+			return new ResponseEntity<>(responseDTO, HttpStatus.UNAUTHORIZED);
 		}
-		String userNickName = user.getUserNickName();
-		String userAccount = user.getUserAccount();
-		Integer userId = user.getUserId();
-		Integer userRole = user.getUserRole();
-		String userBio = user.getUserBio();
-
-		// 로그인한 사용자의 계정 정보를 포함
-		Map<String, Object> responseData = new HashMap<>();
-		responseData.put("accessToken", accessToken);
-		responseData.put("userNickName", userNickName);
-		responseData.put("userAccount", userAccount);
-		responseData.put("userId", userId);
-		responseData.put("userRole", userRole);
-		responseData.put("userBio", userBio);
-
-		return ResponseEntity.ok().body(new ResponseDTO(HttpStatus.OK, "로그인 성공", true, responseData));
 	}
+
 
 	@PostMapping("/logout")
 	public ResponseEntity<ResponseDTO> logout() {
