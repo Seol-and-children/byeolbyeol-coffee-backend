@@ -53,7 +53,7 @@
 📹 시연 영상
 --------
 
-<a href="[https://www.youtube.com/watch?v=slFESylNn0Q](https://www.youtube.com/watch?v=slFESylNn0Q)" rel="nofollow"><img src="[https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/0ac7d680-ad00-4078-9c00-b2a473fe980d](https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/0ac7d680-ad00-4078-9c00-b2a473fe980d)" alt="별별커피 시연영상" style="max-width: 100%;"></a>
+[<a href="[https://www.youtube.com/watch?v=slFESylNn0Q](https://www.youtube.com/watch?v=slFESylNn0Q)" rel="nofollow"><img src="[https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/0ac7d680-ad00-4078-9c00-b2a473fe980d](https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/0ac7d680-ad00-4078-9c00-b2a473fe980d)" alt="별별커피 시연영상" style="max-width: 100%;"></a>](https://www.youtube.com/watch?v=slFESylNn0Q)
 
 👤 개발자
 ------
