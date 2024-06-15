@@ -10,6 +10,10 @@
 ## 📹 시연 영상
 <a href="https://www.youtube.com/watch?v=slFESylNn0Q" rel="nofollow"><img src="https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/0ac7d680-ad00-4078-9c00-b2a473fe980d" alt="별별커피 시연영상" style="max-width: 100%;"></a>
 
+## 🖼 구성도
+
+![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/7f69c78b-7b53-4fc6-a50d-5df3abdafd0c/45e7a8b1-331b-4671-9077-6682634f0aac/Untitled.png)
+
 ## 👤 개발자
 
 - 박형준
