@@ -1,4 +1,4 @@
-![Untitled](https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/c4fa80df-ba0a-48ed-b84d-1d9383557f61)
+![Untitled](https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/43e3beef-93de-4673-a5d0-9e8a80ff948c)
 
 
 ☕ 별별커피
