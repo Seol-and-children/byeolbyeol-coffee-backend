@@ -76,3 +76,13 @@ XYZ 라이센스를 준수하며 ``LICENSE``에서 자세한 정보를 확인할
 [travis-image]: https://img.shields.io/travis/dbader/node-datadog-metrics/master.svg?style=flat-square
 [travis-url]: https://travis-ci.org/dbader/node-datadog-metrics
 [wiki]: https://github.com/yourname/yourproject/wiki
+
+## 사용된 기술
+
+## 주요 기능
+
+## 개발자
+- 박형준
+- 설광진
+- 정건희
+- 한지석
