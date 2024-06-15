@@ -13,9 +13,9 @@
 ![Java 11](https://img.shields.io/badge/Java-11-007396?logo=java&logoColor=white)
 ![MySQL 8.0](https://img.shields.io/badge/MySQL-8.0-4479A1?logo=mysql&logoColor=white)
 ![Spring Boot 2.7.17](https://img.shields.io/badge/Spring%20Boot-2.7.17-6DB33F?logo=spring-boot)
-![Spring Security](https://img.shields.io/badge/Spring%20Security-%E2%97%AF-6DB33F?logo=spring-security)
-![JPA](https://img.shields.io/badge/JPA-%E2%97%AF-2C3E50?logo=hibernate&logoColor=white)
-![React 18.2.0](https://img.shields.io/badge/React-%E2%97%AF-61DAFB?logo=react)
+![Spring Security](https://img.shields.io/badge/Spring%20Security-6DB33F?logo=spring-security)
+![JPA](https://img.shields.io/badge/JPA-2C3E50?logo=hibernate&logoColor=white)
+![React 18.2.0](https://img.shields.io/badge/React-18.2.0-61DAFB?logo=react)
 
 
 🖼 구성도
