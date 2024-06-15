@@ -8,7 +8,7 @@
 ## ✅ 주요 기능
 
 ## 📹 시연 영상
-<img width="60%" src="https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/0ac7d680-ad00-4078-9c00-b2a473fe980d"/ (https://www.youtube.com/watch?v=slFESylNn0Q)>
+<img width="60%" src="https://github.com/Seol-and-children/byeolbyeol-coffee-backend/assets/127364202/0ac7d680-ad00-4078-9c00-b2a473fe980d"/>
 
 ## 👤 개발자
 
